@@ -10,7 +10,8 @@ loginRouter.get("/", (req: Request, res: Response) => {
 // Implement a
 // I don't even know what I am trying to say up there LOL
 loginRouter.post("/", (req: Request, res: Response) => {
-  res.sendStatus(201);
+  console.log(req);
+  res.status(201).send(req.body);
 });
 
 export default loginRouter;

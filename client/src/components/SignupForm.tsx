@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { loginUser } from "../services/Login";
+import { signupUser } from "../services/Signup";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function LoginForm() {
+export default function SignupForm() {
   // Inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   // Form states
   const [loading, setLoading] = useState(false);
@@ -25,7 +26,12 @@ export default function LoginForm() {
     setLoading(true);
     event.preventDefault();
     try {
-      const response = await loginUser(username, email, password);
+      const response = await signupUser(
+        username,
+        email,
+        password,
+        confirmPassword
+      );
       if (!response.ok) {
         const msg = await response.text().catch(() => "");
         throw new Error(
@@ -43,7 +49,7 @@ export default function LoginForm() {
   return (
     <div className="bg-[#03304f] p-5 text-[#b1372c] rounded-2xl md:w-[400px]">
       <form className="flex flex-col gap-2 md:gap-4" onSubmit={handleSubmit}>
-        <h1 className="text-4xl md:text-5xl text-center font-bold">Login</h1>
+        <h1 className="text-4xl md:text-5xl text-center font-bold">Sign-up</h1>
         <div className="flex flex-col">
           <label className="font-bold md:text-xl" htmlFor="username">
             Username
@@ -86,6 +92,20 @@ export default function LoginForm() {
             required
           />
         </div>
+        <div className="flex flex-col">
+          <label className="font-bold md:text-xl" htmlFor="confirmPassword">
+            Confirm Password
+          </label>
+          <input
+            className="border-2 rounded-xl px-2 md:px-4 py-1 border-[#fbe3ad] font-bold md:text-xl outline-none"
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            name="confirmPassword"
+            id="confirmPassword"
+            required
+          />
+        </div>
         {/* Add if loading grey out the button */}
         <div className="flex justify-between">
           <button
@@ -100,13 +120,13 @@ export default function LoginForm() {
             type="submit"
             disabled={loading}
           >
-            {loading ? "Submitting..." : "Login"}
+            {loading ? "Submitting..." : "Sign-up"}
           </button>
         </div>
         <p className="text-md font-bold text-[#fbe3ad]">
-          Don't have an account?{" "}
-          <Link className="#b1372c underline" to={"/signup"}>
-            Sign-up!
+          Have an account?{" "}
+          <Link className="#b1372c underline" to={"/login"}>
+            Login!
           </Link>
         </p>
       </form>
