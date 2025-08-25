@@ -3,10 +3,15 @@ import { loginUser } from "../services/Login";
 import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+  // Inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Form states
   const [loading, setLoading] = useState(false);
+  // const [error, setErrors] = useState("Implement this later");
+
   const navigate = useNavigate();
 
   // Add a loading and error check and when user submits make button not clickable
@@ -31,38 +36,54 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="border-2 border-emerald-700">
-      <h1 className="text-4xl text-center">Login</h1>
-      <form className="flex flex-col" onSubmit={handleSubmit}>
-        <label htmlFor="username">Username</label>
-        <input
-          className="border-2 "
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          name="username"
-          id="username"
-        />
-        <label htmlFor="email">Email</label>
-        <input
-          className="border-2 "
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          name="email"
-          id="email"
-        />
-        <label htmlFor="password">Password</label>
-        <input
-          className="border-2 "
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          name="password"
-          id="password"
-        />
+    <div className="bg-[#b1372c] p-5 text-[#1a1a1a] rounded-2xl">
+      <form className="flex flex-col gap-2" onSubmit={handleSubmit}>
+        <h1 className="text-4xl text-center font-bold">Login</h1>
+        <div className="flex flex-col">
+          <label className="font-bold" htmlFor="username">
+            Username
+          </label>
+          <input
+            className="border-3 rounded-md px-2 py-1 border-[#fbe3ad] font-bold"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            name="username"
+            id="username"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="font-bold" htmlFor="email">
+            Email
+          </label>
+          <input
+            className="border-3 rounded-md px-2 py-1 border-[#fbe3ad] font-bold"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            name="email"
+            id="email"
+          />
+        </div>
+        <div className="flex flex-col">
+          <label className="font-bold" htmlFor="password">
+            Password
+          </label>
+          <input
+            className="border-3 rounded-md px-2 py-1 border-[#fbe3ad] font-bold"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            name="password"
+            id="password"
+          />
+        </div>
         {/* Add if loading grey out the button */}
-        <button className="cursor-pointer" type="submit" disabled={loading}>
+        <button
+          className="cursor-pointer font-extrabold bg-[#043253] text-[#b1372c] py-2 rounded-2xl"
+          type="submit"
+          disabled={loading}
+        >
           {loading ? "Submitting..." : "Login"}
         </button>
       </form>

@@ -8,11 +8,9 @@ loginRouter.get("/", (req: Request, res: Response) => {
 });
 
 // Implement a
-loginRouter.post("/a", (req: Request, res: Response) => {
-  console.log("Success");
-  setTimeout(() => {
-    res.sendStatus(201);
-  }, 2000);
+// I don't even know what I am trying to say up there LOL
+loginRouter.post("/", (req: Request, res: Response) => {
+  res.sendStatus(201);
 });
 
 export default loginRouter;
