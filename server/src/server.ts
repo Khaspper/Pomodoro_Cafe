@@ -3,6 +3,7 @@ import cors from "cors";
 // Routes
 import indexRouter from "./routes";
 import loginRouter from "./routes/login";
+import signupRouter from "./routes/signup";
 
 const app = express();
 const PORT = 3000;
@@ -18,6 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
+app.use("/signup", signupRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

@@ -10,7 +10,6 @@ loginRouter.get("/", (req: Request, res: Response) => {
 // Implement a
 // I don't even know what I am trying to say up there LOL
 loginRouter.post("/", (req: Request, res: Response) => {
-  console.log(req.body);
   res.status(201).send(req.body);
 });
 
