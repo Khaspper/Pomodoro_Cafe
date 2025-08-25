@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 
-function App() {
-  const [message, setMessage] = useState("");
+export default function Home() {
+  const [message, setMessage] = useState(
+    "Failed to fetch from login serverFailed to fetch from index server"
+  );
 
   async function fetchData() {
     const response = await fetch("http://localhost:3000");
@@ -22,10 +24,9 @@ function App() {
 
   return (
     <>
-      <h1 className="">Vite + React</h1>
-      <p className="bg-amber-700">message:{message}</p>
+      <p className="bg-amber-700 text-3xl">
+        <span className="text-white">Index----</span>message: {message}
+      </p>
     </>
   );
 }
-
-export default App;

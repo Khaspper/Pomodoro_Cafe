@@ -1,5 +1,8 @@
 import express from "express";
 import cors from "cors";
+// Routes
+import indexRouter from "./routes";
+import loginRouter from "./routes/login";
 
 const app = express();
 const PORT = 3000;
@@ -13,10 +16,8 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-app.get("/", (req, res) => {
-  res.json({ message: "We in the BACKEND!!!! OH YEAH" });
-});
+app.use("/", indexRouter);
+app.use("/login", loginRouter);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
