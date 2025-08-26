@@ -11,7 +11,8 @@
     "target": "esnext",
     // For nodejs:
     "lib": ["esnext"],
-    "types": ["node"],
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "types": ["node", "express", "express-session"],
     // and npm install -D @types/node
 
     // Other Outputs
@@ -43,5 +44,6 @@
     "noImplicitAny": true,
     "strictNullChecks": true,
     "strictFunctionTypes": true
-  }
+  },
+  "include": ["src", "types"]
 }
