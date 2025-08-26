@@ -6,6 +6,7 @@ import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Navbar from "./components/Navbar.tsx";
+import Account from "./pages/Account.tsx";
 
 // I was thinking here that maybe we should call the backend and check
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
         <Signup />
       </>
     ),
+  },
+  {
+    path: "/account",
+    element: <Account />,
   },
 ]);
 

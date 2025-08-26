@@ -2,7 +2,8 @@ import { Link } from "react-router-dom";
 import pomodoroLogo from "../assets/pomodoro-cafe.png";
 
 export default function Navbar() {
-  const isLoggedIn = false;
+  const isLoggedIn = true;
+  // Add a logout function
   return (
     <div className="bg-[#043253] flex items-center justify-between p-4 text-[#b1372c]">
       <Link to={"/"}>
