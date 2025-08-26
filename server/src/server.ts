@@ -10,7 +10,7 @@ const PORT = 3000;
 
 // This is so we can send data to our front end
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "http://localhost:4173"],
 };
 app.use(cors(corsOptions));
 // This is so we can send data to our front end
