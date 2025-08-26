@@ -5,11 +5,38 @@ import "./index.css";
 import Home from "./pages/Home.tsx";
 import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
+import Navbar from "./components/Navbar.tsx";
+
+// I was thinking here that maybe we should call the backend and check
 
 const router = createBrowserRouter([
-  { path: "/", element: <Home /> },
-  { path: "/login", element: <Login /> },
-  { path: "/signup", element: <Signup /> },
+  {
+    path: "/",
+    element: (
+      <>
+        <Navbar />
+        <Home />
+      </>
+    ),
+  },
+  {
+    path: "/login",
+    element: (
+      <>
+        <Navbar />
+        <Login />
+      </>
+    ),
+  },
+  {
+    path: "/signup",
+    element: (
+      <>
+        <Navbar />
+        <Signup />
+      </>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

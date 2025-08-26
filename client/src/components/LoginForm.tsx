@@ -105,7 +105,7 @@ export default function LoginForm() {
         </div>
         <p className="text-md font-bold text-[#fbe3ad]">
           Don't have an account?{" "}
-          <Link className="#b1372c underline" to={"/signup"}>
+          <Link className="underline" to={"/signup"}>
             Sign-up!
           </Link>
         </p>

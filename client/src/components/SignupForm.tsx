@@ -125,7 +125,7 @@ export default function SignupForm() {
         </div>
         <p className="text-md font-bold text-[#fbe3ad]">
           Have an account?{" "}
-          <Link className="#b1372c underline" to={"/login"}>
+          <Link className="underline" to={"/login"}>
             Login!
           </Link>
         </p>
