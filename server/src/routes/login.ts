@@ -15,7 +15,7 @@ loginRouter.post(
   "/",
   passport.authenticate("local"),
   (req: Request, res: Response) => {
-    res.json({ message: "Logged in successfully" });
+    res.status(200).json({ message: "Logged in successfully" });
   }
 );
 

@@ -7,9 +7,9 @@ const prisma = new PrismaClient();
 async function seed() {
   await prisma.user.create({
     data: {
-      username: "khaspper",
-      password: "qwerty",
-      email: "mark@example.com",
+      username: "qwertykira_",
+      password: "marky",
+      email: "kira@example.com",
     },
   });
 }

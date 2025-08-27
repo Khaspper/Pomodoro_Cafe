@@ -1,12 +1,27 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { getUserByEmail } from "../db/queries";
+import { getUserByEmail, getUserById } from "../db/queries";
 
 passport.serializeUser((user, done) => {
+  console.log("inside serializeUser");
+  console.log("user:");
+  console.log(user);
   done(null, user.id);
 });
 
-passport.deserializeUser((id, done) => {});
+passport.deserializeUser(async (id, done) => {
+  console.log("inside DeserializeUser");
+  console.log(`id: ${id}`);
+  try {
+    const user = await getUserById(Number(id));
+    if (user === null) {
+      throw new Error("User was not found");
+    }
+    done(null, user);
+  } catch (error) {
+    done(error, false);
+  }
+});
 
 export default passport.use(
   new Strategy({ usernameField: "email" }, async (email, password, done) => {
