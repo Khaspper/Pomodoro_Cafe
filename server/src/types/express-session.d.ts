@@ -2,10 +2,11 @@ import "express";
 
 declare global {
   namespace Express {
-    interface UserPayload {
+    interface User {
       id: number;
+      email: string;
       username: string;
-      password?: string;
+      password: string;
     }
   }
 }

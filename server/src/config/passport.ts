@@ -2,6 +2,12 @@ import passport from "passport";
 import { Strategy } from "passport-local";
 import { getUserByEmail } from "../db/queries";
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {});
+
 export default passport.use(
   new Strategy({ usernameField: "email" }, async (email, password, done) => {
     console.log(`email: ${email}`);
