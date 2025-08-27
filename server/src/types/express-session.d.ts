@@ -7,11 +7,5 @@ declare global {
       username: string;
       password?: string;
     }
-
-    interface Request {
-      user?: UserPayload;
-      // This is for JWT
-      token?: string | undefined;
-    }
   }
 }

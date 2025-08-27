@@ -5,10 +5,10 @@ export async function authorizeUser(
   res: Response,
   next: NextFunction
 ) {
-  // const { username, password } = req.body;
-  req.user = {
-    id: 1,
-    username: req.body.username,
-  };
+  const { username, password } = req.body;
+  console.log("username");
+  console.log(username);
+  console.log("password");
+  console.log(password);
   next();
 }

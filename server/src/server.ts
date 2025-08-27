@@ -5,7 +5,7 @@ import cors from "cors";
 import indexRouter from "./routes";
 import loginRouter from "./routes/login";
 import signupRouter from "./routes/signup";
-import accountRouter from "./routes/Account";
+import accountRouter from "./routes/account";
 
 const app = express();
 const PORT = 3000;
