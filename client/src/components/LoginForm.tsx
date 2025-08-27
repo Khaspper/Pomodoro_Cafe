@@ -31,7 +31,7 @@ export default function LoginForm() {
           `Login failed (${response.status} ${response.statusText}) ${msg}`
         );
       }
-      navigate("/profile");
+      navigate("/");
     } catch (error) {
       console.error(error);
     } finally {
