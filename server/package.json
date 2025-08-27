@@ -11,7 +11,7 @@
     "migrate:dev": "prisma migrate dev --name init"
   },
   "prisma": {
-    "seed": "ts-node ./src/db/seed.ts"
+    "seed": "ts-node ./prisma/seed.ts"
   },
   "keywords": [],
   "author": "",

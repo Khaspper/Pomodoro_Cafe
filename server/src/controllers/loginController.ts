@@ -1,4 +1,5 @@
 import type { Request, Response, NextFunction } from "express";
+import "../config/passport";
 
 export async function authorizeUser(
   req: Request,

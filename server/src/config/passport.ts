@@ -4,6 +4,8 @@ import { getUserByUsername } from "../db/queries";
 
 export default passport.use(
   new Strategy(async (username, password, done) => {
+    console.log(`username: ${username}`);
+    console.log(`password: ${password}`);
     try {
       const user = await getUserByUsername(username);
       if (user === null) {

@@ -1,4 +1,6 @@
-import prisma from "../db/seed";
+import { PrismaClient } from "../../generated/prisma";
+
+const prisma = new PrismaClient();
 
 export async function getUserByUsername(username: string) {
   const user = await prisma.user.findUnique({
