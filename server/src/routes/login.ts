@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
-import { authenticateUser } from "../controllers/loginController";
+import { authorizeUser } from "../controllers/loginController";
 import { createJWT } from "../controllers/jwt";
 
 const loginRouter = Router();
@@ -11,6 +11,6 @@ loginRouter.get("/", (req: Request, res: Response) => {
 
 // Implement a
 // I don't even know what I am trying to say up there LOL
-loginRouter.post("/", authenticateUser, createJWT);
+loginRouter.post("/", authorizeUser, createJWT);
 
 export default loginRouter;
