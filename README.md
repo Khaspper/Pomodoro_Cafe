@@ -13,3 +13,6 @@ Tues Aug 26th 2:11 AM School started im so happy and sad...
 Anyways I am adding JWT to authenticate the users and will probably start
 by making a database and then making a prisma models for users
 WISH ME LUCK!!!!
+
+Tues Aug 26th 7:08 PM Messed up I chose JWT when I didn't need it
+and session data would've suffice... wasted hours omg
