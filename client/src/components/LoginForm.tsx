@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 
 export default function LoginForm() {
   // Inputs
-  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,7 +24,7 @@ export default function LoginForm() {
     setLoading(true);
     event.preventDefault();
     try {
-      const response = await loginUser(username, email, password);
+      const response = await loginUser(email, password);
       if (!response.ok) {
         const msg = await response.text().catch(() => "");
         throw new Error(
@@ -44,20 +43,6 @@ export default function LoginForm() {
     <div className="bg-[#03304f] p-5 text-[#b1372c] rounded-2xl md:w-[400px] mt-[-100px]">
       <form className="flex flex-col gap-2 md:gap-4" onSubmit={handleSubmit}>
         <h1 className="text-4xl md:text-5xl text-center font-bold">Login</h1>
-        <div className="flex flex-col">
-          <label className="font-bold md:text-xl" htmlFor="username">
-            Username
-          </label>
-          <input
-            className="border-2 rounded-xl px-2 md:px-4 py-1 border-[#fbe3ad] font-bold md:text-xl outline-none"
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            name="username"
-            id="username"
-            required
-          />
-        </div>
         <div className="flex flex-col">
           <label className="font-bold md:text-xl" htmlFor="email">
             Email
@@ -107,6 +92,13 @@ export default function LoginForm() {
           Don't have an account?{" "}
           <Link className="underline" to={"/signup"}>
             Sign-up!
+          </Link>
+        </p>
+        {/* Add This Later */}
+        <p className="text-md font-bold text-[#fbe3ad]">
+          Forgot Password?{" "}
+          <Link className="underline" to={"/signup"}>
+            Recover!
           </Link>
         </p>
       </form>
