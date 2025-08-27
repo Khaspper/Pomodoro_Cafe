@@ -1,13 +1,13 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { getUserByUsername } from "../db/queries";
+import { getUserByEmail } from "../db/queries";
 
 export default passport.use(
-  new Strategy(async (username, password, done) => {
-    console.log(`username: ${username}`);
-    console.log(`password: ${password}`);
+  new Strategy({ usernameField: "email" }, async (email, password, done) => {
+    console.log(`email: ${email}`);
+    console.log(`password: ${email}`);
     try {
-      const user = await getUserByUsername(username);
+      const user = await getUserByEmail(email);
       if (user === null) {
         throw new Error("User not found!!!!!");
       }
