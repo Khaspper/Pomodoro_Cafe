@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { logout } from "../controllers/account";
 
 const accountRouter = Router();
 
@@ -12,5 +13,7 @@ accountRouter.get("/", (req, res) => {
       })
     : res.sendStatus(401);
 });
+
+accountRouter.post("/logout", logout);
 
 export default accountRouter;
