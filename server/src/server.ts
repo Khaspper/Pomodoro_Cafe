@@ -1,12 +1,17 @@
 import express from "express";
 import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
+import dotenv from "dotenv";
+import session from "express-session";
+
 // Routes
 import indexRouter from "./routes";
 import loginRouter from "./routes/login";
 import signupRouter from "./routes/signup";
 import accountRouter from "./routes/account";
+import passport from "passport";
 
+dotenv.config();
 const app = express();
 const PORT = 3000;
 
@@ -19,6 +24,16 @@ app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  session({
+    secret: String(process.env.SECRET_KEY),
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+
+app.use(passport.session());
+
 app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
