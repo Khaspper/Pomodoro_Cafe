@@ -1,6 +1,7 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
 import { getUserByEmail, getUserById } from "../db/queries";
+import bcrypt from "bcrypt";
 
 passport.serializeUser((user, done) => {
   done(null, user.id);
@@ -25,8 +26,7 @@ export default passport.use(
       if (user === null) {
         throw new Error("User not found!!!!!");
       }
-      //! Add bcrypt.compare!!!!
-      if (user.password !== password) {
+      if (await !bcrypt.compare(password, user.password)) {
         throw new Error("Incorrect Password!!!!!");
       }
       done(null, user);

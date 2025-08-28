@@ -39,7 +39,6 @@ export async function postNewUser({
   username: string;
   password: string;
 }) {
-  //! Don't forget to bcrypt the password
   try {
     if (await getUserByEmail(email)) throw new Error("Email already exists");
     if (await getUserByUsername(username))
