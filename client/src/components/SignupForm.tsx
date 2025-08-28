@@ -3,12 +3,28 @@ import { signupUser } from "../services/Signup";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 
+type TReceivedErrors = {
+  location: string;
+  msg: string;
+  path: "username" | "email" | "password" | "confirmPassword";
+  type: string;
+  value: string;
+};
+
+type TNewErrors = {
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+};
+
 export default function SignupForm() {
   // Inputs
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [errors, setErrors] = useState<TNewErrors>({});
 
   // Form states
   const [loading, setLoading] = useState(false);
@@ -26,17 +42,21 @@ export default function SignupForm() {
     setLoading(true);
     event.preventDefault();
     try {
-      const response = await signupUser(
+      const errors = await signupUser(
         username,
         email,
         password,
         confirmPassword
       );
-      if (!response.ok) {
-        const msg = await response.text().catch(() => "");
-        throw new Error(
-          `Login failed (${response.status} ${response.statusText}) ${msg}`
-        );
+      if (errors.length !== 0) {
+        const newErrors: TNewErrors = {};
+        errors.forEach((error: TReceivedErrors) => {
+          const path = error.path;
+          const msg = error.msg;
+          newErrors[path] = msg;
+        });
+        setErrors(newErrors);
+        throw new Error(`Login failed`, errors);
       }
       navigate("/profile");
     } catch (error) {
@@ -63,6 +83,9 @@ export default function SignupForm() {
             id="username"
             required
           />
+          <p className="text-[#df9f3f]">
+            {errors.username ? errors.username : ""}
+          </p>
         </div>
         <div className="flex flex-col">
           <label className="font-bold md:text-xl" htmlFor="email">
@@ -77,6 +100,7 @@ export default function SignupForm() {
             id="email"
             required
           />
+          <p className="text-[#df9f3f]">{errors.email ? errors.email : ""}</p>
         </div>
         <div className="flex flex-col">
           <label className="font-bold md:text-xl" htmlFor="password">
@@ -91,6 +115,9 @@ export default function SignupForm() {
             id="password"
             required
           />
+          <p className="text-[#df9f3f]">
+            {errors.password ? errors.password : ""}
+          </p>
         </div>
         <div className="flex flex-col">
           <label className="font-bold md:text-xl" htmlFor="confirmPassword">
@@ -105,6 +132,9 @@ export default function SignupForm() {
             id="confirmPassword"
             required
           />
+          <p className="text-[#df9f3f]">
+            {errors.confirmPassword ? errors.confirmPassword : ""}
+          </p>
         </div>
         {/* Add if loading grey out the button */}
         <div className="flex justify-between">

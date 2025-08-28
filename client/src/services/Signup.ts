@@ -9,5 +9,6 @@ export async function signupUser(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password, confirmPassword }),
   });
-  return response;
+  const data = await response.json();
+  return data.errors;
 }
