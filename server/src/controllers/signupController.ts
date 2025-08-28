@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import { postNewUser } from "../db/queries";
-// import { body, query, validationResult } from "express-validator";
-import { body } from "express-validator";
+// import { postNewUser } from "../db/queries";
+import { body, validationResult } from "express-validator";
 import { getUserByEmail, getUserByUsername } from "../db/queries";
 
 // .custom(async (username) => {
@@ -58,12 +57,16 @@ export const addNewUser = [
   validateSignup,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      console.log(req.body);
-      const response = await postNewUser(req.body);
-      if (!response) {
-        return res.status(201).send(req.body);
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json(errors);
       }
-      throw response;
+      // const response = await postNewUser(req.body);
+      // if (!response) {
+      //   return res.status(201).send(req.body);
+      // }
+      // throw response;
+      res.sendStatus(201);
     } catch (error) {
       console.error("Could not create users", error);
       res.sendStatus(400);
