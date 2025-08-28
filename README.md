@@ -17,5 +17,8 @@ WISH ME LUCK!!!!
 Tues Aug 26th 7:08 PM Messed up I chose JWT when I didn't need it
 and session data would've suffice... wasted hours omg
 
+Wed Aug 27th 11:03 PM I Added errors to show in the UI
+BUT I FORGOT TO ADD TESTS FIRST AHHHHHHHHHHHHHHHHHHHHHHHHH
+
 Mon Sep 1st 12:45 AM I didn't realize how hard it is to authenticate a user with a separate front and
 backend wow that was annoying... But I learned about protect routes
