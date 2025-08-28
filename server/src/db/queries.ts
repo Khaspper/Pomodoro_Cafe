@@ -28,3 +28,29 @@ export async function getUserById(id: number) {
   });
   return user;
 }
+
+export async function postNewUser({
+  email,
+  username,
+  password,
+}: {
+  email: string;
+  username: string;
+  password: string;
+}) {
+  //! Don't forget to bcrypt the password
+  try {
+    if (await getUserByEmail(email)) throw new Error("Email already exists");
+    if (await getUserByUsername(username))
+      throw new Error("Username already exists");
+    await prisma.user.create({
+      data: {
+        email,
+        username,
+        password,
+      },
+    });
+  } catch (error) {
+    return error;
+  }
+}
