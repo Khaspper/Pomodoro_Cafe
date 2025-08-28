@@ -19,7 +19,7 @@ export default function SignupForm() {
   // Add a loading and error check and when user submits make button not clickable
 
   function handleClick() {
-    navigate(-1);
+    navigate("/");
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -113,7 +113,7 @@ export default function SignupForm() {
             type="submit"
             onClick={handleClick}
           >
-            Go back
+            Go Home
           </button>
           <button
             className="cursor-pointer font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-[40%] md:w-[35%] text-[#1a1a1a]"
