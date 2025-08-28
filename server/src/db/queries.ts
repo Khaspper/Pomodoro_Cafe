@@ -1,4 +1,5 @@
 import { PrismaClient } from "../../generated/prisma";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -43,11 +44,12 @@ export async function postNewUser({
     if (await getUserByEmail(email)) throw new Error("Email already exists");
     if (await getUserByUsername(username))
       throw new Error("Username already exists");
+    const hash = await bcrypt.hash(password, 10);
     await prisma.user.create({
       data: {
         email,
         username,
-        password,
+        password: hash,
       },
     });
   } catch (error) {

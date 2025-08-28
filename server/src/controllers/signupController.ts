@@ -9,7 +9,7 @@ export async function addNewUser(
   try {
     const response = await postNewUser(req.body);
     if (!response) {
-      res.status(201).send(req.body);
+      return res.status(201).send(req.body);
     }
     throw response;
   } catch (error) {
