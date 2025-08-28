@@ -10,6 +10,6 @@ signupRouter.get("/", (req: Request, res: Response) => {
 
 // Implement a
 // I don't even know what I am trying to say up there LOL
-signupRouter.post("/", addNewUser);
+signupRouter.post("/", ...addNewUser);
 
 export default signupRouter;

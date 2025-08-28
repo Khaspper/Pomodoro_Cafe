@@ -40,7 +40,6 @@ export async function postNewUser({
   password: string;
 }) {
   try {
-    if (await getUserByEmail(email)) throw new Error("Email already exists");
     if (await getUserByUsername(username))
       throw new Error("Username already exists");
     const hash = await bcrypt.hash(password, 10);
