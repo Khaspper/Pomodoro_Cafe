@@ -7,6 +7,6 @@ accountRouter.get("/", isAuthenticated, (req, res) => {
   res.status(200).json({ message: "Updated User..." });
 });
 
-accountRouter.post("/logout", logout);
+accountRouter.post("/logout", isAuthenticated, logout);
 
 export default accountRouter;

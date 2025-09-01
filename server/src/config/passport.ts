@@ -24,11 +24,11 @@ export default passport.use(
     try {
       const user = await getUserByEmail(email);
       if (user === null) {
-        throw new Error("User not found!!!!!");
+        throw new Error("Email not found.");
       }
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
-        throw new Error("Incorrect Password!!!!!");
+        throw new Error("Incorrect Password.");
       }
       done(null, user);
     } catch (error) {
