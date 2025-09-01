@@ -1,17 +1,10 @@
 import { Router } from "express";
-import { logout } from "../controllers/account";
+import { isAuthenticated, logout } from "../controllers/accountController";
 
 const accountRouter = Router();
 
-accountRouter.get("/", (req, res) => {
-  console.log("Inside Account");
-  console.log(req.user);
-
-  req.user
-    ? res.json({
-        message: "Updated User...",
-      })
-    : res.sendStatus(401);
+accountRouter.get("/", isAuthenticated, (req, res) => {
+  res.status(200).json({ message: "Updated User..." });
 });
 
 accountRouter.post("/logout", logout);

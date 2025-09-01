@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
-import { isAuthenticated } from "../controllers/account";
+import { isAuthenticated } from "../controllers/accountController";
 
 const indexRouter = Router();
 
@@ -9,12 +9,12 @@ indexRouter.get("/", (req: Request, res: Response) => {
   res.json({ message: "This is the index page" });
 });
 
-indexRouter.get("/api/authorized", (req: Request, res: Response) => {
-  if (isAuthenticated(req)) {
-    res.status(200).json({ authenticated: true });
-  } else {
-    res.status(401).json({ authenticated: false });
+indexRouter.get(
+  "/api/authorized",
+  isAuthenticated,
+  (req: Request, res: Response) => {
+    res.json({ message: "Updated User..." });
   }
-});
+);
 
 export default indexRouter;
