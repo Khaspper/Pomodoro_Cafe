@@ -16,3 +16,6 @@ WISH ME LUCK!!!!
 
 Tues Aug 26th 7:08 PM Messed up I chose JWT when I didn't need it
 and session data would've suffice... wasted hours omg
+
+Mon Sep 1st 12:45 AM I didn't realize how hard it is to authenticate a user with a separate front and
+backend wow that was annoying... But I learned about protect routes
