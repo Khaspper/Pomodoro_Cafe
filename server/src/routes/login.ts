@@ -5,10 +5,6 @@ import passport from "passport";
 
 const loginRouter = Router();
 
-loginRouter.get("/", (req: Request, res: Response) => {
-  res.json({ message: "Login" });
-});
-
 loginRouter.post(
   "/",
   passport.authenticate("local"),

@@ -1,11 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
-// import { postNewUser } from "../db/queries";
+import { postNewUser } from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { getUserByEmail, getUserByUsername } from "../db/queries";
-
-// .custom(async (username) => {
-//   if (await getUserByEmail(email)) throw new Error("Email already exists");
-// }),
 
 const emptyError = "cannot be empty.";
 const spaceError = "cannot contain spaces.";
@@ -61,12 +57,17 @@ export const addNewUser = [
       if (!errors.isEmpty()) {
         return res.status(400).json(errors);
       }
-      // const response = await postNewUser(req.body);
-      // if (!response) {
-      //   return res.status(201).send(req.body);
-      // }
-      // throw response;
-      res.sendStatus(201);
+      const response = await postNewUser(req.body);
+      if (!response) {
+        return res.status(201).send(req.body);
+      }
+      req.login(req.body, (err) => {
+        if (err) {
+          return next(err);
+        }
+        res.sendStatus(201);
+      });
+      throw response;
     } catch (error) {
       console.error("Could not create users", error);
       res.sendStatus(400);

@@ -3,6 +3,8 @@ import type { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import session from "express-session";
+import connectPgSimple from "connect-pg-simple";
+import pool from "./db/pool";
 
 // Routes
 import indexRouter from "./routes";
@@ -27,9 +29,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
+    store: new (connectPgSimple(session))({
+      pool: pool,
+      tableName: "session",
+    }),
     secret: String(process.env.SECRET_KEY),
     resave: false,
     saveUninitialized: false,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // Equals 1 week
+    },
   })
 );
 
