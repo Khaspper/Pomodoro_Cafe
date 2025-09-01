@@ -5,5 +5,7 @@ export async function loginUser(email: string, password: string) {
     credentials: "include",
     body: JSON.stringify({ email, password }),
   });
-  return response;
+  if (response.ok) return response;
+  const data = await response.json();
+  return data;
 }

@@ -7,6 +7,7 @@ export default function LoginForm() {
   // Inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   // Form states
   const [loading, setLoading] = useState(false);
@@ -24,12 +25,12 @@ export default function LoginForm() {
     setLoading(true);
     event.preventDefault();
     try {
-      const response = await loginUser(email, password);
-      if (!response.ok) {
-        const msg = await response.text().catch(() => "");
-        throw new Error(
-          `Login failed (${response.status} ${response.statusText}) ${msg}`
-        );
+      const errors = await loginUser(email, password);
+      if (!errors.ok) {
+        setLoginError("Email or Password is incorrect.");
+        throw new Error(`Login failed`, errors);
+      } else {
+        setLoginError("");
       }
       navigate("/");
     } catch (error) {
@@ -71,6 +72,7 @@ export default function LoginForm() {
             required
           />
         </div>
+        <p className="text-[#df9f3f]">{loginError}</p>
         {/* Add if loading grey out the button */}
         <div className="flex justify-between">
           <button
