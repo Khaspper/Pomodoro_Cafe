@@ -48,7 +48,7 @@ export default function SignupForm() {
         password,
         confirmPassword
       );
-      if (errors.length !== 0) {
+      if (errors && errors.length !== 0) {
         const newErrors: TNewErrors = {};
         errors.forEach((error: TReceivedErrors) => {
           const path = error.path;
