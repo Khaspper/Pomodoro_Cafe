@@ -7,6 +7,7 @@ import Login from "./pages/Login.tsx";
 import Signup from "./pages/Signup.tsx";
 import Navbar from "./components/Navbar.tsx";
 import Account from "./pages/Account.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
 
 // I was thinking here that maybe we should call the backend and check
 
@@ -40,7 +41,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/account",
-    element: <Account />,
+    element: (
+      <>
+        <Navbar />
+        <ProtectedRoute>
+          <Account />
+        </ProtectedRoute>
+      </>
+    ),
   },
 ]);
 

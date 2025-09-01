@@ -1,0 +1,27 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+type ProtectedProps = { children: React.ReactNode };
+
+export default function ProtectedRoute({ children }: ProtectedProps) {
+  const [checking, setChecking] = useState(true);
+  const [allowed, setAllowed] = useState(false);
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async () => {
+      const res = await fetch("http://localhost:3000/account", {
+        credentials: "include",
+      });
+      if (res.ok) {
+        setAllowed(true);
+      } else {
+        setAllowed(false);
+        navigate("/login", { replace: true });
+      }
+      setChecking(false);
+    })();
+  }, [navigate]);
+
+  if (checking) return <h1 className="text-4xl">Loading</h1>;
+  return allowed ? children : null;
+}
