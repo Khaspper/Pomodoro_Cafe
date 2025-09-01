@@ -26,7 +26,8 @@ export default passport.use(
       if (user === null) {
         throw new Error("User not found!!!!!");
       }
-      if (await !bcrypt.compare(password, user.password)) {
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
         throw new Error("Incorrect Password!!!!!");
       }
       done(null, user);
