@@ -49,11 +49,17 @@ const validateSignup = [
   }),
 ];
 
+export function checkForErrors(req: Request) {
+  return validationResult(req);
+}
+
 export const addNewUser = [
   validateSignup,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const errors = validationResult(req);
+      const errors = checkForErrors(req);
+      // console.log("errors");
+      // console.log(errors);
       if (!errors.isEmpty()) {
         return res.status(400).json(errors);
       }
