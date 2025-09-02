@@ -57,3 +57,23 @@ describe("Login with valid/invalid credentials", () => {
     expect(response.statusCode).toBe(401);
   });
 });
+
+describe("Validate login input", () => {
+  test("Should respond with 'Email not found.'", async () => {
+    const response = await request(app).post("/login").send({
+      email: "nonexistent@email.com",
+      password: "password",
+    });
+
+    expect(response.body.error).toBe("Email not found.");
+  });
+
+  test("Should respond with 'Incorrect Password.'", async () => {
+    const response = await request(app).post("/login").send({
+      email: "valid@email.com",
+      password: "password",
+    });
+
+    expect(response.body.error).toBe("Incorrect Password.");
+  });
+});
