@@ -42,3 +42,19 @@ export const loginUser = [
     }
   },
 ];
+
+export async function sendLoginErrors(
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  // Custom error handler for failed auth
+  if (err.message === "Email not found.") {
+    return res.status(401).json({ error: err.message });
+  }
+  if (err.message === "Incorrect Password.") {
+    return res.status(401).json({ error: err.message });
+  }
+  return res.status(500).json({ error: "Something went wrong." });
+}
