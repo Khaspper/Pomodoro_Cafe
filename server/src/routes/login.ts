@@ -9,8 +9,8 @@ const loginRouter = Router();
 loginRouter.post(
   "/",
   passport.authenticate("local", { failWithError: true }),
-  loginUser,
-  sendLoginErrors
+  sendLoginErrors,
+  loginUser
 );
 
 export default loginRouter;

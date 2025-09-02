@@ -50,10 +50,10 @@ export async function sendLoginErrors(
   next: NextFunction
 ) {
   // Custom error handler for failed auth
-  if (err.message === "Email not found.") {
-    return res.status(401).json({ error: err.message });
-  }
-  if (err.message === "Incorrect Password.") {
+  if (
+    err.message === "Email not found." ||
+    err.message === "Incorrect Password."
+  ) {
     return res.status(401).json({ error: err.message });
   }
   return res.status(500).json({ error: "Something went wrong." });
