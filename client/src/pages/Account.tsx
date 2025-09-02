@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export default function Account() {
   return (
-    <div className="bg-[#1a1a1a] min-h-screen min-w-screen flex justify-center">
+    <div className="bg-[#1a1a1a] min-h-screen flex justify-center">
       <form className="bg-[#043253] text-[#fbe3ad] w-fit p-6">
         <h1 className="text-2xl text-[#d02329] font-bold">
           Change Personal Information

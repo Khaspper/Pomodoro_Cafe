@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import pomodoroLogo from "../assets/pomodoro-cafe.png";
 import { logout } from "../services/Navbar";
@@ -7,6 +7,7 @@ export default function Navbar() {
   const [allowed, setAllowed] = useState(false);
   const [checking, setChecking] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -40,7 +41,10 @@ export default function Navbar() {
             <button
               className="bg-[#fae3ad] px-6 py-2 font-bold rounded-2xl cursor-pointer"
               type="button"
-              onClick={() => logout(setAllowed)}
+              onClick={() => {
+                navigate("/login");
+                logout(setAllowed);
+              }}
             >
               Logout
             </button>

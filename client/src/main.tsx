@@ -43,9 +43,11 @@ const router = createBrowserRouter([
     path: "/account",
     element: (
       <>
-        <Navbar />
         <ProtectedRoute>
-          <Account />
+          <div className="flex flex-col">
+            <Navbar />
+            <Account />
+          </div>
         </ProtectedRoute>
       </>
     ),
