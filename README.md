@@ -20,5 +20,7 @@ and session data would've suffice... wasted hours omg
 Wed Aug 27th 11:03 PM I Added errors to show in the UI
 BUT I FORGOT TO ADD TESTS FIRST AHHHHHHHHHHHHHHHHHHHHHHHHH
 
-Mon Sep 1st 12:45 AM I didn't realize how hard it is to authenticate a user with a separate front and
+Mon Sept 1st 12:45 AM I didn't realize how hard it is to authenticate a user with a separate front and
 backend wow that was annoying... But I learned about protect routes
+
+Mon Sept 1st 10:01 PM I learned more about mocking functions And how much I hate Mocking I will start writing pure functions from now on...
