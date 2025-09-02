@@ -33,10 +33,26 @@ describe("Login with valid/invalid credentials", () => {
     expect(response.statusCode).toBe(200);
   });
 
-  test("Should respond with 401 for invalid credentials --- Email ---", async () => {
+  test("Should respond with 401 for invalid --- Email ---", async () => {
     const response = await request(app).post("/login").send({
       email: "invalid@email.com",
       password: "qweqweqwe",
+    });
+    expect(response.statusCode).toBe(401);
+  });
+
+  test("Should respond with 401 for invalid --- Password ---", async () => {
+    const response = await request(app).post("/login").send({
+      email: "qwer@example.com",
+      password: "IncorrectPassword",
+    });
+    expect(response.statusCode).toBe(401);
+  });
+
+  test("Should respond with 401 for invalid credentials", async () => {
+    const response = await request(app).post("/login").send({
+      email: "invalid@email.com",
+      password: "IncorrectPassword",
     });
     expect(response.statusCode).toBe(401);
   });
