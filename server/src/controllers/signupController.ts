@@ -28,9 +28,9 @@ const validateSignup = [
     .notEmpty()
     .withMessage(`Email ${emptyError}`)
     .isEmail()
-    .withMessage("email must be in this format 'abc@xyz.com'")
+    .withMessage("Email must be in this format 'abc@xyz.com'")
     .custom(async (email) => {
-      if (await getUserByEmail(email)) throw new Error("Email already exists");
+      if (await getUserByEmail(email)) throw new Error("Email already exists.");
       return true;
     }),
   body("password")

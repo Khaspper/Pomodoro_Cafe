@@ -58,7 +58,7 @@ describe("Sign up with valid credentials", () => {
   });
 });
 
-describe("Sign up with invalid credentials", () => {
+describe("Sign up with invalid credentials for username", () => {
   beforeEach(() => {
     (postNewUser as unknown as jest.Mock).mockResolvedValue(null);
     (getUserByEmail as unknown as jest.Mock).mockResolvedValue(false);
@@ -135,5 +135,103 @@ describe("Sign up with invalid credentials", () => {
     expect(response2.body.errors[0].msg).toBe(
       "Username must be between 5 and 12 characters"
     );
+  });
+});
+
+describe("Sign up with invalid credentials for email", () => {
+  beforeEach(() => {
+    (postNewUser as unknown as jest.Mock).mockResolvedValue(null);
+    (getUserByEmail as unknown as jest.Mock).mockResolvedValue(false);
+    (getUserByUsername as unknown as jest.Mock).mockResolvedValue(false);
+  });
+
+  test("Should respond with 'Email cannot be empty.", async () => {
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "",
+      password: "validPassword",
+      confirmPassword: "validPassword",
+    });
+    expect(response.body.errors[0].msg).toBe("Email cannot be empty.");
+  });
+
+  test("Should respond with 'Email must be in this format 'abc@xyz.com''", async () => {
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "notValidEmail",
+      password: "validPassword",
+      confirmPassword: "validPassword",
+    });
+    expect(response.body.errors[0].msg).toBe(
+      "Email must be in this format 'abc@xyz.com'"
+    );
+  });
+
+  test("Should respond with 'Email already exists.'", async () => {
+    (getUserByEmail as unknown as jest.Mock).mockReturnValue(true);
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "email@exists.com",
+      password: "validPassword",
+      confirmPassword: "validPassword",
+    });
+
+    expect(response.body.errors[0].msg).toBe("Email already exists.");
+  });
+});
+
+describe("Sign up with invalid credentials for password", () => {
+  beforeEach(() => {
+    (postNewUser as unknown as jest.Mock).mockResolvedValue(null);
+    (getUserByEmail as unknown as jest.Mock).mockResolvedValue(false);
+    (getUserByUsername as unknown as jest.Mock).mockResolvedValue(false);
+  });
+
+  test("Should respond with 'Password cannot be empty.'", async () => {
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "email@exists.com",
+      password: "",
+      confirmPassword: "",
+    });
+
+    expect(response.body.errors[0].msg).toBe("Password cannot be empty.");
+  });
+
+  test("Should respond with 'Password cannot contain spaces.'", async () => {
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "email@exists.com",
+      password: "Has Spaces",
+      confirmPassword: "Has Spaces",
+    });
+
+    expect(response.body.errors[0].msg).toBe(
+      "Passwords cannot contain spaces."
+    );
+  });
+
+  test("Should respond with 'Password be at least 8 characters long.'", async () => {
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "email@exists.com",
+      password: "123",
+      confirmPassword: "123",
+    });
+
+    expect(response.body.errors[0].msg).toBe(
+      "Password be at least 8 characters long."
+    );
+  });
+
+  test("Should respond with 'Passwords do not match.'", async () => {
+    const response = await request(app).post("/signup").send({
+      username: "validUser",
+      email: "email@exists.com",
+      password: "doNotMatch",
+      confirmPassword: "doMatch",
+    });
+
+    expect(response.body.errors[0].msg).toBe("Passwords do not match.");
   });
 });
