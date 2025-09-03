@@ -24,3 +24,6 @@ Mon Sept 1st 12:45 AM I didn't realize how hard it is to authenticate a user wit
 backend wow that was annoying... But I learned about protect routes
 
 Mon Sept 1st 10:01 PM I learned more about mocking functions And how much I hate Mocking I will start writing pure functions from now on...
+
+Wed Sept 3rd 2:18 PM OMG I FINISHED THE TESTS!!!! NOW I GET TO IMPLEMENT
+GOOGLE MAPS API IM SCARED BUT EXCITED AT THE SAME TIME
