@@ -4,6 +4,7 @@ import session from "express-session";
 import passport from "passport";
 import loginRouter from "../src/routes/login";
 import "../src/config/passport";
+import * as Q from "../src/db/queries";
 
 const app = express();
 
@@ -66,11 +67,21 @@ describe("Validate login input", () => {
   });
 
   test("Should respond with 'Incorrect Password.'", async () => {
+    const spy = jest.spyOn(Q, "getUserByEmail");
+
+    spy.mockResolvedValue({
+      email: "valid@email.com",
+      password: "password",
+      id: 0,
+      username: "exists",
+    });
+
     const response = await request(app).post("/login").send({
       email: "valid@email.com",
       password: "password",
     });
 
+    spy.mockRestore();
     expect(response.body.error).toBe("Incorrect Password.");
   });
 
