@@ -1,32 +1,12 @@
-import { useState, useEffect } from "react";
+import MyMap from "../components/MyMap";
 
-export default function Home() {
-  const [message, setMessage] = useState(
-    "Failed to fetch from login serverFailed to fetch from index server"
-  );
+type THomeProps = { children: React.ReactNode };
 
-  async function fetchData() {
-    const response = await fetch("http://localhost:3000");
-    const data = await response.json();
-    if (
-      data &&
-      typeof data === "object" &&
-      "message" in data &&
-      typeof data.message === "string"
-    ) {
-      setMessage(data.message);
-    }
-  }
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+export default function Home({ children }: THomeProps) {
   return (
-    <>
-      <p className="bg-amber-700 text-3xl">
-        <span className="text-white">Index----</span>message: {message}
-      </p>
-    </>
+    <div className="relative">
+      <div className="absolute z-1 w-screen">{children}</div>
+      <MyMap />
+    </div>
   );
 }

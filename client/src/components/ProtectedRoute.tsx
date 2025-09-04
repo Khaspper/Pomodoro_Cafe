@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-type ProtectedProps = { children: React.ReactNode };
+type TProtectedProps = { children: React.ReactNode };
 
-export default function ProtectedRoute({ children }: ProtectedProps) {
+export default function ProtectedRoute({ children }: TProtectedProps) {
   const [checking, setChecking] = useState(true);
   const [allowed, setAllowed] = useState(false);
   const navigate = useNavigate();
