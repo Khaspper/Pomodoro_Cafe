@@ -27,3 +27,8 @@ Mon Sept 1st 10:01 PM I learned more about mocking functions And how much I hate
 
 Wed Sept 3rd 2:18 PM OMG I FINISHED THE TESTS!!!! NOW I GET TO IMPLEMENT
 GOOGLE MAPS API IM SCARED BUT EXCITED AT THE SAME TIME
+
+Thu Sept 4th 3:25 AM FREAK google maps I don't wanna pay...
+So shout out to Syntax and CJ on youtube I found
+OpenFreeMaps and I found react-maplibre!!!!
+I so EXCITED
