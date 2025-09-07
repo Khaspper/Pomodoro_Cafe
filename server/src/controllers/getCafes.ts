@@ -47,8 +47,11 @@ out center tags;
   });
 
   const data = await res.json();
-  console.log("data");
-  console.log(data);
+  if (typeof data === "object" && data !== null && "elements" in data) {
+    console.log(data.elements);
+  } else {
+    console.log("SOMETHING WENT WRONG WHAT THE HECK!!!!!");
+  }
 }
 
 getCafesFromOverPass();

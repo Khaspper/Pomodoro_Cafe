@@ -22,3 +22,10 @@ model session {
 
   @@index([expire], map: "IDX_session_expire")
 }
+
+model cafe {
+  id       Int    @id
+  email    String @unique
+  username String @unique
+  password String
+}
