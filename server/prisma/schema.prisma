@@ -24,8 +24,13 @@ model session {
 }
 
 model cafe {
-  id       Int    @id
-  email    String @unique
-  username String @unique
-  password String
+  id            Int     @id @default(autoincrement())
+  lat           Float
+  lon           Float
+  type          String?
+  brand         String?
+  name          String
+  official_name String?
+
+  @@unique([lat, lon])
 }

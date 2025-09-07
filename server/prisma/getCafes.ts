@@ -49,7 +49,7 @@ out center tags;
   const data = await res.json();
   if (typeof data === "object" && data !== null && "elements" in data) {
     console.log("Got eeeem");
-    console.log(data);
+    console.log(data.elements);
     return data;
   } else {
     console.log(
@@ -57,3 +57,4 @@ out center tags;
     );
   }
 }
+getCafesFromOverPass();
