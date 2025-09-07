@@ -4,7 +4,6 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 export default function MyMap() {
   const [cafes, setCafes] = useState([]);
-  console.log(cafes);
 
   useEffect(() => {
     async function fetchData() {
