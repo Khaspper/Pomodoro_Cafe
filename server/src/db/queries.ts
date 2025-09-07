@@ -54,3 +54,8 @@ export async function postNewUser({
     return error;
   }
 }
+
+export async function getAllCafes() {
+  const cafes = await prisma.cafe.findMany();
+  return cafes;
+}
