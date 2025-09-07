@@ -15,6 +15,9 @@ export default function Navbar() {
         const res = await fetch("http://localhost:3000/account", {
           credentials: "include",
         });
+        if (!res.ok) {
+          throw new Error("UH OH SOMETHING WENT WRONG");
+        }
         setAllowed(res.ok);
       } catch {
         setAllowed(false);
