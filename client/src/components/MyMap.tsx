@@ -26,7 +26,7 @@ export default function MyMap() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch("http://localhost:3000/");
+      const response = await fetch("http://localhost:3000/cafe");
       if (!response.ok) {
         throw new Error("Failed to get all cafes.");
       }

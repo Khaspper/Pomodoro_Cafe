@@ -1,6 +1,7 @@
 import Navbar from "./Navbar";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 type TCafe = {
   brand: string | null;
@@ -17,6 +18,15 @@ type TSidebarContainer = {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
+type TCafeData = {
+  id: number;
+  cafeId: number;
+  wifiStrength: number;
+  freeWifi: boolean;
+  outlets: number;
+  numberOfInputs: number;
+};
+
 export default function Sidebar({
   selectedCafe,
   setOpen,
@@ -26,10 +36,38 @@ export default function Sidebar({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
 }) {
+  const [cafeData, setCafeData] = useState<TCafeData | null>(null);
+
+  useEffect(() => {
+    console.log("inside");
+    async function fetchData() {
+      const response = await fetch(
+        `http://localhost:3000/cafe/${selectedCafe.id}/inputs`
+      );
+
+      if (!response.ok) {
+        console.error("No reviews for this cafe!");
+        return;
+      }
+
+      // avoid parsing when body is empty (e.g., 204)
+      const ct = response.headers.get("content-type") || "";
+      if (!ct.includes("application/json")) {
+        console.error("Server did not return JSON");
+        return;
+      }
+
+      const data = await response.json();
+      console.log(data);
+      setCafeData(data);
+    }
+    fetchData();
+  }, [selectedCafe]);
+
   return (
     <div className="flex bg-indigo-50 z-2">
       <SidebarContainer setOpen={setOpen} open={open}>
-        <CafeInformation selectedCafe={selectedCafe} />
+        <CafeInformation selectedCafe={selectedCafe} cafeData={cafeData} />
       </SidebarContainer>
     </div>
   );
@@ -52,7 +90,13 @@ function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
   );
 }
 
-function CafeInformation({ selectedCafe }: { selectedCafe: TCafe }) {
+function CafeInformation({
+  selectedCafe,
+  cafeData,
+}: {
+  selectedCafe: TCafe;
+  cafeData: TCafeData | null;
+}) {
   return (
     <>
       <section className="text-[#1a1a1a] bg-[#d02329] p-2 rounded-lg">
@@ -61,38 +105,40 @@ function CafeInformation({ selectedCafe }: { selectedCafe: TCafe }) {
         </h1>
       </section>
       <div className="flex gap-2">
-        <CafeSectionOne selectedCafe={selectedCafe} />
-        <CafeSectionTwo selectedCafe={selectedCafe} />
+        <CafeSectionOne cafeData={cafeData} />
+        <CafeSectionTwo cafeData={cafeData} />
       </div>
-      <ReviewCafe selectedCafe={selectedCafe} />
+      <ReviewCafe cafeData={cafeData} />
       <CafeCommentSection selectedCafe={selectedCafe} />
     </>
   );
 }
 
-function CafeSectionOne({ selectedCafe }: { selectedCafe: TCafe }) {
+function CafeSectionOne({ cafeData }: { cafeData: TCafeData | null }) {
   return (
     <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow">
-      <h1>wifi: {selectedCafe.id} </h1>
+      <h1>wifi: {cafeData ? cafeData.wifiStrength : "Strong"} </h1>
+      <h1>wifi: is not free </h1>
       <h1>outlets: Low</h1>
       <h1>seating: Not many</h1>
     </section>
   );
 }
 
-function CafeSectionTwo({ selectedCafe }: { selectedCafe: TCafe }) {
+function CafeSectionTwo({ cafeData }: { cafeData: TCafeData | null }) {
   return (
     <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow-2">
-      <h1>location: {selectedCafe.id} </h1>
+      <h1>location:</h1>
+      <h1>wifi: {cafeData ? cafeData.wifiStrength : "Strong"} </h1>
       <h1>vibe: spotify song here</h1>
     </section>
   );
 }
 
-function ReviewCafe({ selectedCafe }: { selectedCafe: TCafe }) {
+function ReviewCafe({ cafeData }: { cafeData: TCafeData | null }) {
   return (
     <section className="text-[#fbe3ad] bg-[#4c6850] p-2 rounded-lg mt-2">
-      <h1>location: {selectedCafe.id} </h1>
+      <h1>wifi: {cafeData ? cafeData.wifiStrength : "Strong"} </h1>
       {/* This should send the user to a different link */}
       <Link to={"/"}>Review cafe here!</Link>
     </section>
