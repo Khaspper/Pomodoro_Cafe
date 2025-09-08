@@ -2,13 +2,12 @@ import Navbar from "./Navbar";
 import { motion } from "framer-motion";
 
 type TCafe = {
-  brand: string;
+  brand: string | null;
   id: number;
   lat: GLfloat;
   lon: GLfloat;
   name: string;
-  official_name: string;
-  type: string;
+  official_name: string | null;
 };
 
 type TSidebarContainer = {
@@ -22,18 +21,14 @@ export default function Sidebar({
   setOpen,
   open,
 }: {
-  selectedCafe: TCafe | null;
+  selectedCafe: TCafe;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
 }) {
   return (
     <div className="flex bg-indigo-50 z-2">
       <SidebarContainer setOpen={setOpen} open={open}>
-        {selectedCafe !== null ? (
-          <CafeInformation selectedCafe={selectedCafe} />
-        ) : (
-          <DefaultContent />
-        )}
+        <CafeInformation selectedCafe={selectedCafe} />
       </SidebarContainer>
     </div>
   );
@@ -42,33 +37,62 @@ export default function Sidebar({
 function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
   return (
     <motion.nav
-      className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-white ${
+      className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1a1a1a] ${
         open ? "w-[255px] md:w-[350px]" : "w-fit"
       }`}
       layout
     >
       <Navbar isOpen={open} />
-      {open && children}
-      <ToggleClose open={open} setOpen={setOpen} />
+      <div className="p-2">
+        {open && children}
+        <ToggleClose open={open} setOpen={setOpen} />
+      </div>
     </motion.nav>
-  );
-}
-
-function DefaultContent() {
-  return (
-    <div>
-      <h1>You haven't selected a Cafe yet!</h1>
-      <h1>Choose a cafe to see it's info!</h1>
-    </div>
   );
 }
 
 function CafeInformation({ selectedCafe }: { selectedCafe: TCafe }) {
   return (
-    <div>
-      <h1>Cafe Name: {selectedCafe.name}</h1>
-      <h1>Cafe Id: {selectedCafe.id}</h1>
-    </div>
+    <>
+      <section className="text-[#1a1a1a] bg-[#d02329] p-2 rounded-lg">
+        <h1 className="text-3xl text-center font-extrabold">
+          {selectedCafe.name}
+        </h1>
+      </section>
+      <div className="flex gap-2">
+        <CafeSectionOne selectedCafe={selectedCafe} />
+        <CafeSectionTwo selectedCafe={selectedCafe} />
+      </div>
+      <CafeCommentSection selectedCafe={selectedCafe} />
+    </>
+  );
+}
+
+function CafeSectionOne({ selectedCafe }: { selectedCafe: TCafe }) {
+  return (
+    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow">
+      <h1>wifi: {selectedCafe.id} </h1>
+      <h1>outlets: Low</h1>
+      <h1>seating: Not many</h1>
+    </section>
+  );
+}
+
+function CafeSectionTwo({ selectedCafe }: { selectedCafe: TCafe }) {
+  return (
+    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow-2">
+      <h1>location: {selectedCafe.id} </h1>
+      <h1>vibe: spotify song here</h1>
+    </section>
+  );
+}
+
+function CafeCommentSection({ selectedCafe }: { selectedCafe: TCafe }) {
+  return (
+    <section className="overflow-y: auto bg-[#4c6850] p-2 mt-2">
+      <h1>location: {selectedCafe.id} </h1>
+      <h1>Get cafes comments here</h1>
+    </section>
   );
 }
 
@@ -80,11 +104,12 @@ function ToggleClose({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <button
+    <motion.button
+      layout
       onClick={() => setOpen((pv) => !pv)}
       className="absolute bottom-0 left-0 right-0 border-t border-slate-300 transition-colors hover:bg-slate-100"
     >
-      {open ? <span>Close Sidebar</span> : <span>Open Sidebar</span>}
-    </button>
+      {open ? "Close Sidebar" : "Open Sidebar"}
+    </motion.button>
   );
 }

@@ -4,19 +4,25 @@ import Sidebar from "./Sidebar";
 import "maplibre-gl/dist/maplibre-gl.css";
 
 type TCafe = {
-  brand: string;
+  brand: string | null;
   id: number;
   lat: GLfloat;
   lon: GLfloat;
   name: string;
-  official_name: string;
-  type: string;
+  official_name: string | null;
 };
 
 export default function MyMap() {
   const [cafes, setCafes] = useState([]);
   const [open, setOpen] = useState(false);
-  const [selectedCafe, setSelectedCafe] = useState<TCafe | null>(null);
+  const [selectedCafe, setSelectedCafe] = useState<TCafe>({
+    brand: null,
+    id: 201,
+    lat: 36.1596236,
+    lon: -115.2332193,
+    name: "Grouchy John's Coffee",
+    official_name: null,
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -70,7 +76,7 @@ function CafeMarker({
   setSelectedCafe,
 }: {
   cafe: TCafe;
-  setSelectedCafe: React.Dispatch<React.SetStateAction<TCafe | null>>;
+  setSelectedCafe: React.Dispatch<React.SetStateAction<TCafe>>;
 }) {
   const { current: map } = useMap();
 
