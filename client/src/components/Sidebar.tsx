@@ -1,5 +1,6 @@
 import Navbar from "./Navbar";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 type TCafe = {
   brand: string | null;
@@ -63,6 +64,7 @@ function CafeInformation({ selectedCafe }: { selectedCafe: TCafe }) {
         <CafeSectionOne selectedCafe={selectedCafe} />
         <CafeSectionTwo selectedCafe={selectedCafe} />
       </div>
+      <ReviewCafe selectedCafe={selectedCafe} />
       <CafeCommentSection selectedCafe={selectedCafe} />
     </>
   );
@@ -87,9 +89,21 @@ function CafeSectionTwo({ selectedCafe }: { selectedCafe: TCafe }) {
   );
 }
 
+function ReviewCafe({ selectedCafe }: { selectedCafe: TCafe }) {
+  return (
+    <section className="text-[#fbe3ad] bg-[#4c6850] p-2 rounded-lg mt-2">
+      <h1>location: {selectedCafe.id} </h1>
+      {/* This should send the user to a different link */}
+      <Link to={"/"}>Review cafe here!</Link>
+    </section>
+  );
+}
+
 function CafeCommentSection({ selectedCafe }: { selectedCafe: TCafe }) {
   return (
+    // And delete the background
     <section className="overflow-y: auto bg-[#4c6850] p-2 mt-2">
+      <h1 className="text-center font-extrabold ">Comments</h1>
       <h1>location: {selectedCafe.id} </h1>
       <h1>Get cafes comments here</h1>
     </section>
@@ -107,7 +121,7 @@ function ToggleClose({
     <motion.button
       layout
       onClick={() => setOpen((pv) => !pv)}
-      className="absolute bottom-0 left-0 right-0 border-t border-slate-300 transition-colors hover:bg-slate-100"
+      className="absolute bottom-0 left-0 right-0 border-t border-slate-300 bg-slate-100"
     >
       {open ? "Close Sidebar" : "Open Sidebar"}
     </motion.button>
