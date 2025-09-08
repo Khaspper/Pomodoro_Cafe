@@ -58,8 +58,6 @@ export const addNewUser = [
   async (req: Request, res: Response, next: NextFunction) => {
     try {
       const errors = checkForErrors(req);
-      // console.log("errors");
-      // console.log(errors);
       if (!errors.isEmpty()) {
         return res.status(400).json(errors);
       }

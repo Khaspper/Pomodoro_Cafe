@@ -19,7 +19,7 @@ async function seed() {
               lon: c.center.lon,
               brand: c.tags.brand,
               name: c.tags.name,
-              official_name: c.tags.official_name,
+              officialName: c.tags.official_name,
             },
           });
         } else {
@@ -30,7 +30,7 @@ async function seed() {
               lon: c.lon,
               brand: c.tags.brand,
               name: c.tags.name,
-              official_name: c.tags.official_name,
+              officialName: c.tags.official_name,
             },
           });
         }

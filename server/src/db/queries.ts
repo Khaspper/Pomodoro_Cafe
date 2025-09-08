@@ -59,3 +59,10 @@ export async function getAllCafes() {
   const cafes = await prisma.cafe.findMany();
   return cafes;
 }
+
+export async function cafeInputs(cafeId: number) {
+  const cafes = await prisma.cafeInput.findFirst({
+    where: { cafeId: cafeId },
+  });
+  return cafes;
+}

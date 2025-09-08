@@ -48,8 +48,6 @@ out center tags;
 
   const data = await res.json();
   if (typeof data === "object" && data !== null && "elements" in data) {
-    console.log("Got eeeem");
-    console.log(data);
     return data;
   } else {
     console.log(

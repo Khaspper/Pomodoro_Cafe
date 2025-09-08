@@ -15,7 +15,7 @@ model User {
   password String
 }
 
-model session {
+model Session {
   sid    String   @id @db.VarChar
   sess   Json     @db.Json
   expire DateTime @db.Timestamp(6)
@@ -23,14 +23,26 @@ model session {
   @@index([expire], map: "IDX_session_expire")
 }
 
-model cafe {
-  id            Int     @id @default(autoincrement())
-  lat           Float
-  lon           Float
-  type          String?
-  brand         String?
-  name          String
-  official_name String?
+model Cafe {
+  id           Int         @id @default(autoincrement())
+  lat          Float
+  lon          Float
+  type         String?
+  brand        String?
+  name         String
+  officialName String?
+  cafeInputs   CafeInput[]
 
   @@unique([lat, lon])
+}
+
+model CafeInput {
+  id             Int      @id @default(autoincrement())
+  cafeId         Int
+  wifiStrength   Int?     @default(3)
+  freeWifi       Boolean?
+  outlets        Int      @default(3)
+  numberOfInputs Int      @default(0)
+
+  cafe Cafe @relation(fields: [cafeId], references: [id])
 }

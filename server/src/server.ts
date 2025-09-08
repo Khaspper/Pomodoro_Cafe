@@ -11,6 +11,7 @@ import indexRouter from "./routes";
 import loginRouter from "./routes/login";
 import signupRouter from "./routes/signup";
 import accountRouter from "./routes/account";
+import cafeRouter from "./routes/cafes";
 import passport from "passport";
 
 dotenv.config();
@@ -48,6 +49,7 @@ app.use("/", indexRouter);
 app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
 app.use("/account", accountRouter);
+app.use("/cafe", cafeRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   // Log the error for debugging purposes (e.g., to a file or console)
