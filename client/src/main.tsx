@@ -14,17 +14,13 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Home>
-        <Navbar />
-      </Home>
-    ),
+    element: <Home />,
   },
   {
     path: "/login",
     element: (
       <>
-        <Navbar />
+        <Navbar isOpen={true} />
         <Login />
       </>
     ),
@@ -33,7 +29,7 @@ const router = createBrowserRouter([
     path: "/signup",
     element: (
       <>
-        <Navbar />
+        <Navbar isOpen={true} />
         <Signup />
       </>
     ),
@@ -44,7 +40,7 @@ const router = createBrowserRouter([
       <>
         <ProtectedRoute>
           <div className="flex flex-col">
-            <Navbar />
+            <Navbar isOpen={true} />
             <Account />
           </div>
         </ProtectedRoute>
