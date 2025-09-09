@@ -14,6 +14,7 @@ type TCafe = {
   lon: GLfloat;
   name: string;
   official_name: string | null;
+  spotifyLink: string | null;
 };
 
 type TSidebarContainer = {
@@ -83,7 +84,7 @@ function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
   return (
     <motion.nav
       className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1c1917] ${
-        open ? "w-[255px] md:w-[350px]" : "w-fit"
+        open ? "w-screen md:w-[400px]" : "w-fit"
       }`}
       layout
     >
@@ -110,11 +111,11 @@ function CafeInformation({
           {selectedCafe.name}
         </h1>
       </section>
-      <div className="flex gap-4">
+      <div className="flex flex-col gap-2">
         <CafeSectionOne cafeData={cafeData} />
-        <CafeSectionTwo cafeData={cafeData} />
+        <CafeSectionTwo selectedCafe={selectedCafe} />
       </div>
-      <ReviewCafe cafeData={cafeData} />
+      <ReviewCafe selectedCafe={selectedCafe} />
       <CafeCommentSection selectedCafe={selectedCafe} />
     </>
   );
@@ -122,21 +123,19 @@ function CafeInformation({
 
 function CafeSectionOne({ cafeData }: { cafeData: TCafeData | null }) {
   return (
-    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow">
-      <div className="flex items-center gap-2 text-lg font-bold">
-        <p>wifi:</p> <div>{getWifiStrength(cafeData?.wifiStrength)}</div>
+    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-4 grow flex justify-around">
+      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
+        <p>Wifi</p> <div>{getWifiStrength(cafeData?.wifiStrength)}</div>
       </div>
-      <div className="flex items-center gap-2 text-lg font-bold">
-        <p>Free wifi:</p>
-        <div>
-          {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
-        </div>
+      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
+        <p>Free wifi</p>
+        {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
       </div>
-      <div className="flex items-center gap-2 text-lg font-bold">
+      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
         <IoIosOutlet />
         {getAmountOfOutlets(cafeData?.outlets)}
       </div>
-      <div className="flex items-center gap-2 text-lg font-bold">
+      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
         <PiChairFill />
         {getSeats(cafeData?.seating)}
       </div>
@@ -144,23 +143,51 @@ function CafeSectionOne({ cafeData }: { cafeData: TCafeData | null }) {
   );
 }
 
-function CafeSectionTwo({ cafeData }: { cafeData: TCafeData | null }) {
+function CafeSectionTwo({ selectedCafe }: { selectedCafe: TCafe }) {
+  const embedSrc = selectedCafe.spotifyLink
+    ? toSpotifyEmbed(selectedCafe.spotifyLink)
+    : null;
+
   return (
-    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow-2">
-      <h1>location:</h1>
-      <h1>wifi: {cafeData ? cafeData.wifiStrength : "Strong"} </h1>
-      <h1>vibe: spotify song here</h1>
+    <section className="text-[#fbe3ad] bg-[#043253] p-4 rounded-lg mt-2 mb-2 grow">
+      <h1 className="text-center text-xl mb-2">Vibe</h1>
+
+      {embedSrc ? (
+        <iframe
+          style={{ borderRadius: 10 }}
+          src={embedSrc}
+          width="100%"
+          height="100"
+          frameBorder={0}
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        />
+      ) : (
+        <form method="POST" className="text-lg flex flex-col gap-2">
+          <p className="text-center">No Song yet! Enter one here!</p>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              className="border-2 container rounded-lg py-1 px-2 outline-none"
+              placeholder="Put a Spotify link here!"
+            />
+            <button type="submit" className="border-2 py-2 px-3 rounded-4xl">
+              Submit
+            </button>
+          </div>
+        </form>
+      )}
     </section>
   );
 }
 
-function ReviewCafe({ cafeData }: { cafeData: TCafeData | null }) {
+function ReviewCafe({ selectedCafe }: { selectedCafe: TCafe }) {
   return (
-    <section className="text-[#fbe3ad] bg-[#4c6850] p-2 rounded-lg mt-2">
-      <h1>wifi: {cafeData ? cafeData.wifiStrength : "Strong"} </h1>
-      {/* This should send the user to a different link */}
-      <Link to={"/"}>Review cafe here!</Link>
-    </section>
+    <div className="text-[#fbe3ad] bg-[#4c6850] p-2 rounded-lg mt-2 text-center">
+      <Link to={`/review/${selectedCafe.id}`} className="text-2xl">
+        Review cafe here!
+      </Link>
+    </div>
   );
 }
 
@@ -218,4 +245,19 @@ function getSeats(seating: number | undefined) {
     return <p>ENOUGH</p>;
   }
   return <p>FEW</p>;
+}
+
+function toSpotifyEmbed(url: string) {
+  try {
+    const u = new URL(url);
+    if (u.hostname !== "open.spotify.com") return null;
+    // turns /track/ID => /embed/track/ID (preserves query if present)
+    u.pathname = u.pathname.replace(
+      /^\/(track|album|playlist|artist)\//,
+      "/embed/$1/"
+    );
+    return u.toString();
+  } catch {
+    return null;
+  }
 }

@@ -10,6 +10,7 @@ type TCafe = {
   lon: GLfloat;
   name: string;
   official_name: string | null;
+  spotifyLink: string | null;
 };
 
 export default function MyMap() {
@@ -22,6 +23,8 @@ export default function MyMap() {
     lon: -115.2332193,
     name: "Grouchy John's Coffee",
     official_name: null,
+    spotifyLink:
+      "https://open.spotify.com/track/2GpNjyQO67Ss38PmPaL6uA?si=4ff61a93b6434dc2",
   });
 
   useEffect(() => {
