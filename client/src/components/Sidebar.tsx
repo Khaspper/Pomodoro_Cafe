@@ -2,6 +2,10 @@ import Navbar from "./Navbar";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { BsWifi1, BsWifi2, BsWifi } from "react-icons/bs";
+import { MdAttachMoney, MdMoneyOffCsred } from "react-icons/md";
+import { IoIosOutlet } from "react-icons/io";
+import { PiChairFill } from "react-icons/pi";
 
 type TCafe = {
   brand: string | null;
@@ -24,6 +28,7 @@ type TCafeData = {
   wifiStrength: number;
   freeWifi: boolean;
   outlets: number;
+  seating: number;
   numberOfInputs: number;
 };
 
@@ -58,6 +63,7 @@ export default function Sidebar({
       }
 
       const data = await response.json();
+      console.log("sidebar: data");
       console.log(data);
       setCafeData(data);
     }
@@ -76,13 +82,13 @@ export default function Sidebar({
 function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
   return (
     <motion.nav
-      className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1a1a1a] ${
+      className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1c1917] ${
         open ? "w-[255px] md:w-[350px]" : "w-fit"
       }`}
       layout
     >
       <Navbar isOpen={open} />
-      <div className="p-2">
+      <div className="p-4">
         {open && children}
         <ToggleClose open={open} setOpen={setOpen} />
       </div>
@@ -104,7 +110,7 @@ function CafeInformation({
           {selectedCafe.name}
         </h1>
       </section>
-      <div className="flex gap-2">
+      <div className="flex gap-4">
         <CafeSectionOne cafeData={cafeData} />
         <CafeSectionTwo cafeData={cafeData} />
       </div>
@@ -117,10 +123,23 @@ function CafeInformation({
 function CafeSectionOne({ cafeData }: { cafeData: TCafeData | null }) {
   return (
     <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-2 grow">
-      <h1>wifi: {cafeData ? cafeData.wifiStrength : "Strong"} </h1>
-      <h1>wifi: is not free </h1>
-      <h1>outlets: Low</h1>
-      <h1>seating: Not many</h1>
+      <div className="flex items-center gap-2 text-lg font-bold">
+        <p>wifi:</p> <div>{getWifiStrength(cafeData?.wifiStrength)}</div>
+      </div>
+      <div className="flex items-center gap-2 text-lg font-bold">
+        <p>Free wifi:</p>
+        <div>
+          {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
+        </div>
+      </div>
+      <div className="flex items-center gap-2 text-lg font-bold">
+        <IoIosOutlet />
+        {getAmountOfOutlets(cafeData?.outlets)}
+      </div>
+      <div className="flex items-center gap-2 text-lg font-bold">
+        <PiChairFill />
+        {getSeats(cafeData?.seating)}
+      </div>
     </section>
   );
 }
@@ -172,4 +191,31 @@ function ToggleClose({
       {open ? "Close Sidebar" : "Open Sidebar"}
     </motion.button>
   );
+}
+
+function getWifiStrength(strength: number | undefined) {
+  if (!strength || strength === 3) {
+    return <BsWifi />;
+  } else if (strength === 2) {
+    return <BsWifi2 />;
+  }
+  return <BsWifi1 />;
+}
+
+function getAmountOfOutlets(outlets: number | undefined) {
+  if (!outlets || outlets === 3) {
+    return <p>A LOT</p>;
+  } else if (outlets === 2) {
+    return <p>ENOUGH</p>;
+  }
+  return <p>FEW</p>;
+}
+
+function getSeats(seating: number | undefined) {
+  if (!seating || seating === 3) {
+    return <p>A LOT</p>;
+  } else if (seating === 2) {
+    return <p>ENOUGH</p>;
+  }
+  return <p>FEW</p>;
 }
