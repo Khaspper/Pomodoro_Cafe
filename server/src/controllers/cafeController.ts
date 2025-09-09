@@ -18,3 +18,7 @@ export async function getCafeInputs(req: Request, res: Response) {
 
   return res.status(200).json(inputs); // <-- always JSON
 }
+
+export async function postCafeReview(req: Request, res: Response) {
+  console.log("Received Review!");
+}

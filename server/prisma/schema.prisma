@@ -32,6 +32,7 @@ model Cafe {
   name         String
   officialName String?
   cafeInputs   CafeInput[]
+  spotifyLink  String?     @db.VarChar(512)
 
   @@unique([lat, lon])
 }
@@ -42,6 +43,7 @@ model CafeInput {
   wifiStrength   Int?     @default(3)
   freeWifi       Boolean?
   outlets        Int      @default(3)
+  seating        Int      @default(3)
   numberOfInputs Int      @default(0)
 
   cafe Cafe @relation(fields: [cafeId], references: [id])
