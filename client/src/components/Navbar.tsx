@@ -40,6 +40,7 @@ export default function Navbar({ isOpen }: TNavbarProps) {
         <div className="flex items-center gap-3">
           {isOpen && (
             <motion.div
+              className="flex gap-4"
               layout
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
