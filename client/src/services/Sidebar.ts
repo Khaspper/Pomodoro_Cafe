@@ -8,6 +8,6 @@ export async function addSong(spotifyLink: string, cafeID: number) {
       body: JSON.stringify({ spotifyLink, cafeID }),
     }
   );
-  console.log("response");
-  console.log(response);
+
+  return response;
 }

@@ -2,21 +2,7 @@ import { useState } from "react";
 import { signupUser } from "../services/Signup";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-
-type TReceivedErrors = {
-  location: string;
-  msg: string;
-  path: "username" | "email" | "password" | "confirmPassword";
-  type: string;
-  value: string;
-};
-
-type TNewErrors = {
-  username?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-};
+import type { TNewErrors, TReceivedErrors } from "../types/types";
 
 export default function SignupForm() {
   // Inputs
@@ -28,8 +14,6 @@ export default function SignupForm() {
 
   // Form states
   const [loading, setLoading] = useState(false);
-  // const [error, setErrors] = useState("Implement this later");
-
   const navigate = useNavigate();
 
   // Add a loading and error check and when user submits make button not clickable

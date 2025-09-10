@@ -23,3 +23,19 @@ export type TCafeData = {
   seating: number;
   numberOfInputs: number;
 };
+
+export type TReceivedErrors = {
+  location: string;
+  msg: string;
+  path: "username" | "email" | "password" | "confirmPassword";
+  type: string;
+  value: string;
+};
+
+export type TNewErrors = {
+  username?: string;
+  email?: string;
+  password?: string;
+  confirmPassword?: string;
+  spotifyLink?: string;
+};

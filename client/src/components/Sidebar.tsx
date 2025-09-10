@@ -19,7 +19,6 @@ export default function Sidebar({
   const [cafeData, setCafeData] = useState<TCafeData | null>(null);
 
   useEffect(() => {
-    console.log("inside");
     async function fetchData() {
       const response = await fetch(
         `http://localhost:3000/cafe/${selectedCafe.id}/inputs`
