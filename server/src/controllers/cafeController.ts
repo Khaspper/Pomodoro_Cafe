@@ -1,5 +1,22 @@
-import type { Request, Response } from "express";
+import type { Request, Response, NextFunction } from "express";
 import { getAllCafes, cafeInputs } from "../db/queries";
+import { body, validationResult } from "express-validator";
+import { RequestHandler } from "express";
+
+const validateSpotifyLink: RequestHandler[] = [
+  body("spotifyLink")
+    .isURL({ protocols: ["http", "https"], require_protocol: true })
+    .withMessage("spotifyLink must be a valid URL")
+    .matches(/^https:\/\/open\.spotify\.com\/track\/[a-zA-Z0-9]+/)
+    .withMessage("Must be a valid Spotify track link"),
+  (req: Request, res: Response, next: NextFunction) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
 
 export async function getCafes(req: Request, res: Response) {
   const cafes = await getAllCafes();
@@ -24,7 +41,18 @@ export async function postCafeReview(req: Request, res: Response) {
   res.status(201).json({ message: "Received Review!" });
 }
 
-export async function postNewSong(req: Request, res: Response) {
-  console.log("Received New Song!");
-  res.status(201).json({ message: "Received New Song!" });
-}
+export const postNewSong = [
+  ...validateSpotifyLink,
+  async (req: Request, res: Response) => {
+    try {
+      console.log("Received New Song!");
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).json(errors);
+      }
+      res.sendStatus(201);
+    } catch (error) {
+      console.error("Failed to add new song.", error);
+    }
+  },
+];
