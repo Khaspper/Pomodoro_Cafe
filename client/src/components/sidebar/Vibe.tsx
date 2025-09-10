@@ -8,7 +8,13 @@ type TApiError = {
   msg: string;
 };
 
-export default function Vibe({ selectedCafe }: { selectedCafe: TCafe }) {
+export default function Vibe({
+  selectedCafe,
+  setCafeUpdated,
+}: {
+  selectedCafe: TCafe;
+  setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const embedSrc = selectedCafe.spotifyLink
     ? toSpotifyEmbed(selectedCafe.spotifyLink)
     : null;
@@ -32,6 +38,7 @@ export default function Vibe({ selectedCafe }: { selectedCafe: TCafe }) {
         throw new Error(`Song Input Failed`);
       } else {
         setErrors({});
+        setCafeUpdated(true);
       }
     } catch (error) {
       console.error(error);

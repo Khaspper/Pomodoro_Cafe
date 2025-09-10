@@ -11,10 +11,12 @@ export default function Sidebar({
   selectedCafe,
   setOpen,
   open,
+  setCafeUpdated,
 }: {
   selectedCafe: TCafe;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
+  setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [cafeData, setCafeData] = useState<TCafeData | null>(null);
 
@@ -36,8 +38,6 @@ export default function Sidebar({
       }
 
       const data = await response.json();
-      console.log("sidebar: data");
-      console.log(data);
       setCafeData(data);
     }
     fetchData();
@@ -46,7 +46,11 @@ export default function Sidebar({
   return (
     <div className="flex bg-indigo-50 z-2">
       <SidebarContainer setOpen={setOpen} open={open}>
-        <CafeInformation selectedCafe={selectedCafe} cafeData={cafeData} />
+        <CafeInformation
+          selectedCafe={selectedCafe}
+          cafeData={cafeData}
+          setCafeUpdated={setCafeUpdated}
+        />
       </SidebarContainer>
     </div>
   );
@@ -72,9 +76,11 @@ function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
 function CafeInformation({
   selectedCafe,
   cafeData,
+  setCafeUpdated,
 }: {
   selectedCafe: TCafe;
   cafeData: TCafeData | null;
+  setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <>
@@ -85,7 +91,7 @@ function CafeInformation({
       </section>
       <div className="flex flex-col gap-2">
         <CafePerks cafeData={cafeData} />
-        <Vibe selectedCafe={selectedCafe} />
+        <Vibe selectedCafe={selectedCafe} setCafeUpdated={setCafeUpdated} />
       </div>
       <ReviewCafe selectedCafe={selectedCafe} />
       <CafeComments selectedCafe={selectedCafe} />

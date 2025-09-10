@@ -26,18 +26,25 @@ export default function MyMap() {
     spotifyLink:
       "https://open.spotify.com/track/2GpNjyQO67Ss38PmPaL6uA?si=4ff61a93b6434dc2",
   });
+  const [cafeUpdated, setCafeUpdated] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
+    if (!cafeUpdated) return;
+
+    (async () => {
       const response = await fetch("http://localhost:3000/cafe");
-      if (!response.ok) {
-        throw new Error("Failed to get all cafes.");
-      }
+      if (!response.ok) throw new Error("Failed to get all cafes.");
+
       const cafes = await response.json();
       setCafes(cafes);
-    }
-    fetchData();
-  }, []);
+
+      // ⬇️ keep selectedCafe in sync with DB
+      const updated = cafes.find((cafe: TCafe) => cafe.id === selectedCafe.id);
+      if (updated) setSelectedCafe(updated);
+
+      setCafeUpdated(false);
+    })();
+  }, [cafeUpdated, selectedCafe.id]);
 
   const lasVegasBounds: [[number, number], [number, number]] = [
     [-115.486398, 35.916672],
@@ -61,7 +68,12 @@ export default function MyMap() {
         maxBounds={lasVegasBounds}
         attributionControl={false}
       >
-        <Sidebar selectedCafe={selectedCafe} setOpen={setOpen} open={open} />
+        <Sidebar
+          selectedCafe={selectedCafe}
+          setOpen={setOpen}
+          open={open}
+          setCafeUpdated={setCafeUpdated}
+        />
         {cafes.map((cafe: TCafe) => (
           <CafeMarker
             key={cafe.id}
