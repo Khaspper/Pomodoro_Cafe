@@ -9,12 +9,12 @@ CREATE TABLE "public"."User" (
 );
 
 -- CreateTable
-CREATE TABLE "public"."Session" (
+CREATE TABLE "public"."session" (
     "sid" VARCHAR NOT NULL,
     "sess" JSON NOT NULL,
     "expire" TIMESTAMP(6) NOT NULL,
 
-    CONSTRAINT "Session_pkey" PRIMARY KEY ("sid")
+    CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
 );
 
 -- CreateTable
@@ -26,6 +26,7 @@ CREATE TABLE "public"."Cafe" (
     "brand" TEXT,
     "name" TEXT NOT NULL,
     "officialName" TEXT,
+    "spotifyLink" VARCHAR(512),
 
     CONSTRAINT "Cafe_pkey" PRIMARY KEY ("id")
 );
@@ -37,6 +38,7 @@ CREATE TABLE "public"."CafeInput" (
     "wifiStrength" INTEGER DEFAULT 3,
     "freeWifi" BOOLEAN,
     "outlets" INTEGER NOT NULL DEFAULT 3,
+    "seating" INTEGER NOT NULL DEFAULT 3,
     "numberOfInputs" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "CafeInput_pkey" PRIMARY KEY ("id")
@@ -49,7 +51,7 @@ CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 CREATE UNIQUE INDEX "User_username_key" ON "public"."User"("username");
 
 -- CreateIndex
-CREATE INDEX "IDX_session_expire" ON "public"."Session"("expire");
+CREATE INDEX "IDX_session_expire" ON "public"."session"("expire");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Cafe_lat_lon_key" ON "public"."Cafe"("lat", "lon");

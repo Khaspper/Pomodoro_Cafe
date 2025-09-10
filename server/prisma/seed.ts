@@ -2,6 +2,7 @@
 
 import { PrismaClient } from "../generated/prisma";
 import getCafesFromOverPass from "./getCafes";
+import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 async function seed() {
@@ -39,10 +40,11 @@ async function seed() {
   } else {
     console.log("I COULDN'T RETRIEVE IT!!");
   }
+  const hashPassword = await bcrypt.hash("validPassword", 10);
   await prisma.user.create({
     data: {
       username: "validUser",
-      password: "validPassword",
+      password: hashPassword,
       email: "valid@example.com",
     },
   });
