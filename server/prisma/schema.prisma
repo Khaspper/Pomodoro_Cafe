@@ -15,7 +15,7 @@ model User {
   password String
 }
 
-model Session {
+model session {
   sid    String   @id @db.VarChar
   sess   Json     @db.Json
   expire DateTime @db.Timestamp(6)

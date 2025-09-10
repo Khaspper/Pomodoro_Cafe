@@ -11,7 +11,7 @@ import indexRouter from "./routes";
 import loginRouter from "./routes/login";
 import signupRouter from "./routes/signup";
 import accountRouter from "./routes/account";
-import cafeRouter from "./routes/cafes";
+import cafeRouter from "./routes/cafe";
 import passport from "passport";
 
 dotenv.config();

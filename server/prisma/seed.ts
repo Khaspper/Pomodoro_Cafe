@@ -41,9 +41,9 @@ async function seed() {
   }
   await prisma.user.create({
     data: {
-      username: "qwertykira_",
-      password: "marky",
-      email: "kira@example.com",
+      username: "validUser",
+      password: "validPassword",
+      email: "valid@example.com",
     },
   });
 }

@@ -28,8 +28,8 @@ app.use("/login", loginRouter);
 describe("Login with valid/invalid credentials", () => {
   test("Should respond with 200 for valid credentials", async () => {
     const response = await request(app).post("/login").send({
-      email: "qwer@example.com",
-      password: "qweqweqwe",
+      email: "valid@example.com",
+      password: "validPassword",
     });
     expect(response.statusCode).toBe(200);
   });

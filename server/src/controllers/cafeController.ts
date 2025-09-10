@@ -22,3 +22,7 @@ export async function getCafeInputs(req: Request, res: Response) {
 export async function postCafeReview(req: Request, res: Response) {
   console.log("Received Review!");
 }
+
+export async function postNewSong(req: Request, res: Response) {
+  console.log("Received New Song!");
+}
