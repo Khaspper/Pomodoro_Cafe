@@ -1,37 +1,11 @@
 import Navbar from "./Navbar";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { BsWifi1, BsWifi2, BsWifi } from "react-icons/bs";
-import { MdAttachMoney, MdMoneyOffCsred } from "react-icons/md";
-import { IoIosOutlet } from "react-icons/io";
-import { PiChairFill } from "react-icons/pi";
-
-type TCafe = {
-  brand: string | null;
-  id: number;
-  lat: GLfloat;
-  lon: GLfloat;
-  name: string;
-  official_name: string | null;
-  spotifyLink: string | null;
-};
-
-type TSidebarContainer = {
-  children: React.ReactNode;
-  open: boolean;
-  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-};
-
-type TCafeData = {
-  id: number;
-  cafeId: number;
-  wifiStrength: number;
-  freeWifi: boolean;
-  outlets: number;
-  seating: number;
-  numberOfInputs: number;
-};
+import CafePerks from "./sidebar/CafeInfo";
+import Vibe from "./sidebar/Vibe";
+import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
+import CafeComments from "./sidebar/Comments";
+import ReviewCafe from "./sidebar/ReviewCafe";
 
 export default function Sidebar({
   selectedCafe,
@@ -56,7 +30,6 @@ export default function Sidebar({
         return;
       }
 
-      // avoid parsing when body is empty (e.g., 204)
       const ct = response.headers.get("content-type") || "";
       if (!ct.includes("application/json")) {
         console.error("Server did not return JSON");
@@ -112,93 +85,12 @@ function CafeInformation({
         </h1>
       </section>
       <div className="flex flex-col gap-2">
-        <CafeSectionOne cafeData={cafeData} />
-        <CafeSectionTwo selectedCafe={selectedCafe} />
+        <CafePerks cafeData={cafeData} />
+        <Vibe selectedCafe={selectedCafe} />
       </div>
       <ReviewCafe selectedCafe={selectedCafe} />
-      <CafeCommentSection selectedCafe={selectedCafe} />
+      <CafeComments selectedCafe={selectedCafe} />
     </>
-  );
-}
-
-function CafeSectionOne({ cafeData }: { cafeData: TCafeData | null }) {
-  return (
-    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-4 grow flex justify-around">
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <p>Wifi</p> <div>{getWifiStrength(cafeData?.wifiStrength)}</div>
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <p>Free wifi</p>
-        {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <IoIosOutlet />
-        {getAmountOfOutlets(cafeData?.outlets)}
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <PiChairFill />
-        {getSeats(cafeData?.seating)}
-      </div>
-    </section>
-  );
-}
-
-function CafeSectionTwo({ selectedCafe }: { selectedCafe: TCafe }) {
-  const embedSrc = selectedCafe.spotifyLink
-    ? toSpotifyEmbed(selectedCafe.spotifyLink)
-    : null;
-
-  return (
-    <section className="text-[#fbe3ad] bg-[#043253] p-4 rounded-lg mt-2 mb-2 grow">
-      <h1 className="text-center text-xl mb-2">Vibe</h1>
-
-      {embedSrc ? (
-        <iframe
-          style={{ borderRadius: 10 }}
-          src={embedSrc}
-          width="100%"
-          height="100"
-          frameBorder={0}
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-        />
-      ) : (
-        <form method="POST" className="text-lg flex flex-col gap-2">
-          <p className="text-center">No Song yet! Enter one here!</p>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              className="border-2 container rounded-lg py-1 px-2 outline-none"
-              placeholder="Put a Spotify link here!"
-            />
-            <button type="submit" className="border-2 py-2 px-3 rounded-4xl">
-              Submit
-            </button>
-          </div>
-        </form>
-      )}
-    </section>
-  );
-}
-
-function ReviewCafe({ selectedCafe }: { selectedCafe: TCafe }) {
-  return (
-    <div className="text-[#fbe3ad] bg-[#4c6850] p-2 rounded-lg mt-2 text-center">
-      <Link to={`/review/${selectedCafe.id}`} className="text-2xl">
-        Review cafe here!
-      </Link>
-    </div>
-  );
-}
-
-function CafeCommentSection({ selectedCafe }: { selectedCafe: TCafe }) {
-  return (
-    // And delete the background
-    <section className="overflow-y: auto bg-[#4c6850] p-2 mt-2">
-      <h1 className="text-center font-extrabold ">Comments</h1>
-      <h1>location: {selectedCafe.id} </h1>
-      <h1>Get cafes comments here</h1>
-    </section>
   );
 }
 
@@ -218,46 +110,4 @@ function ToggleClose({
       {open ? "Close Sidebar" : "Open Sidebar"}
     </motion.button>
   );
-}
-
-function getWifiStrength(strength: number | undefined) {
-  if (!strength || strength === 3) {
-    return <BsWifi />;
-  } else if (strength === 2) {
-    return <BsWifi2 />;
-  }
-  return <BsWifi1 />;
-}
-
-function getAmountOfOutlets(outlets: number | undefined) {
-  if (!outlets || outlets === 3) {
-    return <p>A LOT</p>;
-  } else if (outlets === 2) {
-    return <p>ENOUGH</p>;
-  }
-  return <p>FEW</p>;
-}
-
-function getSeats(seating: number | undefined) {
-  if (!seating || seating === 3) {
-    return <p>A LOT</p>;
-  } else if (seating === 2) {
-    return <p>ENOUGH</p>;
-  }
-  return <p>FEW</p>;
-}
-
-function toSpotifyEmbed(url: string) {
-  try {
-    const u = new URL(url);
-    if (u.hostname !== "open.spotify.com") return null;
-    // turns /track/ID => /embed/track/ID (preserves query if present)
-    u.pathname = u.pathname.replace(
-      /^\/(track|album|playlist|artist)\//,
-      "/embed/$1/"
-    );
-    return u.toString();
-  } catch {
-    return null;
-  }
 }
