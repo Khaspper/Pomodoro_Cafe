@@ -58,7 +58,7 @@ export default function SignupForm() {
         setErrors(newErrors);
         throw new Error(`Login failed`, errors);
       }
-      navigate("/profile");
+      navigate("/login");
     } catch (error) {
       console.error(error);
     } finally {
