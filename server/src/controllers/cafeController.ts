@@ -5,6 +5,9 @@ import { RequestHandler } from "express";
 
 const validateSpotifyLink: RequestHandler[] = [
   body("spotifyLink")
+    .trim()
+    .notEmpty()
+    .withMessage("Link cannot be empty.")
     .isURL({ protocols: ["http", "https"], require_protocol: true })
     .withMessage("spotifyLink must be a valid URL")
     .matches(/^https:\/\/open\.spotify\.com\/track\/[a-zA-Z0-9]+/)
