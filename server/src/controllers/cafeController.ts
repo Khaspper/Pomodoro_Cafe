@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import { getAllCafes, cafeInputs } from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
+import { addSong } from "../db/queries";
 
 const validateSpotifyLink: RequestHandler[] = [
   body("spotifyLink")
@@ -48,12 +49,12 @@ export const postNewSong = [
   ...validateSpotifyLink,
   async (req: Request, res: Response) => {
     try {
-      console.log("Received New Song!");
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(401).json(errors);
       }
-      res.sendStatus(201);
+      await addSong(req.body.spotifyLink, req.body.cafeID);
+      res.status(201).json({ message: `Updated cafe ${req.body.cafeID}` });
     } catch (error) {
       console.error("Failed to add new song.", error);
     }

@@ -66,3 +66,12 @@ export async function cafeInputs(cafeId: number) {
   });
   return cafes;
 }
+
+export async function addSong(spotifyLink: string, cafeId: number) {
+  await prisma.cafe.update({
+    where: { id: cafeId },
+    data: {
+      spotifyLink: spotifyLink,
+    },
+  });
+}
