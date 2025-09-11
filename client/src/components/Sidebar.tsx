@@ -5,7 +5,7 @@ import CafePerks from "./sidebar/CafeInfo";
 import Vibe from "./sidebar/Vibe";
 import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
 import CafeComments from "./sidebar/Comments";
-import ReviewCafe from "./sidebar/ReviewCafe";
+import ReviewCafeButton from "./sidebar/ReviewCafeButton";
 
 export default function Sidebar({
   selectedCafe,
@@ -93,7 +93,7 @@ function CafeInformation({
         <CafePerks cafeData={cafeData} />
         <Vibe selectedCafe={selectedCafe} setCafeUpdated={setCafeUpdated} />
       </div>
-      <ReviewCafe selectedCafe={selectedCafe} />
+      <ReviewCafeButton selectedCafe={selectedCafe} />
       <CafeComments selectedCafe={selectedCafe} />
     </>
   );
