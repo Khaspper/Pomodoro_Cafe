@@ -13,7 +13,7 @@ const cafeRouter = Router();
 
 cafeRouter.get("/", getCafes);
 cafeRouter.get("/:id/inputs", getCafeInputs);
-cafeRouter.post("/:id/inputs", isAuthenticated, postCafeReview);
+cafeRouter.post("/review/:id", isAuthenticated, postCafeReview);
 cafeRouter.post("/:id/inputs/song", isAuthenticated, postNewSong);
 
 export default cafeRouter;
