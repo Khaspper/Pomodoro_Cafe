@@ -47,7 +47,7 @@ export default function Navbar({ isOpen }: TNavbarProps) {
               transition={{ delay: 0.15 }}
             >
               <Link
-                className="bg-[#fae3ad] px-6 py-2 font-bold rounded-2xl"
+                className="bg-[#fae3ad] px-6 py-2 font-bold rounded-2xl hover:scale-105 transform transition-transform duration-150"
                 to={allowed ? "/account" : "/login"}
               >
                 {allowed ? "Account" : "Login"}
@@ -55,7 +55,7 @@ export default function Navbar({ isOpen }: TNavbarProps) {
 
               {allowed && (
                 <button
-                  className="bg-[#fae3ad] px-6 py-2 font-bold rounded-2xl cursor-pointer"
+                  className="bg-[#fae3ad] px-6 py-2 font-bold rounded-2xl cursor-pointer hover:scale-105 transform transition-transform duration-150"
                   type="button"
                   onClick={() => {
                     logout(setAllowed);

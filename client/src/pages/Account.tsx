@@ -56,7 +56,7 @@ export default function Account() {
         <div className="flex flex-col">
           <button
             type="submit"
-            className="mt-6 p-3 bg-[#fbe3ad] text-[#1a1a1a] font-bold rounded-lg cursor-pointer"
+            className="mt-6 p-3 bg-[#fbe3ad] text-[#1a1a1a] font-bold rounded-lg cursor-pointer hover:scale-105 transform transition-transform duration-150"
           >
             Change Information
           </button>
