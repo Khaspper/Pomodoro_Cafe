@@ -13,7 +13,7 @@ export function FreeWifi({
         <label
           className={`${
             freeWifi ? "border-2" : ""
-          } w-fit inline py-1 px-3 rounded-2xl`}
+          } w-fit inline py-1 px-3 rounded-2xl cursor-pointer hover:scale-105 transform transition-transform duration-150`}
         >
           <input
             type="radio"
@@ -29,7 +29,7 @@ export function FreeWifi({
         <label
           className={`${
             !freeWifi ? "border-2" : ""
-          } w-fit inline py-1 px-3 rounded-2xl`}
+          } w-fit inline py-1 px-3 rounded-2xl cursor-pointer hover:scale-105 transform transition-transform duration-150`}
         >
           <input
             type="radio"
