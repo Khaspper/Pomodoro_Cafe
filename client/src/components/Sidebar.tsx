@@ -1,7 +1,7 @@
 import Navbar from "./Navbar";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import CafePerks from "./sidebar/CafeInfo";
+import CafePerks from "./sidebar/CafePerks";
 import Vibe from "./sidebar/Vibe";
 import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
 import CafeComments from "./sidebar/Comments";
@@ -27,11 +27,19 @@ export default function Sidebar({
       );
       if (response.status === 204) {
         console.error("No reviews for this cafe!");
-        return;
+        setCafeData({
+          cafeId: selectedCafe.id,
+          freeWifi: true,
+          id: 0,
+          numberOfInputs: 0,
+          outlets: 5,
+          seating: 5,
+          wifiStrength: 3,
+        });
+      } else {
+        const data = await response.json();
+        setCafeData(data);
       }
-
-      const data = await response.json();
-      setCafeData(data);
     }
     fetchData();
   }, [selectedCafe]);

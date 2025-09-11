@@ -5,9 +5,9 @@ import { IoIosOutlet } from "react-icons/io";
 import { BsOutlet } from "react-icons/bs";
 import { MdChair } from "react-icons/md";
 import { MdOutlineChair } from "react-icons/md";
+import { GrWifiLow, GrWifiMedium, GrWifi } from "react-icons/gr";
 
 import { MdAttachMoney, MdMoneyOffCsred } from "react-icons/md";
-import { BsWifi1, BsWifi2, BsWifi } from "react-icons/bs";
 
 export default function CafePerks({
   cafeData,
@@ -37,11 +37,11 @@ export default function CafePerks({
 
 function getWifiStrength(strength: number | undefined) {
   if (!strength || strength === 3) {
-    return <BsWifi />;
+    return <GrWifi />;
   } else if (strength === 2) {
-    return <BsWifi2 />;
+    return <GrWifiMedium />;
   }
-  return <BsWifi1 />;
+  return <GrWifiLow />;
 }
 
 function getAmountOfOutlets(outlets?: number) {
