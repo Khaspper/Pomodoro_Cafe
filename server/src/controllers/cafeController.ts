@@ -74,6 +74,7 @@ export async function postCafeReview(req: Request, res: Response) {
   res.status(201).json({ message: "Received Review!" });
 }
 
+//TODO: This has to get the average as well remember that!!!
 export const postNewSong = [
   ...validateSpotifyLink,
   async (req: Request, res: Response) => {
