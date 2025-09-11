@@ -2,7 +2,10 @@ import type { TCafeData } from "../../types/types";
 
 // Icons
 import { IoIosOutlet } from "react-icons/io";
-import { PiChairFill } from "react-icons/pi";
+import { BsOutlet } from "react-icons/bs";
+import { MdChair } from "react-icons/md";
+import { MdOutlineChair } from "react-icons/md";
+
 import { MdAttachMoney, MdMoneyOffCsred } from "react-icons/md";
 import { BsWifi1, BsWifi2, BsWifi } from "react-icons/bs";
 
@@ -14,19 +17,19 @@ export default function CafePerks({
   return (
     <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-4 grow flex justify-around">
       <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <p>Wifi</p> <div>{getWifiStrength(cafeData?.wifiStrength)}</div>
+        <p>Wifi</p>{" "}
+        <div className="flex gap-2">
+          {getWifiStrength(cafeData?.wifiStrength)}{" "}
+          {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
+        </div>
       </div>
       <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <p>Free wifi</p>
-        {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
+        <h1>Outlets</h1>
+        <div className="flex">{getAmountOfOutlets(cafeData?.outlets)}</div>
       </div>
       <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <IoIosOutlet />
-        {getAmountOfOutlets(cafeData?.outlets)}
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <PiChairFill />
-        {getSeats(cafeData?.seating)}
+        <h1>Seating</h1>
+        <div className="flex">{getSeats(cafeData?.seating)}</div>
       </div>
     </section>
   );
@@ -41,20 +44,30 @@ function getWifiStrength(strength: number | undefined) {
   return <BsWifi1 />;
 }
 
-function getAmountOfOutlets(outlets: number | undefined) {
-  if (!outlets || outlets === 3) {
-    return <p>A LOT</p>;
-  } else if (outlets === 2) {
-    return <p>SOME</p>;
-  }
-  return <p>FEW</p>;
+function getAmountOfOutlets(outlets?: number) {
+  if (!outlets) outlets = 5;
+
+  const filled = Array(outlets).fill(<IoIosOutlet />);
+  const empty = Array(5 - outlets).fill(<BsOutlet />);
+
+  return (
+    <>
+      {filled}
+      {empty}
+    </>
+  );
 }
 
 function getSeats(seating: number | undefined) {
-  if (!seating || seating === 3) {
-    return <p>A LOT</p>;
-  } else if (seating === 2) {
-    return <p>SOME</p>;
-  }
-  return <p>FEW</p>;
+  if (!seating) seating = 5;
+
+  const filled = Array(seating).fill(<MdChair />);
+  const empty = Array(5 - seating).fill(<MdOutlineChair />);
+
+  return (
+    <>
+      {filled}
+      {empty}
+    </>
+  );
 }
