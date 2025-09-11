@@ -45,7 +45,7 @@ function getAmountOfOutlets(outlets: number | undefined) {
   if (!outlets || outlets === 3) {
     return <p>A LOT</p>;
   } else if (outlets === 2) {
-    return <p>ENOUGH</p>;
+    return <p>SOME</p>;
   }
   return <p>FEW</p>;
 }
@@ -54,7 +54,7 @@ function getSeats(seating: number | undefined) {
   if (!seating || seating === 3) {
     return <p>A LOT</p>;
   } else if (seating === 2) {
-    return <p>ENOUGH</p>;
+    return <p>SOME</p>;
   }
   return <p>FEW</p>;
 }

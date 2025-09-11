@@ -39,3 +39,5 @@ export type TNewErrors = {
   confirmPassword?: string;
   spotifyLink?: string;
 };
+
+export type TReviewScore = 1 | 2 | 3;
