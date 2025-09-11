@@ -26,12 +26,17 @@ export default function Vibe({
     setLoading(true);
     try {
       const response = await addSong(spotifyLink.trim(), selectedCafe.id);
-
       if (!response.ok) {
-        const error: TApiError = (await response.json()).errors[0];
         const newErrors: TNewErrors = {};
-        newErrors[error.path] = error.msg;
-        setErrors(newErrors);
+        if (response.statusText === "Unauthorized") {
+          console.log("inside");
+          newErrors["spotifyLink"] = "You need to have an account.";
+          setErrors(newErrors);
+        } else {
+          const error: TApiError = (await response.json()).errors[0];
+          newErrors[error.path] = error.msg;
+          setErrors(newErrors);
+        }
         throw new Error("Song Input Failed");
       } else {
         setErrors({});
