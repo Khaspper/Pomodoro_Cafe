@@ -75,3 +75,37 @@ export async function addSong(spotifyLink: string, cafeId: number) {
     },
   });
 }
+
+export async function getCafeById(cafeID: number) {
+  const exists = await prisma.cafe.findUnique({
+    where: { id: cafeID },
+  });
+  return exists ? true : false;
+}
+
+export async function findReview(cafeID: number) {
+  const review = await prisma.cafeInput.findUnique({
+    where: { cafeId: cafeID },
+  });
+  return review;
+}
+
+export async function reviewCafe(
+  cafeID: number,
+  wifiStrength: number,
+  freeWifi: boolean,
+  outlets: number,
+  seating: number,
+  numberOfInputs: number
+) {
+  await prisma.cafeInput.create({
+    data: {
+      cafeId: cafeID,
+      wifiStrength,
+      freeWifi,
+      outlets,
+      seating,
+      numberOfInputs,
+    },
+  });
+}

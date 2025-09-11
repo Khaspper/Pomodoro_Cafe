@@ -39,7 +39,7 @@ model Cafe {
 
 model CafeInput {
   id             Int      @id @default(autoincrement())
-  cafeId         Int
+  cafeId         Int      @unique
   wifiStrength   Int?     @default(3)
   freeWifi       Boolean?
   outlets        Int      @default(3)

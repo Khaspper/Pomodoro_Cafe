@@ -1,5 +1,11 @@
 import type { Request, Response, NextFunction } from "express";
-import { getAllCafes, cafeInputs } from "../db/queries";
+import {
+  getAllCafes,
+  cafeInputs,
+  reviewCafe,
+  getCafeById,
+  findReview,
+} from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
 import { addSong } from "../db/queries";
@@ -41,7 +47,30 @@ export async function getCafeInputs(req: Request, res: Response) {
 }
 
 export async function postCafeReview(req: Request, res: Response) {
-  console.log("Received Review!");
+  const wifiStrength = req.body.wifiStrength;
+  const outlets = req.body.outlets;
+  const seating = req.body.seating;
+  const freeWifi = req.body.freeWifi;
+  const cafeID = Number(req.params.id);
+  const exists = await getCafeById(cafeID);
+  console.log("wifiStrength", wifiStrength);
+  console.log("outlets", outlets);
+  console.log("seating", seating);
+  console.log("freeWifi", freeWifi);
+  console.log("cafeID", cafeID);
+  if (exists) {
+    const reviews = await findReview(cafeID);
+    if (!reviews) {
+      reviewCafe(cafeID, wifiStrength, freeWifi, outlets, seating, 1);
+    }
+  }
+  // const cafe = await reviewCafe(
+  //   wifiStrength,
+  // outlets,
+  // seating,
+  // freeWifi,
+  // cafeID
+  // );
   res.status(201).json({ message: "Received Review!" });
 }
 
@@ -60,3 +89,7 @@ export const postNewSong = [
     }
   },
 ];
+// in the legend use chairs as a star like remember
+// One outlet means 1 pair
+// One seating means 4 chairs
+// blue light brown
