@@ -25,15 +25,8 @@ export default function Sidebar({
       const response = await fetch(
         `http://localhost:3000/cafe/${selectedCafe.id}/inputs`
       );
-
-      if (!response.ok) {
+      if (response.status === 204) {
         console.error("No reviews for this cafe!");
-        return;
-      }
-
-      const ct = response.headers.get("content-type") || "";
-      if (!ct.includes("application/json")) {
-        console.error("Server did not return JSON");
         return;
       }
 
