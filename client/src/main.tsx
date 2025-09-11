@@ -52,8 +52,10 @@ const router = createBrowserRouter([
     path: "/review/:id",
     element: (
       <>
-        <Navbar isOpen={true} />
-        <ReviewCafe />
+        <ProtectedRoute>
+          <Navbar isOpen={true} />
+          <ReviewCafe />
+        </ProtectedRoute>
       </>
     ),
   },

@@ -16,7 +16,10 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
         setAllowed(true);
       } else {
         setAllowed(false);
-        navigate("/login", { replace: true });
+        navigate("/login", {
+          replace: true,
+          state: { error: "To access the page you need to login." },
+        });
       }
       setChecking(false);
     })();

@@ -27,7 +27,7 @@ export default function ReviewCafe() {
     event.preventDefault();
     try {
       const response = await sendReview(
-        String(cafeID),
+        String(cafeID.id),
         wifiStrength,
         outletAmounts,
         seating,
