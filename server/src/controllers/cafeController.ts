@@ -46,6 +46,7 @@ export async function getCafeInputs(req: Request, res: Response) {
   return res.status(200).json(inputs); // <-- always JSON
 }
 
+//TODO: This has to get the average as well remember that!!!
 export async function postCafeReview(req: Request, res: Response) {
   const wifiStrength = req.body.wifiStrength;
   const outlets = req.body.outlets;
@@ -53,11 +54,6 @@ export async function postCafeReview(req: Request, res: Response) {
   const freeWifi = req.body.freeWifi;
   const cafeID = Number(req.params.id);
   const exists = await getCafeById(cafeID);
-  console.log("wifiStrength", wifiStrength);
-  console.log("outlets", outlets);
-  console.log("seating", seating);
-  console.log("freeWifi", freeWifi);
-  console.log("cafeID", cafeID);
   if (exists) {
     const reviews = await findReview(cafeID);
     if (!reviews) {
@@ -74,7 +70,6 @@ export async function postCafeReview(req: Request, res: Response) {
   res.status(201).json({ message: "Received Review!" });
 }
 
-//TODO: This has to get the average as well remember that!!!
 export const postNewSong = [
   ...validateSpotifyLink,
   async (req: Request, res: Response) => {
