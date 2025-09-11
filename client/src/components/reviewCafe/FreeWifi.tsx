@@ -1,4 +1,4 @@
-export function FreeWifi({
+export default function FreeWifi({
   setFreeWifi,
   freeWifi,
 }: {

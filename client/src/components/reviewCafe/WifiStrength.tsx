@@ -1,4 +1,4 @@
-export function WifiStrength({
+export default function WifiStrength({
   setWifiStrength,
 }: {
   setWifiStrength: React.Dispatch<React.SetStateAction<number>>;

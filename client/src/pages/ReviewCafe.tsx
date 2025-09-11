@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { WifiStrength } from "../components/reviewCafe/WifiStrength";
-import { Outlets } from "../components/reviewCafe/Outlets";
-import { Seating } from "../components/reviewCafe/Seating";
-import { FreeWifi } from "../components/reviewCafe/FreeWifi";
+import WifiStrength from "../components/reviewCafe/WifiStrength";
+import Outlets from "../components/reviewCafe/Outlets";
+import Seating from "../components/reviewCafe/Seating";
+import FreeWifi from "../components/reviewCafe/FreeWifi";
 import { sendReview } from "../services/ReviewCafe";
 
 export default function ReviewCafe() {
@@ -68,8 +68,11 @@ export default function ReviewCafe() {
           </h1>
 
           <WifiStrength setWifiStrength={setWifiStrength} />
-          <Outlets setOutletAmounts={setOutletAmounts} />
-          <Seating setSeating={setSeating} />
+          <Outlets
+            setOutletAmounts={setOutletAmounts}
+            outletAmounts={outletAmounts}
+          />
+          <Seating setSeating={setSeating} seating={seating} />
           <FreeWifi setFreeWifi={setFreeWifi} freeWifi={freeWifi} />
 
           <div className="flex justify-between">
