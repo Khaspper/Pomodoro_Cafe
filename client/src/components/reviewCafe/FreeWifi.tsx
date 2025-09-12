@@ -2,8 +2,8 @@ export default function FreeWifi({
   setFreeWifi,
   freeWifi,
 }: {
-  setFreeWifi: React.Dispatch<React.SetStateAction<boolean>>;
-  freeWifi: boolean;
+  setFreeWifi: React.Dispatch<React.SetStateAction<number>>;
+  freeWifi: number;
 }) {
   // React.ChangeEvent<HTMLSelectElement>;
   return (
@@ -18,10 +18,10 @@ export default function FreeWifi({
           <input
             type="radio"
             name="freeWifi"
-            value="true"
+            value="1"
             hidden
             onClick={() => {
-              setFreeWifi((pv) => !pv);
+              setFreeWifi(1);
             }}
           />
           Yes
@@ -34,10 +34,10 @@ export default function FreeWifi({
           <input
             type="radio"
             name="freeWifi"
-            value="false"
+            value="0"
             hidden
             onClick={() => {
-              setFreeWifi((pv) => !pv);
+              setFreeWifi(0);
             }}
           />
           No

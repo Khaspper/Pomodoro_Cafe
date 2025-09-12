@@ -29,7 +29,6 @@ export default function Vibe({
       if (!response.ok) {
         const newErrors: TNewErrors = {};
         if (response.statusText === "Unauthorized") {
-          console.log("inside");
           newErrors["spotifyLink"] = "You need to have an account.";
           setErrors(newErrors);
         } else {

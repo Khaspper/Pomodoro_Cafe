@@ -3,7 +3,7 @@ export async function sendReview(
   wifiStrength: number,
   outlets: number,
   seating: number,
-  freeWifi: boolean
+  freeWifi: number
 ) {
   const response = await fetch(`http://localhost:3000/cafe/review/${cafeID}`, {
     method: "POST",

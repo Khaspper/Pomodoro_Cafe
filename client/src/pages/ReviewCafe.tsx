@@ -11,7 +11,7 @@ export default function ReviewCafe() {
   const [wifiStrength, setWifiStrength] = useState(3);
   const [outletAmounts, setOutletAmounts] = useState(3);
   const [seating, setSeating] = useState(3);
-  const [freeWifi, setFreeWifi] = useState(true);
+  const [freeWifi, setFreeWifi] = useState(1);
   // Form inputs
 
   const [loading, setLoading] = useState(false);
@@ -35,6 +35,8 @@ export default function ReviewCafe() {
       );
       console.log("ReviewCafe: handleSubmit: response");
       console.log(response);
+
+      //! This part should do the validation
       // const errors = await signupUser(
       //   username,
       //   email,
@@ -51,7 +53,7 @@ export default function ReviewCafe() {
       //   setErrors(newErrors);
       //   throw new Error(`Login failed`, errors);
       // }
-      // navigate(-1);
+      navigate(-1);
     } catch (error) {
       console.error(error);
     } finally {

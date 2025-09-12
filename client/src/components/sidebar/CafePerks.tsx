@@ -19,17 +19,17 @@ export default function CafePerks({
       <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
         <p>Wifi</p>{" "}
         <div className="flex gap-2">
-          {getWifiStrength(cafeData?.wifiStrength)}{" "}
-          {cafeData?.freeWifi ? <MdAttachMoney /> : <MdMoneyOffCsred />}
+          {getWifiStrength(cafeData?.wifiCount)}{" "}
+          {cafeData?.freeWifi ? <MdMoneyOffCsred /> : <MdAttachMoney />}
         </div>
       </div>
       <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
         <h1>Outlets</h1>
-        <div className="flex">{getAmountOfOutlets(cafeData?.outlets)}</div>
+        <div className="flex">{getAmountOfOutlets(cafeData?.outletCount)}</div>
       </div>
       <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
         <h1>Seating</h1>
-        <div className="flex">{getSeats(cafeData?.seating)}</div>
+        <div className="flex">{getSeats(cafeData?.seatingCount)}</div>
       </div>
     </section>
   );
@@ -47,8 +47,13 @@ function getWifiStrength(strength: number | undefined) {
 function getAmountOfOutlets(outlets?: number) {
   if (!outlets) outlets = 5;
 
-  const filled = Array(outlets).fill(<IoIosOutlet />);
-  const empty = Array(5 - outlets).fill(<BsOutlet />);
+  const filled = Array.from({ length: outlets }, (_, i) => (
+    <IoIosOutlet key={`filled-${i}`} />
+  ));
+
+  const empty = Array.from({ length: 5 - outlets }, (_, i) => (
+    <BsOutlet key={`empty-${i}`} />
+  ));
 
   return (
     <>
@@ -61,8 +66,13 @@ function getAmountOfOutlets(outlets?: number) {
 function getSeats(seating: number | undefined) {
   if (!seating) seating = 5;
 
-  const filled = Array(seating).fill(<MdChair />);
-  const empty = Array(5 - seating).fill(<MdOutlineChair />);
+  const filled = Array.from({ length: seating }, (_, i) => (
+    <MdChair key={`filled-${i}`} />
+  ));
+
+  const empty = Array.from({ length: 5 - seating }, (_, i) => (
+    <MdOutlineChair key={`empty-${i}`} />
+  ));
 
   return (
     <>

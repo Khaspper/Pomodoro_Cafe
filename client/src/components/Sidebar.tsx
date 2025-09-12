@@ -29,16 +29,15 @@ export default function Sidebar({
         console.error("No reviews for this cafe!");
         setCafeData({
           cafeId: selectedCafe.id,
+          wifiCount: 3,
+          outletCount: 5,
+          seatingCount: 5,
           freeWifi: true,
-          id: 0,
-          numberOfInputs: 0,
-          outlets: 5,
-          seating: 5,
-          wifiStrength: 3,
         });
       } else {
         const data = await response.json();
-        setCafeData(data);
+        const freeWifi = data.wifiFreeCount > 0 ? true : false;
+        setCafeData({ ...data, freeWifi });
       }
     }
     fetchData();

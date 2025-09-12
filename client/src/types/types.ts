@@ -15,13 +15,11 @@ export type TSidebarContainer = {
 };
 
 export type TCafeData = {
-  id: number;
   cafeId: number;
-  wifiStrength: number;
+  wifiCount: number;
+  outletCount: number;
+  seatingCount: number;
   freeWifi: boolean;
-  outlets: number;
-  seating: number;
-  numberOfInputs: number;
 };
 
 export type TReceivedErrors = {
