@@ -1,6 +1,6 @@
 import {
   getCafes,
-  getCafeInputs,
+  getCafeReviews,
   postCafeReview,
   postNewSong,
 } from "../controllers/cafeController";
@@ -12,7 +12,7 @@ import { Router } from "express";
 const cafeRouter = Router();
 
 cafeRouter.get("/", getCafes);
-cafeRouter.get("/:id/inputs", getCafeInputs);
+cafeRouter.get("/:id/inputs", getCafeReviews);
 cafeRouter.post("/review/:id", isAuthenticated, postCafeReview);
 cafeRouter.post("/:id/inputs/song", isAuthenticated, postNewSong);
 

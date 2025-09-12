@@ -60,8 +60,8 @@ export async function getAllCafes() {
   return cafes;
 }
 
-export async function cafeInputs(cafeId: number) {
-  const cafes = await prisma.cafeInput.findFirst({
+export async function cafeReviews(cafeId: number) {
+  const cafes = await prisma.review.findFirst({
     where: { cafeId: cafeId },
   });
   return cafes;
@@ -83,29 +83,95 @@ export async function getCafeById(cafeID: number) {
   return exists ? true : false;
 }
 
-export async function findReview(cafeID: number) {
-  const review = await prisma.cafeInput.findUnique({
-    where: { cafeId: cafeID },
-  });
-  return review;
-}
-
 export async function reviewCafe(
-  cafeID: number,
+  userId: number,
+  cafeId: number,
   wifiStrength: number,
   freeWifi: boolean,
   outlets: number,
-  seating: number,
-  numberOfInputs: number
+  seating: number
 ) {
-  await prisma.cafeInput.create({
+  await prisma.review.create({
     data: {
-      cafeId: cafeID,
+      userId,
+      cafeId,
       wifiStrength,
       freeWifi,
       outlets,
       seating,
-      numberOfInputs,
+    },
+  });
+}
+
+export async function createCafeStats(
+  cafeId: number,
+  wifiStrength: number,
+  outlets: number,
+  seating: number,
+  freeWifi: boolean
+) {
+  const wifiFreeCount = freeWifi ? 0 : -1;
+
+  await prisma.cafeStats.create({
+    data: {
+      cafeId,
+      wifiCount: wifiStrength,
+      outletCount: outlets,
+      seatingCount: seating,
+      wifiFreeCount,
+    },
+  });
+}
+
+export async function updateCafeStats(
+  cafeId: number,
+  avgWifi: number,
+  avgOutlets: number,
+  avgSeating: number,
+  freeWifi: boolean
+) {
+  if (freeWifi) {
+    await prisma.cafeStats.update({
+      where: { cafeId },
+      data: {
+        wifiFreeCount: {
+          increment: 1,
+        },
+      },
+    });
+  } else {
+    await prisma.cafeStats.update({
+      where: { cafeId },
+      data: {
+        wifiFreeCount: {
+          decrement: 1,
+        },
+      },
+    });
+  }
+  await prisma.cafeStats.update({
+    where: { cafeId },
+    data: {
+      wifiCount: avgWifi,
+      outletCount: avgOutlets,
+      seatingCount: avgSeating,
+    },
+  });
+}
+
+export async function getCafeStats(cafeID: number) {
+  return await prisma.cafeStats.findUnique({
+    where: { cafeId: cafeID },
+  });
+}
+
+export async function getAvgCafeStats(cafeID: number) {
+  return await prisma.cafeStats.aggregate({
+    where: { cafeId: cafeID },
+    _avg: {
+      wifiCount: true,
+      outletCount: true,
+      seatingCount: true,
     },
   });
 }

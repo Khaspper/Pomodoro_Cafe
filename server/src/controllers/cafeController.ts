@@ -1,10 +1,12 @@
 import type { Request, Response, NextFunction } from "express";
 import {
   getAllCafes,
-  cafeInputs,
+  cafeReviews,
   reviewCafe,
   getCafeById,
-  findReview,
+  getCafeStats,
+  createCafeStats,
+  updateCafeStats,
 } from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
@@ -33,9 +35,9 @@ export async function getCafes(req: Request, res: Response) {
   res.send(cafes);
 }
 
-export async function getCafeInputs(req: Request, res: Response) {
+export async function getCafeReviews(req: Request, res: Response) {
   const cafeId = Number(req.params.id);
-  const inputs = await cafeInputs(cafeId);
+  const inputs = await cafeReviews(cafeId);
 
   if (!inputs || (Array.isArray(inputs) && inputs.length === 0)) {
     return res
@@ -46,28 +48,48 @@ export async function getCafeInputs(req: Request, res: Response) {
   return res.status(200).json(inputs); // <-- always JSON
 }
 
-//TODO: This has to get the average as well remember that!!!
 export async function postCafeReview(req: Request, res: Response) {
-  const wifiStrength = req.body.wifiStrength;
-  const outlets = req.body.outlets;
-  const seating = req.body.seating;
-  const freeWifi = req.body.freeWifi;
-  const cafeID = Number(req.params.id);
-  const exists = await getCafeById(cafeID);
-  if (exists) {
-    const reviews = await findReview(cafeID);
-    if (!reviews) {
-      reviewCafe(cafeID, wifiStrength, freeWifi, outlets, seating, 1);
+  try {
+    //?⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄ This is reviews and user and cafe id to tie the reviews to ⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄
+    const userID = Number(req.user?.id);
+    const cafeID = Number(req.params.id);
+    const wifiStrength = req.body.wifiStrength;
+    const outlets = req.body.outlets;
+    const seating = req.body.seating;
+    const freeWifi = req.body.freeWifi;
+    //?^^^^^^^^^^^^^^^ This is reviews and user and cafe id to tie the reviews to ^^^^^^^^^^^^^^^
+
+    // Checks to see if the cafe even exists
+    const exists = await getCafeById(cafeID);
+    if (exists) {
+      await reviewCafe(
+        userID,
+        cafeID,
+        wifiStrength,
+        freeWifi,
+        outlets,
+        seating
+      );
+      // After adding the review we need to update the CafeStats model
+      const cafe = await getCafeStats(cafeID);
+      if (!cafe) {
+        await createCafeStats(cafeID, wifiStrength, outlets, seating, freeWifi);
+      } else {
+        await updateCafeStats(
+          cafeID,
+          cafe.wifiCount + wifiStrength,
+          cafe.outletCount + outlets,
+          cafe.seatingCount + seating,
+          freeWifi
+        );
+      }
+    } else {
+      throw new Error("Error in postCafeReview.");
     }
+    res.status(201).json({ message: "Received Review!" });
+  } catch (error) {
+    console.error("Cafe doesn't exist", error);
   }
-  // const cafe = await reviewCafe(
-  //   wifiStrength,
-  // outlets,
-  // seating,
-  // freeWifi,
-  // cafeID
-  // );
-  res.status(201).json({ message: "Received Review!" });
 }
 
 export const postNewSong = [
