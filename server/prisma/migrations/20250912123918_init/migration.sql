@@ -1,25 +1,45 @@
-/*
-  Warnings:
+-- CreateTable
+CREATE TABLE "public"."User" (
+    "id" SERIAL NOT NULL,
+    "email" TEXT NOT NULL,
+    "username" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
 
-  - You are about to drop the `CafeInput` table. If the table is not empty, all the data it contains will be lost.
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
 
-*/
--- DropForeignKey
-ALTER TABLE "public"."CafeInput" DROP CONSTRAINT "CafeInput_cafeId_fkey";
+-- CreateTable
+CREATE TABLE "public"."session" (
+    "sid" VARCHAR NOT NULL,
+    "sess" JSON NOT NULL,
+    "expire" TIMESTAMP(6) NOT NULL,
 
--- DropTable
-DROP TABLE "public"."CafeInput";
+    CONSTRAINT "session_pkey" PRIMARY KEY ("sid")
+);
+
+-- CreateTable
+CREATE TABLE "public"."Cafe" (
+    "id" SERIAL NOT NULL,
+    "lat" DOUBLE PRECISION NOT NULL,
+    "lon" DOUBLE PRECISION NOT NULL,
+    "type" TEXT,
+    "brand" TEXT,
+    "name" TEXT NOT NULL,
+    "officialName" TEXT,
+    "spotifyLink" VARCHAR(512),
+
+    CONSTRAINT "Cafe_pkey" PRIMARY KEY ("id")
+);
 
 -- CreateTable
 CREATE TABLE "public"."Review" (
     "id" SERIAL NOT NULL,
     "cafeId" INTEGER NOT NULL,
     "userId" INTEGER NOT NULL,
-    "wifiStrength" INTEGER DEFAULT 3,
-    "freeWifi" BOOLEAN,
+    "wifiStrength" INTEGER NOT NULL DEFAULT 3,
+    "freeWifi" INTEGER NOT NULL DEFAULT 1,
     "outlets" INTEGER NOT NULL DEFAULT 3,
     "seating" INTEGER NOT NULL DEFAULT 3,
-    "numberOfInputs" INTEGER NOT NULL DEFAULT 0,
 
     CONSTRAINT "Review_pkey" PRIMARY KEY ("id")
 );
@@ -27,19 +47,25 @@ CREATE TABLE "public"."Review" (
 -- CreateTable
 CREATE TABLE "public"."CafeStats" (
     "cafeId" INTEGER NOT NULL,
-    "inputsCount" INTEGER NOT NULL DEFAULT 0,
-    "avgWifi" DOUBLE PRECISION,
-    "avgOutlets" DOUBLE PRECISION,
-    "avgSeating" DOUBLE PRECISION,
+    "wifiCount" INTEGER,
+    "outletCount" INTEGER,
+    "seatingCount" INTEGER,
+    "wifiFreeCount" INTEGER,
 
     CONSTRAINT "CafeStats_pkey" PRIMARY KEY ("cafeId")
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Review_cafeId_key" ON "public"."Review"("cafeId");
+CREATE UNIQUE INDEX "User_email_key" ON "public"."User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Review_userId_key" ON "public"."Review"("userId");
+CREATE UNIQUE INDEX "User_username_key" ON "public"."User"("username");
+
+-- CreateIndex
+CREATE INDEX "IDX_session_expire" ON "public"."session"("expire");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Cafe_lat_lon_key" ON "public"."Cafe"("lat", "lon");
 
 -- CreateIndex
 CREATE INDEX "Review_userId_idx" ON "public"."Review"("userId");

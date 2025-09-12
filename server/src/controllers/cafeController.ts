@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
 import {
   getAllCafes,
-  cafeReviews,
   reviewCafe,
   getCafeById,
   getCafeStats,
@@ -37,15 +36,13 @@ export async function getCafes(req: Request, res: Response) {
 
 export async function getCafeReviews(req: Request, res: Response) {
   const cafeId = Number(req.params.id);
-  const inputs = await cafeReviews(cafeId);
-
-  if (!inputs || (Array.isArray(inputs) && inputs.length === 0)) {
+  const response = await getCafeStats(cafeId);
+  if (!response || response === null) {
     return res
       .status(204)
       .json({ message: "No reviews for this cafe", inputs: [] });
   }
-
-  return res.status(200).json(inputs); // <-- always JSON
+  return res.status(200).send(response);
 }
 
 export async function postCafeReview(req: Request, res: Response) {
@@ -62,6 +59,9 @@ export async function postCafeReview(req: Request, res: Response) {
     // Checks to see if the cafe even exists
     const exists = await getCafeById(cafeID);
     if (exists) {
+      // TODO:::
+      // Check to see if user already posted made a review
+      // If it exists DELETE IT
       await reviewCafe(
         userID,
         cafeID,
@@ -73,20 +73,14 @@ export async function postCafeReview(req: Request, res: Response) {
       // After adding the review we need to update the CafeStats model
       const cafe = await getCafeStats(cafeID);
       if (!cafe) {
-        await createCafeStats(cafeID, wifiStrength, outlets, seating, freeWifi);
+        await createCafeStats(cafeID);
       } else {
-        await updateCafeStats(
-          cafeID,
-          cafe.wifiCount + wifiStrength,
-          cafe.outletCount + outlets,
-          cafe.seatingCount + seating,
-          freeWifi
-        );
+        await updateCafeStats(cafeID);
       }
+      return res.status(201).json({ message: "Received Review!" });
     } else {
       throw new Error("Error in postCafeReview.");
     }
-    res.status(201).json({ message: "Received Review!" });
   } catch (error) {
     console.error("Cafe doesn't exist", error);
   }

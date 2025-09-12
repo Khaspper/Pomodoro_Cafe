@@ -59,3 +59,7 @@ seed()
     await prisma.$disconnect();
     process.exit(1);
   });
+
+// First Reset DB
+// Then --name init it
+// Finally seed it

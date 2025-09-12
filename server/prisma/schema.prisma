@@ -46,16 +46,14 @@ model Cafe {
 
 model Review {
   id     Int @id @default(autoincrement())
-  cafeId Int @unique
+  cafeId Int
   userId Int
 
   /// Inputs
-  wifiStrength Int?     @default(3)
-  freeWifi     Boolean?
-  outlets      Int      @default(3)
-  seating      Int      @default(3)
-
-  numberOfInputs Int @default(0)
+  wifiStrength Int @default(3)
+  freeWifi     Int @default(1)
+  outlets      Int @default(3)
+  seating      Int @default(3)
 
   cafe Cafe @relation(fields: [cafeId], references: [id])
   user User @relation(fields: [userId], references: [id])
@@ -69,12 +67,12 @@ model CafeStats {
   cafeId Int @id
 
   /// These should be rounded up why? Idk just felt like it lol
-  wifiCount    Int
-  outletCount  Int
-  seatingCount Int
+  wifiCount    Int?
+  outletCount  Int?
+  seatingCount Int?
 
   /// If wifiFreeCount >= 0 then it's free if it's < 0 it's not free...
-  wifiFreeCount Int
+  wifiFreeCount Int?
 
   cafe Cafe @relation(fields: [cafeId], references: [id], onDelete: Cascade)
 }
