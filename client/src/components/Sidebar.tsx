@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import CafePerks from "./sidebar/CafePerks";
 import Vibe from "./sidebar/Vibe";
 import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
-import CafeComments from "./sidebar/Comments";
+import CafeComments from "./sidebar/comments/CafeComments";
 import ReviewCafeButton from "./sidebar/ReviewCafeButton";
 
 export default function Sidebar({

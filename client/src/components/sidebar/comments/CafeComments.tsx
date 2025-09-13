@@ -1,4 +1,4 @@
-import type { TCafe } from "../../types/types";
+import type { TCafe } from "../../../types/types";
 
 export default function CafeComments({
   selectedCafe,
