@@ -6,6 +6,7 @@ import Vibe from "./sidebar/Vibe";
 import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
 import CafeComments from "./sidebar/comments/CafeComments";
 import ReviewCafeButton from "./sidebar/ReviewCafeButton";
+import Tabs from "./sidebar/Tabs";
 
 export default function Sidebar({
   selectedCafe,
@@ -19,6 +20,7 @@ export default function Sidebar({
   setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const [cafeData, setCafeData] = useState<TCafeData | null>(null);
+  const [showData, setShowData] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
@@ -45,18 +47,27 @@ export default function Sidebar({
 
   return (
     <div className="flex bg-indigo-50 z-2">
-      <SidebarContainer setOpen={setOpen} open={open}>
-        <CafeInformation
-          selectedCafe={selectedCafe}
-          cafeData={cafeData}
-          setCafeUpdated={setCafeUpdated}
-        />
+      <SidebarContainer setOpen={setOpen} open={open} setShowData={setShowData}>
+        {showData === 0 ? (
+          <CafeInformation
+            selectedCafe={selectedCafe}
+            cafeData={cafeData}
+            setCafeUpdated={setCafeUpdated}
+          />
+        ) : (
+          ""
+        )}
       </SidebarContainer>
     </div>
   );
 }
 
-function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
+function SidebarContainer({
+  children,
+  setOpen,
+  open,
+  setShowData,
+}: TSidebarContainer) {
   return (
     <motion.nav
       className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1c1917] ${
@@ -65,6 +76,7 @@ function SidebarContainer({ children, setOpen, open }: TSidebarContainer) {
       layout
     >
       <Navbar isOpen={open} />
+      {open && <Tabs setShowData={setShowData} />}
       <div className="p-4">
         {open && children}
         <ToggleClose open={open} setOpen={setOpen} />
