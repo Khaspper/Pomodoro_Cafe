@@ -1,12 +1,13 @@
 import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+// import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import WifiStrength from "../components/reviewCafe/WifiStrength";
 import Outlets from "../components/reviewCafe/Outlets";
 import Seating from "../components/reviewCafe/Seating";
 import FreeWifi from "../components/reviewCafe/FreeWifi";
 import { sendReview } from "../services/ReviewCafe";
 
-export default function ReviewCafe() {
+export default function ReviewCafe({ cafeID }: { cafeID: number }) {
   // Form inputs
   const [wifiStrength, setWifiStrength] = useState(3);
   const [outletAmounts, setOutletAmounts] = useState(3);
@@ -15,7 +16,7 @@ export default function ReviewCafe() {
   // Form inputs
 
   const [loading, setLoading] = useState(false);
-  const cafeID = useParams();
+  // const cafeID = useParams();
   const navigate = useNavigate();
 
   function handleClick() {
@@ -27,7 +28,8 @@ export default function ReviewCafe() {
     event.preventDefault();
     try {
       const response = await sendReview(
-        String(cafeID.id),
+        // String(cafeID.id),
+        String(cafeID),
         wifiStrength,
         outletAmounts,
         seating,
@@ -62,7 +64,7 @@ export default function ReviewCafe() {
   }
 
   return (
-    <div className="bg-[#1a1a1a] min-h-screen flex justify-center items-center">
+    <div className="flex justify-center items-center mt-26">
       <div className="bg-[#03304f] p-5 text-[#fae3ad] rounded-2xl w-[300px] md:w-[400px] mt-[-100px]">
         <form className="flex flex-col gap-2 md:gap-4" onSubmit={handleSubmit}>
           <h1 className="text-4xl md:text-5xl text-center font-bold text-[#b1372c]">

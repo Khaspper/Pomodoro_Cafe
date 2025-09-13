@@ -12,6 +12,7 @@ export type TSidebarContainer = {
   children: React.ReactNode;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  showData: number;
   setShowData: React.Dispatch<React.SetStateAction<number>>;
 };
 

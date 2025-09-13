@@ -18,13 +18,19 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
         setAllowed(false);
         navigate("/login", {
           replace: true,
-          state: { error: "To access the page you need to login." },
+          state: {
+            error: "To access the page or review a cafe you need to login.",
+          },
         });
       }
       setChecking(false);
     })();
   }, [navigate]);
 
+  //TODO: Maybe put a loading gif instead
+  // if (checking) {
+  //  console.log("Loading");
+  // }
   if (checking) return <h1 className="text-4xl">Loading</h1>;
   return allowed ? children : null;
 }

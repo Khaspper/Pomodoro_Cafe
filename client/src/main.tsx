@@ -8,7 +8,7 @@ import Signup from "./pages/Signup.tsx";
 import Navbar from "./components/Navbar.tsx";
 import Account from "./pages/Account.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import ReviewCafe from "./pages/ReviewCafe.tsx";
+// import ReviewCafe from "./pages/ReviewCafe.tsx";
 
 // I was thinking here that maybe we should call the backend and check
 
@@ -44,17 +44,6 @@ const router = createBrowserRouter([
             <Navbar isOpen={true} />
             <Account />
           </div>
-        </ProtectedRoute>
-      </>
-    ),
-  },
-  {
-    path: "/review/:id",
-    element: (
-      <>
-        <ProtectedRoute>
-          <Navbar isOpen={true} />
-          <ReviewCafe />
         </ProtectedRoute>
       </>
     ),

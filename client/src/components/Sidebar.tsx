@@ -5,8 +5,10 @@ import CafePerks from "./sidebar/CafePerks";
 import Vibe from "./sidebar/Vibe";
 import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
 import CafeComments from "./sidebar/comments/CafeComments";
-import ReviewCafeButton from "./sidebar/ReviewCafeButton";
+// import ReviewCafeButton from "./sidebar/ReviewCafeButton";
 import Tabs from "./sidebar/Tabs";
+import ProtectedRoute from "./ProtectedRoute";
+import ReviewCafe from "../pages/ReviewCafe";
 
 export default function Sidebar({
   selectedCafe,
@@ -47,15 +49,24 @@ export default function Sidebar({
 
   return (
     <div className="flex bg-indigo-50 z-2">
-      <SidebarContainer setOpen={setOpen} open={open} setShowData={setShowData}>
+      <SidebarContainer
+        setOpen={setOpen}
+        open={open}
+        setShowData={setShowData}
+        showData={showData}
+      >
         {showData === 0 ? (
           <CafeInformation
             selectedCafe={selectedCafe}
             cafeData={cafeData}
             setCafeUpdated={setCafeUpdated}
           />
+        ) : showData === 1 ? (
+          <CafeComments selectedCafe={selectedCafe} />
         ) : (
-          ""
+          <ProtectedRoute>
+            <ReviewCafe cafeID={selectedCafe.id} />
+          </ProtectedRoute>
         )}
       </SidebarContainer>
     </div>
@@ -66,6 +77,7 @@ function SidebarContainer({
   children,
   setOpen,
   open,
+  showData,
   setShowData,
 }: TSidebarContainer) {
   return (
@@ -76,7 +88,7 @@ function SidebarContainer({
       layout
     >
       <Navbar isOpen={open} />
-      {open && <Tabs setShowData={setShowData} />}
+      {open && <Tabs showData={showData} setShowData={setShowData} />}
       <div className="p-4">
         {open && children}
         <ToggleClose open={open} setOpen={setOpen} />
@@ -105,8 +117,6 @@ function CafeInformation({
         <CafePerks cafeData={cafeData} />
         <Vibe selectedCafe={selectedCafe} setCafeUpdated={setCafeUpdated} />
       </div>
-      <ReviewCafeButton selectedCafe={selectedCafe} />
-      <CafeComments selectedCafe={selectedCafe} />
     </>
   );
 }
