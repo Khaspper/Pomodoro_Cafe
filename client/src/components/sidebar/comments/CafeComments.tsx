@@ -1,4 +1,5 @@
 import type { TCafe } from "../../../types/types";
+import { Comment } from "./Comment";
 
 export default function CafeComments({
   selectedCafe,
@@ -8,9 +9,10 @@ export default function CafeComments({
   return (
     // And delete the background
     <section className="overflow-y: auto bg-[#4c6850] p-2 mt-2">
-      <h1 className="text-center font-extrabold ">Comments</h1>
+      <h1 className="text-center font-extrabold text-2xl">Comments</h1>
       <h1>location: {selectedCafe.id} </h1>
       <h1>Get cafes comments here</h1>
+      <Comment />
     </section>
   );
 }
