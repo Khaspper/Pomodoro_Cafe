@@ -40,4 +40,8 @@ export type TNewErrors = {
   spotifyLink?: string;
 };
 
-export type TReviewScore = 1 | 2 | 3;
+export type TCommentProps = {
+  username: string;
+  comment: string;
+  createdAt: Date;
+};
