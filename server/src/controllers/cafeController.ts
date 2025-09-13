@@ -6,6 +6,8 @@ import {
   getCafeStats,
   createCafeStats,
   updateCafeStats,
+  getReviewFromUser,
+  deleteUsersReview,
 } from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
@@ -58,10 +60,17 @@ export async function postCafeReview(req: Request, res: Response) {
 
     // Checks to see if the cafe even exists
     const exists = await getCafeById(cafeID);
+    let message = "Received Review!";
     if (exists) {
       // TODO:::
       // Check to see if user already posted made a review
       // If it exists DELETE IT
+      const userReview = await getReviewFromUser(cafeID, userID);
+      if (userReview) {
+        await deleteUsersReview(cafeID, userID);
+        console.log("Previous review has been deleted");
+        message = "Previous review has been deleted";
+      }
       await reviewCafe(
         userID,
         cafeID,
@@ -77,7 +86,7 @@ export async function postCafeReview(req: Request, res: Response) {
       } else {
         await updateCafeStats(cafeID);
       }
-      return res.status(201).json({ message: "Received Review!" });
+      return res.status(201).json({ message });
     } else {
       throw new Error("Error in postCafeReview.");
     }

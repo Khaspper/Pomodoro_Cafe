@@ -158,3 +158,14 @@ export async function getReviewFromUser(cafeId: number, userId: number) {
     },
   });
 }
+
+export async function deleteUsersReview(cafeId: number, userId: number) {
+  await prisma.review.delete({
+    where: {
+      cafeId_userId: {
+        cafeId,
+        userId,
+      },
+    },
+  });
+}
