@@ -40,7 +40,7 @@ export default function CafeComments({
         Comments
       </h1>
       <div className="flex flex-col gap-4">
-        <CommentInput />
+        <CommentInput cafeID={selectedCafe.id} />
         {/* Then we use the state variable to loop through
         them and load them and pass data to the Comment component */}
         <div className="flex gap-2 flex-col p-2">
