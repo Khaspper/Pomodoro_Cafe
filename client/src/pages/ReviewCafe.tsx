@@ -38,6 +38,7 @@ export default function ReviewCafe({ cafeID }: { cafeID: number }) {
       console.log("ReviewCafe: handleSubmit: response");
       console.log(response);
 
+      //TODO:
       //! This part should do the validation
       // const errors = await signupUser(
       //   username,

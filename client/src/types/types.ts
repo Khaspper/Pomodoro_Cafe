@@ -46,3 +46,12 @@ export type TCommentProps = {
   comment: string;
   createdAt: Date;
 };
+
+export type TComment = {
+  id: number;
+  cafeId: number;
+  userId: number;
+  username: string;
+  message: string;
+  createdAt: string;
+};

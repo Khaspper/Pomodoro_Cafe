@@ -3,7 +3,13 @@ import { IoSend } from "react-icons/io5";
 import { sendComment } from "../../../services/Cafe";
 import type { TNewErrors } from "../../../types/types";
 
-export default function CommentInput({ cafeID }: { cafeID: number }) {
+export default function CommentInput({
+  cafeID,
+  setSubmit,
+}: {
+  cafeID: number;
+  setSubmit: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");
   const [errors, setErrors] = useState<TNewErrors>({});
@@ -14,19 +20,24 @@ export default function CommentInput({ cafeID }: { cafeID: number }) {
     try {
       // Step 1 post comment to DB
       const response = await sendComment(comment, cafeID);
-      console.log("response");
-      console.log(response);
       if (!response.ok) {
         const newErrors: TNewErrors = {};
-        const errors = (await response.json()).errors[0];
-        newErrors["comment"] = errors.msg;
-        setErrors(newErrors);
+        if (response.statusText === "Unauthorized") {
+          newErrors["comment"] = "You need to have an account to post.";
+          setErrors(newErrors);
+        } else {
+          const errors = (await response.json()).errors[0];
+          newErrors["comment"] = errors.msg;
+          setErrors(newErrors);
+        }
       } else {
+        setComment("");
         setErrors({});
       }
     } catch (error) {
       console.error(error);
     } finally {
+      setSubmit(true);
       setLoading(false);
     }
   }
@@ -56,7 +67,9 @@ export default function CommentInput({ cafeID }: { cafeID: number }) {
           )}
         </button>
       </form>
-      <p>{errors ? errors.comment : ""}</p>
+      <p className="text-xl text-[#b5442a] font-extrabold px-1">
+        {errors ? errors.comment : ""}
+      </p>
     </>
   );
 }
