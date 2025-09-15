@@ -12,19 +12,19 @@ export default function CafeComments({
   const mockComments = [
     {
       id: 1,
-      username: "Alice Johnson",
+      username: "Alice",
       comment: "Love this café! The vibes are perfect for studying.",
       createdAt: new Date("2025-09-12T14:30:00"),
     },
     {
       id: 2,
-      username: "Brian Lee",
+      username: "Brian",
       comment: "Wi-Fi could be better, but the coffee is amazing.",
       createdAt: new Date("2025-09-12T16:45:00"),
     },
     {
       id: 3,
-      username: "Charlie Kim",
+      username: "Charlie",
       comment:
         "Nice place to hang out with friends. Seating is limited though.",
       createdAt: new Date("2025-09-13T09:15:00"),
@@ -43,7 +43,7 @@ export default function CafeComments({
         <CommentInput />
         {/* Then we use the state variable to loop through
         them and load them and pass data to the Comment component */}
-        <div className="border-2 border-emerald-600 flex gap-2 flex-col p-2">
+        <div className="flex gap-2 flex-col p-2">
           {mockComments.map((comment) => {
             return (
               <Comment
