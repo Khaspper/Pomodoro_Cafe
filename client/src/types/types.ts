@@ -38,6 +38,7 @@ export type TNewErrors = {
   password?: string;
   confirmPassword?: string;
   spotifyLink?: string;
+  comment?: string;
 };
 
 export type TCommentProps = {

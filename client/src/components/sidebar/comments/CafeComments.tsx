@@ -31,8 +31,8 @@ export default function CafeComments({
     },
   ];
 
-  console.log("CafeComments.tsx: selectedCafe");
-  console.log(selectedCafe);
+  // console.log("CafeComments.tsx: selectedCafe");
+  // console.log(selectedCafe);
   return (
     // And delete the background
     <>
