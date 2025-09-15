@@ -138,8 +138,6 @@ export const addNewComment = [
         throw new Error("Cafe does not exists");
       }
       // Get usernames by userID
-      console.log("cafeController: req.body");
-      console.log(req.body);
       await postNewComment(
         Number(cafeID),
         Number(req.user?.id),
