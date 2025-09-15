@@ -129,7 +129,7 @@ export const addNewComment = [
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).json(errors);
+        return res.status(400).json(errors);
       }
       // Check to see if the cafe even exists
       const cafeID = req.params.id;
@@ -149,7 +149,7 @@ export const addNewComment = [
       res.sendStatus(201);
     } catch (error) {
       console.error(error);
-      res.status(401).json({ message: "Cafe doesn't exists" });
+      res.status(400).json({ message: "Cafe doesn't exists" });
     }
   },
 ];
