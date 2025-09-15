@@ -4,6 +4,7 @@ import {
   postCafeReview,
   postNewSong,
   addNewComment,
+  getCommentsController,
 } from "../controllers/cafeController";
 
 import { isAuthenticated } from "../controllers/accountController";
@@ -17,6 +18,6 @@ cafeRouter.get("/:id/inputs", getCafeReviews);
 cafeRouter.post("/review/:id", isAuthenticated, postCafeReview);
 cafeRouter.post("/:id/inputs/song", isAuthenticated, postNewSong);
 // Comments
-// cafeRouter.get("/:id/comments", );
+cafeRouter.get("/:id/comments", getCommentsController);
 cafeRouter.post("/:id/comments", isAuthenticated, ...addNewComment);
 export default cafeRouter;

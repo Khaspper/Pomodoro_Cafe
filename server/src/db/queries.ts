@@ -177,13 +177,20 @@ export async function postNewComment(
   username: string,
   message: string
 ) {
-  // await prisma.comment.create({
-  //   data: {
-  //     cafeId,
-  //     userId,
-  //     username,
-  //     message,
-  //   },
-  // });
+  await prisma.comment.create({
+    data: {
+      cafeId,
+      userId,
+      username,
+      message,
+    },
+  });
   return;
+}
+
+export async function getComments(cafeId: number) {
+  return await prisma.comment.findMany({
+    where: { cafeId },
+    orderBy: { createdAt: "desc" },
+  });
 }

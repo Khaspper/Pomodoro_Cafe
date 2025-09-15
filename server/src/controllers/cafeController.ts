@@ -10,6 +10,7 @@ import {
   deleteUsersReview,
   addSong,
   postNewComment,
+  getComments,
 } from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
@@ -152,3 +153,11 @@ export const addNewComment = [
     }
   },
 ];
+
+export async function getCommentsController(req: Request, res: Response) {
+  const comments = await getComments(Number(req.params.id));
+  if (comments.length === 0) {
+    return res.status(200).json({ message: "No comments for this cafe yet!" });
+  }
+  res.status(200).json({ comments });
+}
