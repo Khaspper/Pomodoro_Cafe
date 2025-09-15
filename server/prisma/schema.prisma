@@ -10,11 +10,12 @@ datasource db {
 
 /// Later Add Comments
 model User {
-  id       Int      @id @default(autoincrement())
-  email    String   @unique
-  username String   @unique
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  username String    @unique
   password String
   reviews  Review[]
+  Comment  Comment[]
 }
 
 model session {
@@ -40,6 +41,7 @@ model Cafe {
 
   reviews   Review[]
   CafeStats CafeStats[]
+  Comment   Comment[]
 
   @@unique([lat, lon])
 }
@@ -75,4 +77,20 @@ model CafeStats {
   wifiFreeCount Int?
 
   cafe Cafe @relation(fields: [cafeId], references: [id], onDelete: Cascade)
+}
+
+model Comment {
+  id     Int @id @default(autoincrement())
+  cafeId Int
+  userId Int
+
+  username  String
+  message   String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @db.Timestamptz(6)
+
+  cafe Cafe @relation(fields: [cafeId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([cafeId])
 }

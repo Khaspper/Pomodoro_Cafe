@@ -8,10 +8,20 @@ import {
   updateCafeStats,
   getReviewFromUser,
   deleteUsersReview,
+  addSong,
+  postNewComment,
 } from "../db/queries";
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
-import { addSong } from "../db/queries";
+
+const validateComment: RequestHandler[] = [
+  body("comment")
+    .trim()
+    .notEmpty()
+    .withMessage("Comment cannot be empty.")
+    .isLength({ min: 1, max: 255 })
+    .withMessage("Comment has to be less than 255 characters."),
+];
 
 const validateSpotifyLink: RequestHandler[] = [
   body("spotifyLink")
@@ -62,9 +72,6 @@ export async function postCafeReview(req: Request, res: Response) {
     const exists = await getCafeById(cafeID);
     let message = "Received Review!";
     if (exists) {
-      // TODO:::
-      // Check to see if user already posted made a review
-      // If it exists DELETE IT
       const userReview = await getReviewFromUser(cafeID, userID);
       if (userReview) {
         await deleteUsersReview(cafeID, userID);
@@ -114,3 +121,34 @@ export const postNewSong = [
 // One outlet means 1 pair
 // One seating means 4 chairs
 // blue light brown
+
+export const addNewComment = [
+  validateComment,
+  async (req: Request, res: Response) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).json(errors);
+      }
+      // Check to see if the cafe even exists
+      const cafeID = req.params.id;
+      const exists = await getCafeById(Number(cafeID));
+      if (!exists) {
+        throw new Error("Cafe does not exists");
+      }
+      // Get usernames by userID
+      console.log("cafeController: req.body");
+      console.log(req.body);
+      await postNewComment(
+        Number(cafeID),
+        Number(req.user?.id),
+        String(req.user?.username),
+        req.body.comment
+      );
+      res.sendStatus(201);
+    } catch (error) {
+      console.error(error);
+      res.status(401).json({ message: "Cafe doesn't exists" });
+    }
+  },
+];

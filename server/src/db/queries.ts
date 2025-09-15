@@ -26,6 +26,7 @@ export async function getUserById(id: number) {
     where: {
       id: id,
     },
+    select: { id: true, email: true, username: true },
   });
   return user;
 }
@@ -168,4 +169,21 @@ export async function deleteUsersReview(cafeId: number, userId: number) {
       },
     },
   });
+}
+
+export async function postNewComment(
+  cafeId: number,
+  userId: number,
+  username: string,
+  message: string
+) {
+  // await prisma.comment.create({
+  //   data: {
+  //     cafeId,
+  //     userId,
+  //     username,
+  //     message,
+  //   },
+  // });
+  return;
 }
