@@ -36,7 +36,9 @@ function UserIcon({ username }: { username: string }) {
       style={{ backgroundColor: randomColor }}
       className="rounded-full w-9 h-9 flex items-center justify-center shrink-0"
     >
-      <p className="font-extrabold text-lg text-white">{username[0]}</p>
+      <p className="font-extrabold text-lg text-white">
+        {username[0].toUpperCase()}
+      </p>
     </div>
   );
 }

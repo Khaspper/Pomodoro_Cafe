@@ -40,7 +40,7 @@ const router = createBrowserRouter([
     element: (
       <>
         <ProtectedRoute>
-          <div className="flex flex-col">
+          <div className="flex flex-col h-screen">
             <Navbar isOpen={true} />
             <Account />
           </div>

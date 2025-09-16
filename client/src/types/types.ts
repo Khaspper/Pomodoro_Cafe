@@ -55,3 +55,9 @@ export type TComment = {
   message: string;
   createdAt: string;
 };
+
+export type TUserInfo = {
+  id: number;
+  email: string;
+  username: string;
+};

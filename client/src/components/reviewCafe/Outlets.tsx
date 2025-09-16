@@ -18,7 +18,7 @@ export default function Outlets({
       <div>
         <h1 className="font-bold text-xl">How many outlets?</h1>
         <div className="flex gap-2 items-center">
-          <h2 className="font-bold text-xs text-[#b1372c]">One Outlet is 1</h2>{" "}
+          <h2 className="font-bold text-xs text-[#b1372c]">One Outlet is 2</h2>{" "}
           <div className="text-xs border-1">
             <IoIosOutlet />
             <IoIosOutlet />

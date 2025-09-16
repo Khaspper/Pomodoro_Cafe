@@ -56,7 +56,6 @@ export default function ReviewCafe({ cafeID }: { cafeID: number }) {
       //   setErrors(newErrors);
       //   throw new Error(`Login failed`, errors);
       // }
-      navigate(-1);
     } catch (error) {
       console.error(error);
     } finally {
