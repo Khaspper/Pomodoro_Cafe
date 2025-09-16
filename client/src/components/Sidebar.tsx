@@ -5,10 +5,10 @@ import CafePerks from "./sidebar/CafePerks";
 import Vibe from "./sidebar/Vibe";
 import type { TCafe, TCafeData, TSidebarContainer } from "../types/types";
 import CafeComments from "./sidebar/comments/CafeComments";
-// import ReviewCafeButton from "./sidebar/ReviewCafeButton";
 import Tabs from "./sidebar/Tabs";
 import ProtectedRoute from "./ProtectedRoute";
 import ReviewCafe from "../pages/ReviewCafe";
+import { FiChevronsRight } from "react-icons/fi";
 
 export default function Sidebar({
   selectedCafe,
@@ -21,6 +21,7 @@ export default function Sidebar({
   open: boolean;
   setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
+  const [reviewAdded, setReviewAdded] = useState(false);
   const [cafeData, setCafeData] = useState<TCafeData | null>(null);
   const [showData, setShowData] = useState(0);
 
@@ -44,8 +45,9 @@ export default function Sidebar({
         setCafeData({ ...data, freeWifi });
       }
     }
+    setReviewAdded(false);
     fetchData();
-  }, [selectedCafe]);
+  }, [selectedCafe, reviewAdded]);
 
   return (
     <div className="flex bg-indigo-50 z-2">
@@ -65,7 +67,10 @@ export default function Sidebar({
           <CafeComments selectedCafe={selectedCafe} />
         ) : (
           <ProtectedRoute>
-            <ReviewCafe cafeID={selectedCafe.id} />
+            <ReviewCafe
+              cafeID={selectedCafe.id}
+              setReviewAdded={setReviewAdded}
+            />
           </ProtectedRoute>
         )}
       </SidebarContainer>
@@ -129,12 +134,20 @@ function ToggleClose({
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
-    <motion.button
-      layout
+    <button
       onClick={() => setOpen((pv) => !pv)}
-      className="absolute bottom-0 left-0 right-0 border-t border-slate-300 bg-slate-100"
+      className="absolute bottom-0 left-0 right-0 border-t transition-colors hover:bg-[#b54329]"
     >
-      {open ? "Close Sidebar" : "Open Sidebar"}
-    </motion.button>
+      <div className="flex items-center justify-center p-2 cursor-pointer">
+        <div className="grid size-10 place-content-center text-2xl text-[#fae3ad]">
+          <FiChevronsRight
+            className={`transition-transform ${open && "rotate-180"}`}
+          />
+        </div>
+        {open && (
+          <span className="text-xl font-medium text-[#fae3ad]">Hide</span>
+        )}
+      </div>
+    </button>
   );
 }

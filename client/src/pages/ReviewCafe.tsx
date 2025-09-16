@@ -7,7 +7,13 @@ import Seating from "../components/reviewCafe/Seating";
 import FreeWifi from "../components/reviewCafe/FreeWifi";
 import { sendReview } from "../services/ReviewCafe";
 
-export default function ReviewCafe({ cafeID }: { cafeID: number }) {
+export default function ReviewCafe({
+  cafeID,
+  setReviewAdded,
+}: {
+  cafeID: number;
+  setReviewAdded: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   // Form inputs
   const [wifiStrength, setWifiStrength] = useState(3);
   const [outletAmounts, setOutletAmounts] = useState(3);
@@ -16,6 +22,7 @@ export default function ReviewCafe({ cafeID }: { cafeID: number }) {
   // Form inputs
 
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   // const cafeID = useParams();
   const navigate = useNavigate();
 
@@ -35,6 +42,11 @@ export default function ReviewCafe({ cafeID }: { cafeID: number }) {
         seating,
         freeWifi
       );
+      setReviewAdded(true);
+      setSuccess(true);
+      setTimeout(() => {
+        setSuccess(false);
+      }, 3000);
       console.log("ReviewCafe: handleSubmit: response");
       console.log(response);
 
@@ -88,13 +100,16 @@ export default function ReviewCafe({ cafeID }: { cafeID: number }) {
               Go Home
             </button>
             <button
-              className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-[40%] md:w-[35%] text-[#1a1a1a]"
+              className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-fit md:w-[35%] text-[#1a1a1a]"
               type="submit"
               disabled={loading}
             >
               {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
+          <p className="text-2xl text-center">
+            {success ? "Review posted" : ""}
+          </p>
         </form>
       </div>
     </div>
