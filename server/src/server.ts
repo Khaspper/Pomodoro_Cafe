@@ -68,3 +68,9 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
+
+// TODO: I have to validate all inputs
+// TODO: Like the review cafe comments
+// TODO: and the account page
+// TODO: I also have to implement a update account part...
+// TODO: Finally style the page professionally...
