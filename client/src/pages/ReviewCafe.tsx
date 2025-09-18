@@ -104,21 +104,29 @@ export default function ReviewCafe({
               {loading ? "Submitting..." : "Submit"}
             </button>
           </div>
-          <p className="text-2xl text-center">
-            {success ? "Review posted" : ""}
+          <p className={`text-2xl text-center ${success ? "block" : "hidden"}`}>
+            Review posted
           </p>
           {/* Errors */}
-          <p className="text-[#df9f3f]">
-            {errors.freeWifi ? errors.freeWifi : ""}
+          <p
+            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+          >
+            {errors.freeWifi}
           </p>
-          <p className="text-[#df9f3f]">
-            {errors.seating ? errors.seating : ""}
+          <p
+            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+          >
+            {errors.seating}
           </p>
-          <p className="text-[#df9f3f]">
-            {errors.outlets ? errors.outlets : ""}
+          <p
+            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+          >
+            {errors.outlets}
           </p>
-          <p className="text-[#df9f3f]">
-            {errors.wifiStrength ? errors.wifiStrength : ""}
+          <p
+            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+          >
+            {errors.wifiStrength}
           </p>
         </form>
       </div>
