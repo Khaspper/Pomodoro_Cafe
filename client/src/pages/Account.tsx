@@ -107,7 +107,7 @@ export default function Account() {
           <label htmlFor="confirmPassword">Confirm New Password</label>
           <input
             className="outline-none border-3 rounded-lg border-[#1a1a1a] px-2 py-2"
-            type="confirmPassword"
+            type="password"
             name="confirmPassword"
             id="confirmPassword"
             value={confirmPassword}
