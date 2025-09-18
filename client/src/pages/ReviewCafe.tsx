@@ -6,6 +6,7 @@ import Outlets from "../components/reviewCafe/Outlets";
 import Seating from "../components/reviewCafe/Seating";
 import FreeWifi from "../components/reviewCafe/FreeWifi";
 import { sendReview } from "../services/ReviewCafe";
+import type { TNewErrors, TReceivedErrors } from "../types/types";
 
 export default function ReviewCafe({
   cafeID,
@@ -21,6 +22,8 @@ export default function ReviewCafe({
   const [freeWifi, setFreeWifi] = useState(1);
   // Form inputs
 
+  const [errors, setErrors] = useState<TNewErrors>({});
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   // const cafeID = useParams();
@@ -35,7 +38,6 @@ export default function ReviewCafe({
     event.preventDefault();
     try {
       const response = await sendReview(
-        // String(cafeID.id),
         String(cafeID),
         wifiStrength,
         outletAmounts,
@@ -47,27 +49,22 @@ export default function ReviewCafe({
       setTimeout(() => {
         setSuccess(false);
       }, 3000);
-      console.log("ReviewCafe: handleSubmit: response");
-      console.log(response);
 
       //TODO:
       //! This part should do the validation
-      // const errors = await signupUser(
-      //   username,
-      //   email,
-      //   password,
-      //   confirmPassword
-      // );
-      // if (errors && errors.length !== 0) {
-      //   const newErrors: TNewErrors = {};
-      //   errors.forEach((error: TReceivedErrors) => {
-      //     const path = error.path;
-      //     const msg = error.msg;
-      //     newErrors[path] = msg;
-      //   });
-      //   setErrors(newErrors);
-      //   throw new Error(`Login failed`, errors);
-      // }
+      if (!response.ok) {
+        const reviewErrors = (await response.json()).errors;
+        const newErrors: TNewErrors = {};
+        console.log("reviewErrors");
+        console.log(reviewErrors);
+        reviewErrors.forEach((error: TReceivedErrors) => {
+          const path = error.path;
+          const msg = error.msg;
+          newErrors[path] = msg;
+        });
+        setErrors(newErrors);
+        throw new Error(`Login failed`, reviewErrors);
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -109,6 +106,19 @@ export default function ReviewCafe({
           </div>
           <p className="text-2xl text-center">
             {success ? "Review posted" : ""}
+          </p>
+          {/* Errors */}
+          <p className="text-[#df9f3f]">
+            {errors.freeWifi ? errors.freeWifi : ""}
+          </p>
+          <p className="text-[#df9f3f]">
+            {errors.seating ? errors.seating : ""}
+          </p>
+          <p className="text-[#df9f3f]">
+            {errors.outlets ? errors.outlets : ""}
+          </p>
+          <p className="text-[#df9f3f]">
+            {errors.wifiStrength ? errors.wifiStrength : ""}
           </p>
         </form>
       </div>

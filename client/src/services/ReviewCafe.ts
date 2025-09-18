@@ -5,12 +5,12 @@ export async function sendReview(
   seating: number,
   freeWifi: number
 ) {
+  // const outlets = 8;
   const response = await fetch(`http://localhost:3000/cafe/review/${cafeID}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ wifiStrength, outlets, seating, freeWifi }),
     credentials: "include",
   });
-  console.log("Review Cafe API");
-  console.log(response);
+  return response;
 }

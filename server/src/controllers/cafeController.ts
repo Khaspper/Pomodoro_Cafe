@@ -17,30 +17,33 @@ import { RequestHandler } from "express";
 
 const validateReview: RequestHandler[] = [
   body("wifiStrength")
-    .trim()
-    .notEmpty()
-    .withMessage("How did you even get it to be empty?")
-    .isString()
-    .withMessage("This has to be a string")
-    .isIn(["Great", "Good", "Bad"])
-    .withMessage("Wifi strength must be either 'Great', 'Good' or 'Bad'"),
+    .isEmpty()
+    // .notEmpty()
+    .withMessage("Wifi Strength input cannot be empty.")
+    .isInt({ min: 1, max: 3 })
+    .toInt()
+    .withMessage("Wifi Strength has to be or between 1 and 5."),
   body("outlets")
-    .notEmpty()
+    .isEmpty()
+    // .notEmpty()
     .withMessage("Outlet input cannot be empty.")
     .isInt({ min: 1, max: 5 })
     .toInt()
-    .withMessage("Seating input has to be a whole number."),
+    .withMessage("Outlet has to be or between 1 and 5."),
   body("seating")
-    .notEmpty()
+    .isEmpty()
+    // .notEmpty()
     .withMessage("Seating input cannot be empty.")
     .isInt({ min: 1, max: 5 })
     .toInt()
-    .withMessage("Seating input has to be a whole number."),
+    .withMessage("Seating has to be or between 1 and 5."),
   body("freeWifi")
-    .notEmpty()
-    .withMessage("Free wifi input cannot be empty.")
-    .isBoolean()
-    .withMessage("Free wifi input has to be a boolean"),
+    // .notEmpty()
+    .isEmpty()
+    .withMessage("Free Wifi input cannot be empty.")
+    .isInt({ min: 0, max: 1 })
+    .toInt()
+    .withMessage("Free Wifi has to be either 0 or 1."),
 ];
 
 const validateComment: RequestHandler[] = [
@@ -92,7 +95,7 @@ export const postCafeReview = [
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(401).json(errors);
+        return res.status(400).json(errors);
       }
       //?⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄ This is reviews and user and cafe id to tie the reviews to ⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄
       const userID = Number(req.user?.id);

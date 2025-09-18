@@ -39,6 +39,10 @@ export type TNewErrors = {
   confirmPassword?: string;
   spotifyLink?: string;
   comment?: string;
+  freeWifi?: string;
+  seating?: string;
+  outlets?: string;
+  wifiStrength?: string;
 };
 
 export type TCommentProps = {
