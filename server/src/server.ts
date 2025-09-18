@@ -75,6 +75,6 @@ app.listen(PORT, () => {
 // // TODO: I also have to implement a update account part...
 // TODO: Finally style the page professionally...
 // ? Make the screen scrollable when it overflows y axis
-// TODO: Date/Time formatting
+// // TODO: Date/Time formatting
 // TODO: Change the loading thing
 // TODO: google form

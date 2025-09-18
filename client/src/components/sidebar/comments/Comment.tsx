@@ -1,11 +1,10 @@
 import type { TCommentProps } from "../../../types/types";
 
 export function Comment({ username, comment, createdAt }: TCommentProps) {
-  const time = createdAt.toLocaleTimeString();
-  const date = createdAt.toDateString();
-  //TODO: I need to format the date and time
-  // Maybe get rid of the day of the week in date (mon, tues, wed... etc)
-  // Also def get rid of the seconds in the time
+  const formatted = createdAt.toLocaleString("en-US", {
+    dateStyle: "long", // "September 15, 2025"
+    timeStyle: "short", // "4:08 PM"
+  });
   return (
     <section className="flex gap-2">
       <UserIcon username={username} />
@@ -13,7 +12,7 @@ export function Comment({ username, comment, createdAt }: TCommentProps) {
         <h1 className="font-extrabold">
           {username}{" "}
           <span className="text-xs font-medium text-[#b54228]">
-            {date}, {time}
+            {formatted}
           </span>
         </h1>
         <p className="p-3 rounded-b-2xl rounded-tr-2xl bg-[#0a3353] text-lg">
