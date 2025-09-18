@@ -15,6 +15,34 @@ import {
 import { body, validationResult } from "express-validator";
 import { RequestHandler } from "express";
 
+const validateReview: RequestHandler[] = [
+  body("wifiStrength")
+    .trim()
+    .notEmpty()
+    .withMessage("How did you even get it to be empty?")
+    .isString()
+    .withMessage("This has to be a string")
+    .isIn(["Great", "Good", "Bad"])
+    .withMessage("Wifi strength must be either 'Great', 'Good' or 'Bad'"),
+  body("outlets")
+    .notEmpty()
+    .withMessage("Outlet input cannot be empty.")
+    .isInt({ min: 1, max: 5 })
+    .toInt()
+    .withMessage("Seating input has to be a whole number."),
+  body("seating")
+    .notEmpty()
+    .withMessage("Seating input cannot be empty.")
+    .isInt({ min: 1, max: 5 })
+    .toInt()
+    .withMessage("Seating input has to be a whole number."),
+  body("freeWifi")
+    .notEmpty()
+    .withMessage("Free wifi input cannot be empty.")
+    .isBoolean()
+    .withMessage("Free wifi input has to be a boolean"),
+];
+
 const validateComment: RequestHandler[] = [
   body("comment")
     .trim()
@@ -58,50 +86,57 @@ export async function getCafeReviews(req: Request, res: Response) {
   return res.status(200).send(response);
 }
 
-export async function postCafeReview(req: Request, res: Response) {
-  try {
-    //?⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄ This is reviews and user and cafe id to tie the reviews to ⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄
-    const userID = Number(req.user?.id);
-    const cafeID = Number(req.params.id);
-    const wifiStrength = req.body.wifiStrength;
-    const outlets = req.body.outlets;
-    const seating = req.body.seating;
-    const freeWifi = req.body.freeWifi;
-    //?^^^^^^^^^^^^^^^ This is reviews and user and cafe id to tie the reviews to ^^^^^^^^^^^^^^^
+export const postCafeReview = [
+  ...validateReview,
+  async (req: Request, res: Response) => {
+    try {
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(401).json(errors);
+      }
+      //?⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄ This is reviews and user and cafe id to tie the reviews to ⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄⌄
+      const userID = Number(req.user?.id);
+      const cafeID = Number(req.params.id);
+      const wifiStrength = req.body.wifiStrength;
+      const outlets = req.body.outlets;
+      const seating = req.body.seating;
+      const freeWifi = req.body.freeWifi;
+      //?^^^^^^^^^^^^^^^ This is reviews and user and cafe id to tie the reviews to ^^^^^^^^^^^^^^^
 
-    // Checks to see if the cafe even exists
-    const exists = await getCafeById(cafeID);
-    let message = "Received Review!";
-    if (exists) {
-      const userReview = await getReviewFromUser(cafeID, userID);
-      if (userReview) {
-        await deleteUsersReview(cafeID, userID);
-        console.log("Previous review has been deleted");
-        message = "Previous review has been deleted";
-      }
-      await reviewCafe(
-        userID,
-        cafeID,
-        wifiStrength,
-        freeWifi,
-        outlets,
-        seating
-      );
-      // After adding the review we need to update the CafeStats model
-      const cafe = await getCafeStats(cafeID);
-      if (!cafe) {
-        await createCafeStats(cafeID);
+      // Checks to see if the cafe even exists
+      const exists = await getCafeById(cafeID);
+      let message = "Received Review!";
+      if (exists) {
+        const userReview = await getReviewFromUser(cafeID, userID);
+        if (userReview) {
+          await deleteUsersReview(cafeID, userID);
+          console.log("Previous review has been deleted");
+          message = "Previous review has been deleted";
+        }
+        await reviewCafe(
+          userID,
+          cafeID,
+          wifiStrength,
+          freeWifi,
+          outlets,
+          seating
+        );
+        // After adding the review we need to update the CafeStats model
+        const cafe = await getCafeStats(cafeID);
+        if (!cafe) {
+          await createCafeStats(cafeID);
+        } else {
+          await updateCafeStats(cafeID);
+        }
+        return res.status(201).json({ message });
       } else {
-        await updateCafeStats(cafeID);
+        throw new Error("Error in postCafeReview.");
       }
-      return res.status(201).json({ message });
-    } else {
-      throw new Error("Error in postCafeReview.");
+    } catch (error) {
+      console.error("Cafe doesn't exist", error);
     }
-  } catch (error) {
-    console.error("Cafe doesn't exist", error);
-  }
-}
+  },
+];
 
 export const postNewSong = [
   ...validateSpotifyLink,
