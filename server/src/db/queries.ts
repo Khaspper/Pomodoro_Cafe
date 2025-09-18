@@ -194,3 +194,52 @@ export async function getComments(cafeId: number) {
     orderBy: { createdAt: "desc" },
   });
 }
+
+async function changeUsernameInComments(
+  oldUsername: string,
+  newUsername: string
+) {
+  await prisma.comment.updateMany({
+    where: {
+      username: oldUsername,
+    },
+    data: {
+      username: newUsername,
+    },
+  });
+}
+
+export async function updateUsername(oldUsername: string, newUsername: string) {
+  await prisma.user.update({
+    where: {
+      username: oldUsername,
+    },
+    data: {
+      username: newUsername,
+    },
+  });
+  await changeUsernameInComments(oldUsername, newUsername);
+}
+
+export async function updateEmail(oldEmail: string, newEmail: string) {
+  await prisma.user.update({
+    where: {
+      email: oldEmail,
+    },
+    data: {
+      email: newEmail,
+    },
+  });
+}
+
+export async function updatePassword(userId: number, password: string) {
+  const newPassword = await bcrypt.hash(password, 10);
+  await prisma.user.update({
+    where: {
+      id: userId,
+    },
+    data: {
+      password: newPassword,
+    },
+  });
+}

@@ -71,7 +71,6 @@ export const addNewUser = [
         }
         res.sendStatus(201);
       });
-      throw response;
     } catch (error) {
       console.error("Could not create users", error);
       res.sendStatus(400);
