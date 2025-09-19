@@ -27,10 +27,22 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
     })();
   }, [navigate]);
 
-  //TODO: Maybe put a loading gif instead
   // if (checking) {
   //  console.log("Loading");
   // }
   if (checking) return <h1 className="text-4xl">Loading</h1>;
   return allowed ? children : null;
 }
+
+//TODO: Maybe put a loading gif instead
+/* if (checking) {
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <img
+        src="/tomato-spinner.gif"
+        alt="Loading..."
+        className="w-20 h-20 animate-spin"
+      />
+    </div>
+  );
+} */

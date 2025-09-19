@@ -52,6 +52,7 @@ export default function MyMap() {
   ];
 
   if (cafes.length === 0) {
+    // TODO: Do this loading thing too!!
     return <h1 className="text-5xl text-black">Loading</h1>;
   }
 
