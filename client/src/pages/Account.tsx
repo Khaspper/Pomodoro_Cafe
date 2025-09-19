@@ -12,6 +12,7 @@ export default function Account() {
   useEffect(() => {
     async function getUserInfo() {
       try {
+        // TODO: Replace hardcoded localhost URL with environment variable
         const response = await fetch("http://localhost:3000/account", {
           credentials: "include",
         });
@@ -38,8 +39,11 @@ export default function Account() {
         newPassword,
         confirmPassword
       );
+      // TODO: Remove console.log statements - use proper logging
       console.log("Account: response");
       console.log(response);
+      // TODO: Implement proper error handling and user feedback
+      // TODO: Add success/error messages for account updates
       // const errors = await loginUser(email, password);
       // if (!errors.ok) {
       //   setLoginError("Email or Password is incorrect.");

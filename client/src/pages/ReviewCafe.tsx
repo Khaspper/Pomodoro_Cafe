@@ -50,11 +50,12 @@ export default function ReviewCafe({
         setSuccess(false);
       }, 3000);
 
-      //TODO:
-      //! This part should do the validation
+      // TODO: Move validation logic to a separate function
+      // TODO: Add proper error handling for different error types
       if (!response.ok) {
         const reviewErrors = (await response.json()).errors;
         const newErrors: TNewErrors = {};
+        // TODO: Remove console.log statements - use proper logging
         console.log("reviewErrors");
         console.log(reviewErrors);
         reviewErrors.forEach((error: TReceivedErrors) => {
@@ -108,23 +109,26 @@ export default function ReviewCafe({
             Review posted
           </p>
           {/* Errors */}
+          {/* TODO: Fix error display logic - all errors check for freeWifi instead of their own field */}
           <p
             className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
           >
             {errors.freeWifi}
           </p>
           <p
-            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+            className={`text-[#df9f3f] ${errors.seating ? "block" : "hidden"}`}
           >
             {errors.seating}
           </p>
           <p
-            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+            className={`text-[#df9f3f] ${errors.outlets ? "block" : "hidden"}`}
           >
             {errors.outlets}
           </p>
           <p
-            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
+            className={`text-[#df9f3f] ${
+              errors.wifiStrength ? "block" : "hidden"
+            }`}
           >
             {errors.wifiStrength}
           </p>

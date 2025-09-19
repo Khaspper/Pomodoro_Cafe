@@ -27,11 +27,14 @@ export default function Sidebar({
 
   useEffect(() => {
     async function fetchData() {
+      // TODO: Replace hardcoded localhost URL with environment variable
       const response = await fetch(
         `http://localhost:3000/cafe/${selectedCafe.id}/inputs`
       );
       if (response.status === 204) {
+        // TODO: Replace console.error with proper error handling/logging
         console.error("No reviews for this cafe!");
+        // TODO: Consider showing a message to user instead of default values
         setCafeData({
           cafeId: selectedCafe.id,
           wifiCount: 3,

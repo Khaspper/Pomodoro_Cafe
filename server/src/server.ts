@@ -16,13 +16,16 @@ import passport from "passport";
 
 dotenv.config();
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
+// TODO: Use environment variable for PORT instead of hardcoded value
 
 // This is so we can send data to our front end
 const corsOptions = {
   origin: ["http://localhost:5173", "http://localhost:4173"],
   credentials: true,
 };
+// TODO: Replace hardcoded localhost URLs with environment variables
+// TODO: Add production URLs to CORS origins
 app.use(cors(corsOptions));
 // This is so we can send data to our front end
 
@@ -70,11 +73,15 @@ app.listen(PORT, () => {
 });
 
 // // TODO: I have to validate all inputs
-// // Todo: Validate the Review cafe section
+// // TODO: Validate the Review cafe section
 // // TODO: and the account page
 // // TODO: I also have to implement a update account part...
 // TODO: Finally style the page professionally...
-// ? Make the screen scrollable when it overflows y axis
+// TODO: Make the screen scrollable when it overflows y axis
 // // TODO: Date/Time formatting
-// TODO: Change the loading thing
+// // TODO: Change the loading thing
 // TODO: google form
+// TODO: Add rate limiting middleware
+// TODO: Add request logging middleware
+// TODO: Add health check endpoint
+// TODO: Add proper error handling middleware

@@ -9,6 +9,7 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
+      // TODO: Replace hardcoded localhost URL with environment variable
       const res = await fetch("http://localhost:3000/account", {
         credentials: "include",
       });
@@ -27,6 +28,7 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
     })();
   }, [navigate]);
 
+  // TODO: Replace with proper loading spinner component
   // if (checking) {
   //  console.log("Loading");
   // }

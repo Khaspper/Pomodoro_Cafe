@@ -19,7 +19,7 @@ export default function Vibe({
   const [loading, setLoading] = useState(false);
   const [spotifyLink, setSpotifyLink] = useState("");
   const [errors, setErrors] = useState<TNewErrors>({});
-  const [editMode, setEditMode] = useState(false); // <- NEW
+  const [editMode, setEditMode] = useState(false); // TODO: Remove comment and clean up code
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();

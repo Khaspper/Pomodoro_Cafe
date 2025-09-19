@@ -32,6 +32,7 @@ export default function MyMap() {
     if (!cafeUpdated) return;
 
     (async () => {
+      // TODO: Replace hardcoded localhost URL with environment variable
       const response = await fetch("http://localhost:3000/cafe");
       if (!response.ok) throw new Error("Failed to get all cafes.");
 
@@ -46,13 +47,15 @@ export default function MyMap() {
     })();
   }, [cafeUpdated, selectedCafe.id]);
 
+  // TODO: Make bounds configurable via environment variables instead of hardcoded
   const lasVegasBounds: [[number, number], [number, number]] = [
     [-115.486398, 35.916672],
     [-114.907841, 36.411699],
   ];
 
   if (cafes.length === 0) {
-    // TODO: Do this loading thing too!!
+    // TODO: Replace with proper loading spinner component
+    // TODO: Add error handling for failed API calls
     return <h1 className="text-5xl text-black">Loading</h1>;
   }
 

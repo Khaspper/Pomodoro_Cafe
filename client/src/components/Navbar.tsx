@@ -17,9 +17,11 @@ export default function Navbar({ isOpen }: TNavbarProps) {
   useEffect(() => {
     (async () => {
       try {
+        // TODO: Replace hardcoded localhost URL with environment variable
         const res = await fetch("http://localhost:3000/account", {
           credentials: "include",
         });
+        // TODO: Replace generic error message with proper error handling
         if (!res.ok) throw new Error("UH OH SOMETHING WENT WRONG");
         setAllowed(true);
       } catch {
