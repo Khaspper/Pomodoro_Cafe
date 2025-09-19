@@ -17,29 +17,25 @@ import { RequestHandler } from "express";
 
 const validateReview: RequestHandler[] = [
   body("wifiStrength")
-    .isEmpty()
-    // .notEmpty()
+    .notEmpty()
     .withMessage("Wifi Strength input cannot be empty.")
     .isInt({ min: 1, max: 3 })
     .toInt()
     .withMessage("Wifi Strength has to be or between 1 and 5."),
   body("outlets")
-    .isEmpty()
-    // .notEmpty()
+    .notEmpty()
     .withMessage("Outlet input cannot be empty.")
     .isInt({ min: 1, max: 5 })
     .toInt()
     .withMessage("Outlet has to be or between 1 and 5."),
   body("seating")
-    .isEmpty()
-    // .notEmpty()
+    .notEmpty()
     .withMessage("Seating input cannot be empty.")
     .isInt({ min: 1, max: 5 })
     .toInt()
     .withMessage("Seating has to be or between 1 and 5."),
   body("freeWifi")
-    // .notEmpty()
-    .isEmpty()
+    .notEmpty()
     .withMessage("Free Wifi input cannot be empty.")
     .isInt({ min: 0, max: 1 })
     .toInt()
