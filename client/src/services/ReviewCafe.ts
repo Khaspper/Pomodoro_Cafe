@@ -5,7 +5,6 @@ export async function sendReview(
   seating: number,
   freeWifi: number
 ) {
-  // const outlets = 8;
   const response = await fetch(`http://localhost:3000/cafe/review/${cafeID}`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
