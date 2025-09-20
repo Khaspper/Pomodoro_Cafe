@@ -83,7 +83,7 @@ app.listen(PORT, () => {
 // // TODO: Make the screen scrollable when it overflows y axis
 // // TODO: Date/Time formatting
 // // TODO: Change the loading thing
-// TODO: google form
+// // TODO: google form
 // // TODO: Add rate limiting middleware
 // // TODO: Add request logging middleware
 // // TODO: Add health check endpoint
