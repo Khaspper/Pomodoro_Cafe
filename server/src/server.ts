@@ -18,7 +18,9 @@ import morgan from "morgan";
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3000;
-// TODO: Use environment variable for PORT instead of hardcoded value
+
+// Trust proxy for accurate IP addresses (important for rate limiting)
+app.set("trust proxy", 1);
 
 // This is so we can send data to our front end
 const corsOptions = {
@@ -84,7 +86,7 @@ app.listen(PORT, () => {
 // // TODO: Date/Time formatting
 // // TODO: Change the loading thing
 // TODO: google form
-// TODO: Add rate limiting middleware
+// // TODO: Add rate limiting middleware
 // TODO: Add request logging middleware
 // TODO: Add health check endpoint
 // TODO: Add proper error handling middleware

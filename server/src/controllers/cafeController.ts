@@ -12,10 +12,17 @@ import {
   postNewComment,
   getComments,
 } from "../db/queries";
-import { body, validationResult } from "express-validator";
+import { body, param, validationResult } from "express-validator";
 import { RequestHandler } from "express";
 
 const validateReview: RequestHandler[] = [
+  param("id").isInt().withMessage("Cafe ID must be a valid integer"),
+  body().custom((value, { req }) => {
+    if (!req.user?.id || isNaN(Number(req.user.id))) {
+      throw new Error("User must be authenticated");
+    }
+    return true;
+  }),
   body("wifiStrength")
     .notEmpty()
     .withMessage("Wifi Strength input cannot be empty.")
@@ -102,7 +109,6 @@ export const postCafeReview = [
       const freeWifi = req.body.freeWifi;
       //?^^^^^^^^^^^^^^^ This is reviews and user and cafe id to tie the reviews to ^^^^^^^^^^^^^^^
 
-      // TODO: Add input validation and sanitization for userID and cafeID
       // TODO: Add rate limiting to prevent spam reviews
 
       // Checks to see if the cafe even exists

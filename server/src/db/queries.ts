@@ -4,7 +4,6 @@ import bcrypt from "bcrypt";
 const prisma = new PrismaClient();
 
 export async function getUserByUsername(username: string) {
-  // TODO: Add input validation and sanitization
   const user = await prisma.user.findUnique({
     where: {
       username: username,
@@ -14,7 +13,6 @@ export async function getUserByUsername(username: string) {
 }
 
 export async function getUserByEmail(email: string) {
-  // TODO: Add email validation
   const user = await prisma.user.findUnique({
     where: {
       email: email,
