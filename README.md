@@ -37,3 +37,5 @@ Fri Sept 19th 7:10 PM Greetings... it's been a while XD I'm pretty much done wit
 sorry for not updating... I just got really lazy... but today I am going to try to get rid of all the todos as fast as I can
 so I can deploy this project... but I am going to start off with learning what Logging is... I am researching about morgan
 right now!
+
+Fri Sept 19th 8:23 PM Just put dotenv client side... yeah yeah yeah i know i know
