@@ -19,7 +19,7 @@ export default function Vibe({
   const [loading, setLoading] = useState(false);
   const [spotifyLink, setSpotifyLink] = useState("");
   const [errors, setErrors] = useState<TNewErrors>({});
-  const [editMode, setEditMode] = useState(false); // TODO: Remove comment and clean up code
+  const [editMode, setEditMode] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -39,8 +39,8 @@ export default function Vibe({
         throw new Error("Song Input Failed");
       } else {
         setErrors({});
-        setCafeUpdated(true); // upstream refetch
-        setEditMode(false); // close form
+        setCafeUpdated(true);
+        setEditMode(false);
       }
     } catch (e) {
       console.error(e);

@@ -38,10 +38,8 @@ async function seed() {
       }
     });
   } else {
-    // TODO: Replace console.log with proper error handling
     console.log("I COULDN'T RETRIEVE IT!!");
   }
-  // TODO: Use environment variables for test user credentials
   const hashPassword = await bcrypt.hash("validPassword", 10);
   await prisma.user.create({
     data: {

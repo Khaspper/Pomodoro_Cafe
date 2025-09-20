@@ -51,7 +51,6 @@ export default function MyMap() {
     })();
   }, [cafeUpdated, selectedCafe.id]);
 
-  // TODO: Make bounds configurable via environment variables instead of hardcoded
   const lasVegasBounds: [[number, number], [number, number]] = [
     [-115.486398, 35.916672],
     [-114.907841, 36.411699],
