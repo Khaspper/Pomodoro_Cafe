@@ -8,8 +8,15 @@ type TProtectedProps = { children: React.ReactNode };
 export default function ProtectedRoute({ children }: TProtectedProps) {
   const [checking, setChecking] = useState(true);
   const [allowed, setAllowed] = useState(false);
+  const [showLoading, setShowLoading] = useState(false);
   const navigate = useNavigate();
+
   useEffect(() => {
+    // Show loading spinner after 2 seconds
+    const timer = setTimeout(() => {
+      setShowLoading(true);
+    }, 2000);
+
     (async () => {
       if (import.meta.env.DEV) {
         console.log("ProtectedRoute: Checking authentication...");
@@ -32,26 +39,31 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
         });
       }
       setChecking(false);
+      clearTimeout(timer); // Clear timer if auth check completes before 2 seconds
     })();
+
+    return () => clearTimeout(timer); // Cleanup timer on unmount
   }, [navigate]);
 
-  // TODO: Replace with proper loading spinner component
-  // if (checking) {
-  //  console.log("Loading");
-  // }
-  if (checking) return <h1 className="text-4xl">Loading</h1>;
+  // Show loading spinner after 2 seconds OR if still checking
+  if (checking && showLoading) {
+    return (
+      <div className="flex items-center justify-center h-full bg-[#1c1917] text-center">
+        <div className="">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#b6432a] border-t-transparent mx-auto mb-4 relative">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl">🍅</span>
+            </div>
+          </div>
+          <h1 className="text-2xl text-[#fae3ad] font-semibold">
+            Checking access...
+          </h1>
+          <p className="text-[#fae3ad] mt-2">
+            Please wait while we verify your login
+          </p>
+        </div>
+      </div>
+    );
+  }
   return allowed ? children : null;
 }
-
-//TODO: Maybe put a loading gif instead
-/* if (checking) {
-  return (
-    <div className="flex justify-center items-center h-screen">
-      <img
-        src="/tomato-spinner.gif"
-        alt="Loading..."
-        className="w-20 h-20 animate-spin"
-      />
-    </div>
-  );
-} */
