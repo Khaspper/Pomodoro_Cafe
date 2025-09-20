@@ -13,7 +13,6 @@
     "@tailwindcss/vite": "^4.1.12",
     "@types/react-icons": "^2.2.7",
     "@vis.gl/react-maplibre": "^8.0.4",
-    "dotenv": "^17.2.2",
     "framer-motion": "^12.23.12",
     "maplibre-gl": "^5.7.0",
     "react": "^19.1.1",

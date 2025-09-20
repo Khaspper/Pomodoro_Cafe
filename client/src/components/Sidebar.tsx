@@ -9,11 +9,8 @@ import Tabs from "./sidebar/Tabs";
 import ProtectedRoute from "./ProtectedRoute";
 import ReviewCafe from "../pages/ReviewCafe";
 import { FiChevronsRight } from "react-icons/fi";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export default function Sidebar({
   selectedCafe,

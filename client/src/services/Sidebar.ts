@@ -1,8 +1,4 @@
-import dotenv from "dotenv";
-
-dotenv.config();
-
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export async function addSong(spotifyLink: string, cafeID: number) {
   const response = await fetch(`${BACKEND_URL}/cafe/${cafeID}/inputs/song`, {

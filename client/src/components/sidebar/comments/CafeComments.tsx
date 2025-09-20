@@ -2,11 +2,8 @@ import { useEffect, useState } from "react";
 import type { TCafe, TComment } from "../../../types/types";
 import { Comment } from "./Comment";
 import CommentInput from "./CommentInput";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export default function CafeComments({
   selectedCafe,

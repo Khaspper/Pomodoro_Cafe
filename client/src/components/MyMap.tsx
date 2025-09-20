@@ -1,12 +1,9 @@
 import { Map, Marker, useMap } from "@vis.gl/react-maplibre";
 import { useState, useEffect } from "react";
-import dotenv from "dotenv";
 import Sidebar from "./Sidebar";
 import "maplibre-gl/dist/maplibre-gl.css";
 
-dotenv.config();
-
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 type TCafe = {
   brand: string | null;

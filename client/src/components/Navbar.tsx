@@ -3,11 +3,8 @@ import { useEffect, useState } from "react";
 import pomodoroLogo from "../assets/pomodoro-cafe.png";
 import { logout } from "../services/Navbar";
 import { motion } from "framer-motion";
-import dotenv from "dotenv";
 
-dotenv.config();
-
-const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 type TNavbarProps = {
   isOpen: boolean;
