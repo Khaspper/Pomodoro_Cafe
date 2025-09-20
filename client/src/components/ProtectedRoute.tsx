@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 type TProtectedProps = { children: React.ReactNode };
 
@@ -9,8 +14,7 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
-      // TODO: Replace hardcoded localhost URL with environment variable
-      const res = await fetch("http://localhost:3000/account", {
+      const res = await fetch(`${BACKEND_URL}/account`, {
         credentials: "include",
       });
       if (res.ok) {

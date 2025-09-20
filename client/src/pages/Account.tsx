@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateUser } from "../services/Account";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 export default function Account() {
   const [loading, setLoading] = useState(false);
@@ -12,8 +17,7 @@ export default function Account() {
   useEffect(() => {
     async function getUserInfo() {
       try {
-        // TODO: Replace hardcoded localhost URL with environment variable
-        const response = await fetch("http://localhost:3000/account", {
+        const response = await fetch(`${BACKEND_URL}/account`, {
           credentials: "include",
         });
         if (!response.ok) {

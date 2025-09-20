@@ -1,7 +1,12 @@
 import { Map, Marker, useMap } from "@vis.gl/react-maplibre";
 import { useState, useEffect } from "react";
+import dotenv from "dotenv";
 import Sidebar from "./Sidebar";
 import "maplibre-gl/dist/maplibre-gl.css";
+
+dotenv.config();
+
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 type TCafe = {
   brand: string | null;
@@ -32,8 +37,7 @@ export default function MyMap() {
     if (!cafeUpdated) return;
 
     (async () => {
-      // TODO: Replace hardcoded localhost URL with environment variable
-      const response = await fetch("http://localhost:3000/cafe");
+      const response = await fetch(`${BACKEND_URL}/cafe`);
       if (!response.ok) throw new Error("Failed to get all cafes.");
 
       const cafes = await response.json();

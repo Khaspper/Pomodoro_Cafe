@@ -9,6 +9,11 @@ import Tabs from "./sidebar/Tabs";
 import ProtectedRoute from "./ProtectedRoute";
 import ReviewCafe from "../pages/ReviewCafe";
 import { FiChevronsRight } from "react-icons/fi";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3000";
 
 export default function Sidebar({
   selectedCafe,
@@ -27,9 +32,8 @@ export default function Sidebar({
 
   useEffect(() => {
     async function fetchData() {
-      // TODO: Replace hardcoded localhost URL with environment variable
       const response = await fetch(
-        `http://localhost:3000/cafe/${selectedCafe.id}/inputs`
+        `${BACKEND_URL}/cafe/${selectedCafe.id}/inputs`
       );
       if (response.status === 204) {
         // TODO: Replace console.error with proper error handling/logging

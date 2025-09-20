@@ -10,7 +10,6 @@ import Account from "./pages/Account.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 // import ReviewCafe from "./pages/ReviewCafe.tsx";
 
-// TODO: Implement proper authentication check on app load
 // I was thinking here that maybe we should call the backend and check
 
 const router = createBrowserRouter([
