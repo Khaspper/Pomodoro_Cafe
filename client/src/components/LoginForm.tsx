@@ -29,7 +29,7 @@ export default function LoginForm() {
     try {
       const errors = await loginUser(email, password);
       if (!errors.ok) {
-        setLoginError("Email or Password is incorrect.");
+        setLoginError(errors.error);
         throw new Error(`Login failed`, errors);
       } else {
         setLoginError("");
