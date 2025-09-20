@@ -13,6 +13,7 @@ import signupRouter from "./routes/signup";
 import accountRouter from "./routes/Account";
 import cafeRouter from "./routes/cafe";
 import passport from "passport";
+import morgan from "morgan";
 
 dotenv.config();
 const app = express();
@@ -28,6 +29,8 @@ const corsOptions = {
 // TODO: Add production URLs to CORS origins
 app.use(cors(corsOptions));
 // This is so we can send data to our front end
+
+app.use(morgan("dev"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
