@@ -15,7 +15,7 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
     // Show loading spinner after 2 seconds
     const timer = setTimeout(() => {
       setShowLoading(true);
-    }, 2000);
+    }, 500);
 
     (async () => {
       if (import.meta.env.DEV) {
@@ -39,7 +39,7 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
         });
       }
       setChecking(false);
-      clearTimeout(timer); // Clear timer if auth check completes before 2 seconds
+      clearTimeout(timer);
     })();
 
     return () => clearTimeout(timer); // Cleanup timer on unmount

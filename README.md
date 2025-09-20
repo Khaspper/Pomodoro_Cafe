@@ -47,3 +47,5 @@ I thought it was so easy UNTIL I SAW MY TERMINAL TALKING BOUT IPv6
 WHAT THE FREAK!!!! I'm on a time crunch so I will ignore this for now and will get back to this later...
 Rate limit: 1
 Markus: 0
+
+Fri Sept 19th 12:45 PM I will add health check API idk I saw a youtube video talking about it so now I just wanna implement it

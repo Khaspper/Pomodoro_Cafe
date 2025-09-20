@@ -14,6 +14,7 @@ import accountRouter from "./routes/account";
 import cafeRouter from "./routes/cafe";
 import passport from "passport";
 import morgan from "morgan";
+import healthRouter from "./routes/health";
 
 dotenv.config();
 const app = express();
@@ -58,18 +59,15 @@ app.use("/login", loginRouter);
 app.use("/signup", signupRouter);
 app.use("/account", accountRouter);
 app.use("/cafe", cafeRouter);
+app.use("/health", healthRouter);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  // Log the error for debugging purposes (e.g., to a file or console)
   console.error(err.stack);
+  const statusCode = 500;
 
-  // Set the status code for the response
-  const statusCode = 500; // Use custom status if available, otherwise default to 500 (Internal Server Error)
-
-  // Send a JSON response to the client
   res.status(statusCode).json({
     status: "error",
-    message: err.message || "Something went wrong!", // Use custom message if available
+    message: err.message || "Something went wrong!",
   });
 });
 
@@ -87,6 +85,6 @@ app.listen(PORT, () => {
 // // TODO: Change the loading thing
 // TODO: google form
 // // TODO: Add rate limiting middleware
-// TODO: Add request logging middleware
-// TODO: Add health check endpoint
-// TODO: Add proper error handling middleware
+// // TODO: Add request logging middleware
+// // TODO: Add health check endpoint
+// // TODO: Add proper error handling middleware

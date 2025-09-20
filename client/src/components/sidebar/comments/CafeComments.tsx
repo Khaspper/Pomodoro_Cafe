@@ -12,8 +12,13 @@ export default function CafeComments({
 }) {
   const [comments, setComments] = useState<TComment[]>([]);
   const [submit, setSubmit] = useState(false);
+  const [checking, setChecking] = useState(true);
+  const [showLoading, setShowLoading] = useState(false);
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowLoading(true);
+    }, 500);
     const abortController = new AbortController();
 
     async function getComments() {
@@ -42,11 +47,34 @@ export default function CafeComments({
     }
     getComments();
     setSubmit(false);
-
+    setChecking(false);
+    clearTimeout(timer);
     return () => {
       abortController.abort();
+      clearTimeout(timer);
     };
   }, [selectedCafe.id, submit]);
+
+  if (checking && showLoading) {
+    return (
+      <div className="flex items-center justify-center h-full bg-[#1c1917] text-center">
+        <div className="">
+          <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#b6432a] border-t-transparent mx-auto mb-4 relative">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl">🍅</span>
+            </div>
+          </div>
+          <h1 className="text-2xl text-[#fae3ad] font-semibold">
+            Grabbing the comments...
+          </h1>
+          <p className="text-[#fae3ad] mt-2">
+            Please wait while we grab the comments
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     // And delete the background
     <>
@@ -57,21 +85,18 @@ export default function CafeComments({
         <CommentInput cafeID={selectedCafe.id} setSubmit={setSubmit} />
         {/* Then we use the state variable to loop through
         them and load them and pass data to the Comment component */}
+
         <div className="flex gap-2 flex-col p-2">
-          {comments.length !== 0 ? (
-            comments.map((comment) => {
-              return (
-                <Comment
-                  key={comment.id}
-                  username={comment.username}
-                  comment={comment.message}
-                  createdAt={new Date(comment.createdAt)}
-                />
-              );
-            })
-          ) : (
-            <p>Be the first one to comment!</p>
-          )}
+          {comments.map((comment) => {
+            return (
+              <Comment
+                key={comment.id}
+                username={comment.username}
+                comment={comment.message}
+                createdAt={new Date(comment.createdAt)}
+              />
+            );
+          })}
         </div>
       </div>
     </>
