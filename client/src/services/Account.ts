@@ -6,7 +6,7 @@ export async function updateUser(
   password: string,
   confirmPassword: string
 ) {
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log("Account: Updating User info...");
   }
   const response = await fetch(`${BACKEND_URL}/account`, {
@@ -15,7 +15,7 @@ export async function updateUser(
     credentials: "include",
     body: JSON.stringify({ username, email, password, confirmPassword }),
   });
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log(`Account: Updating User info response: ${response.status}`);
   }
   return response;

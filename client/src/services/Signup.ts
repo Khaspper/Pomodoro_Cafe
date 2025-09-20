@@ -6,7 +6,7 @@ export async function signupUser(
   password: string,
   confirmPassword: string
 ) {
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log(`Signing user up with:`);
     console.log(`Username: ${username}`);
     console.log(`Email: ${email}`);
@@ -16,7 +16,7 @@ export async function signupUser(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ username, email, password, confirmPassword }),
   });
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log(`Sign up Response: ${response.status}`);
   }
   const data = await response.json();

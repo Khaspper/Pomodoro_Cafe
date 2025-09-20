@@ -19,18 +19,18 @@ export default function Navbar({ isOpen }: TNavbarProps) {
   useEffect(() => {
     (async () => {
       try {
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log("Navbar: Checking authentication...");
         }
         const res = await fetch(`${BACKEND_URL}/account`, {
           credentials: "include",
         });
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log("Navbar: Auth response ", res.status);
         }
 
         if (res.status === 401) {
-          if (import.meta.env.DEV)
+          if (import.meta.env.DEV === true)
             console.log("Navbar: not authenticated (401)");
           setAllowed(false);
           return;

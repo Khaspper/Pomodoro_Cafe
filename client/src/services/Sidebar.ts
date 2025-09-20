@@ -1,7 +1,7 @@
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export async function addSong(spotifyLink: string, cafeID: number) {
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log("Add Song: Adding song...");
   }
   const response = await fetch(`${BACKEND_URL}/cafe/${cafeID}/inputs/song`, {
@@ -10,7 +10,7 @@ export async function addSong(spotifyLink: string, cafeID: number) {
     credentials: "include",
     body: JSON.stringify({ spotifyLink, cafeID }),
   });
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log(`Add Song: Response: ${response.status}`);
   }
 

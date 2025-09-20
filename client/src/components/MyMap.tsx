@@ -40,11 +40,11 @@ export default function MyMap() {
         setFailedToGetCafes(false);
         setErrorMessage(null);
 
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log("Fetching cafes...");
         }
         const response = await fetch(`${BACKEND_URL}/cafe`);
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log("Cafe Response: ", response.status);
         }
         if (!response.ok) {

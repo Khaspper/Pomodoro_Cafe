@@ -32,7 +32,7 @@ export default function Sidebar({
 
     async function fetchData() {
       try {
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log(`Sidebar: Fetching Cafe(${selectedCafe.id}) inputs...`);
         }
         const response = await fetch(
@@ -40,7 +40,7 @@ export default function Sidebar({
           { signal: abortController.signal }
         );
 
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log(`Sidebar: response status: ${response.status}`);
         }
 
@@ -147,6 +147,13 @@ function CafeInformation({
       <div className="flex flex-col gap-2">
         <CafePerks cafeData={cafeData} />
         <Vibe selectedCafe={selectedCafe} setCafeUpdated={setCafeUpdated} />
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfzlGs7YKGTL3ioCKYLOsX9yDZu-diytfiTR2tJ0COnN3yHvA/viewform"
+          target="blank"
+          className="text-2xl font-extrabold bg-[#fae3ad] text-[#b64128] text-center inline p-4 rounded-2xl hover:scale-105 transform transition-transform duration-150"
+        >
+          Review the website here!
+        </a>
       </div>
     </>
   );

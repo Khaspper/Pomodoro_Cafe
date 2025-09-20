@@ -18,13 +18,13 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
     }, 500);
 
     (async () => {
-      if (import.meta.env.DEV) {
+      if (import.meta.env.DEV === true) {
         console.log("ProtectedRoute: Checking authentication...");
       }
       const res = await fetch(`${BACKEND_URL}/account`, {
         credentials: "include",
       });
-      if (import.meta.env.DEV) {
+      if (import.meta.env.DEV === true) {
         console.log("ProtectedRoute: Auth response: ", res.status);
       }
       if (res.ok) {

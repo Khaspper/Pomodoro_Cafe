@@ -17,13 +17,13 @@ export default function Account() {
   useEffect(() => {
     async function getUserInfo() {
       try {
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log("Account: Fetching User info...");
         }
         const response = await fetch(`${BACKEND_URL}/account`, {
           credentials: "include",
         });
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log(`Account: Response status: ${response.status}`);
         }
         if (!response.ok) {

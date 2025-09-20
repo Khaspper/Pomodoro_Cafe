@@ -23,7 +23,7 @@ export default function CafeComments({
 
     async function getComments() {
       try {
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log(
             `Cafe Comments: Fetching Cafe(${selectedCafe.id}) Comments...`
           );
@@ -32,7 +32,7 @@ export default function CafeComments({
           `${BACKEND_URL}/cafe/${selectedCafe.id}/comments`,
           { signal: abortController.signal }
         );
-        if (import.meta.env.DEV) {
+        if (import.meta.env.DEV === true) {
           console.log(`Cafe Comments: response status: ${response.status}`);
         }
         const newComments = (await response.json()).comments;

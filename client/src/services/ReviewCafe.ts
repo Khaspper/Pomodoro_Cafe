@@ -7,7 +7,7 @@ export async function sendReview(
   seating: number,
   freeWifi: number
 ) {
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log("Cafe Review: Fetching Cafe Review...");
   }
   const response = await fetch(`${BACKEND_URL}/cafe/review/${cafeID}`, {
@@ -16,7 +16,7 @@ export async function sendReview(
     body: JSON.stringify({ wifiStrength, outlets, seating, freeWifi }),
     credentials: "include",
   });
-  if (import.meta.env.DEV) {
+  if (import.meta.env.DEV === true) {
     console.log(`Cafe Review: Response: ${response.status}`);
   }
   return response;
