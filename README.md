@@ -32,3 +32,8 @@ Thu Sept 4th 3:25 AM FREAK google maps I don't wanna pay...
 So shout out to Syntax and CJ on youtube I found
 OpenFreeMaps and I found react-maplibre!!!!
 I so EXCITED
+
+Fri Sept 19th 7:10 PM Greetings... it's been a while XD I'm pretty much done with the project... I just need to polish it
+sorry for not updating... I just got really lazy... but today I am going to try to get rid of all the todos as fast as I can
+so I can deploy this project... but I am going to start off with learning what Logging is... I am researching about morgan
+right now!
