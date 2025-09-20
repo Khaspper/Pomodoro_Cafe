@@ -39,3 +39,5 @@ so I can deploy this project... but I am going to start off with learning what L
 right now!
 
 Fri Sept 19th 8:23 PM Just put dotenv client side... yeah yeah yeah i know i know
+
+Fri Sept 19th 10:34 PM Omg I have to add rate limiting
