@@ -19,13 +19,33 @@ export default function Navbar({ isOpen }: TNavbarProps) {
   useEffect(() => {
     (async () => {
       try {
+        if (import.meta.env.DEV) {
+          console.log("Navbar: Checking authentication...");
+        }
         const res = await fetch(`${BACKEND_URL}/account`, {
           credentials: "include",
         });
-        // TODO: Replace generic error message with proper error handling
-        if (!res.ok) throw new Error("UH OH SOMETHING WENT WRONG");
+        if (import.meta.env.DEV) {
+          console.log("Navbar: Auth response ", res.status);
+        }
+
+        if (res.status === 401) {
+          if (import.meta.env.DEV)
+            console.log("Navbar: not authenticated (401)");
+          setAllowed(false);
+          return;
+        }
+
+        if (!res.ok) {
+          setAllowed(false);
+          console.error("Navbar: unexpected status:", res.status);
+          throw new Error("UH OH SOMETHING WENT WRONG");
+        }
         setAllowed(true);
-      } catch {
+      } catch (error) {
+        if ((error as { name?: string })?.name !== "AbortError") {
+          console.error("Navbar: auth check failed:", error);
+        }
         setAllowed(false);
       } finally {
         setChecking(false);

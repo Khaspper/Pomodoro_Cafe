@@ -29,13 +29,17 @@ export default function Sidebar({
 
   useEffect(() => {
     async function fetchData() {
+      if (import.meta.env.DEV) {
+        console.log(`Sidebar: Fetching Cafe(${selectedCafe.id}) inputs...`);
+      }
       const response = await fetch(
         `${BACKEND_URL}/cafe/${selectedCafe.id}/inputs`
       );
+      if (import.meta.env.DEV) {
+        console.log(`Sidebar: response status: ${response.status}`);
+      }
       if (response.status === 204) {
-        // TODO: Replace console.error with proper error handling/logging
         console.error("No reviews for this cafe!");
-        // TODO: Consider showing a message to user instead of default values
         setCafeData({
           cafeId: selectedCafe.id,
           wifiCount: 3,

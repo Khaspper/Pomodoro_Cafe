@@ -34,13 +34,18 @@ export default function MyMap() {
     if (!cafeUpdated) return;
 
     (async () => {
+      if (import.meta.env.DEV) {
+        console.log("Fetching cafes...");
+      }
       const response = await fetch(`${BACKEND_URL}/cafe`);
+      if (import.meta.env.DEV) {
+        console.log("Cafe Response: ", response.status);
+      }
       if (!response.ok) throw new Error("Failed to get all cafes.");
 
       const cafes = await response.json();
       setCafes(cafes);
 
-      // ⬇️ keep selectedCafe in sync with DB
       const updated = cafes.find((cafe: TCafe) => cafe.id === selectedCafe.id);
       if (updated) setSelectedCafe(updated);
 

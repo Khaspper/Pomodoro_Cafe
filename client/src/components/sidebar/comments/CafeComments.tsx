@@ -15,9 +15,17 @@ export default function CafeComments({
 
   useEffect(() => {
     async function getComments() {
+      if (import.meta.env.DEV) {
+        console.log(
+          `Cafe Comments: Fetching Cafe(${selectedCafe.id}) Comments...`
+        );
+      }
       const response = await fetch(
         `${BACKEND_URL}/cafe/${selectedCafe.id}/comments`
       );
+      if (import.meta.env.DEV) {
+        console.log(`Cafe Comments: response status: ${response.status}`);
+      }
       const newComments = (await response.json()).comments;
       setComments(newComments);
     }

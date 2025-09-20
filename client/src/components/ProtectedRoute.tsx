@@ -11,9 +11,15 @@ export default function ProtectedRoute({ children }: TProtectedProps) {
   const navigate = useNavigate();
   useEffect(() => {
     (async () => {
+      if (import.meta.env.DEV) {
+        console.log("ProtectedRoute: Checking authentication...");
+      }
       const res = await fetch(`${BACKEND_URL}/account`, {
         credentials: "include",
       });
+      if (import.meta.env.DEV) {
+        console.log("ProtectedRoute: Auth response: ", res.status);
+      }
       if (res.ok) {
         setAllowed(true);
       } else {
