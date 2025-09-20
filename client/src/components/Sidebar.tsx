@@ -84,20 +84,26 @@ export default function Sidebar({
         showData={showData}
       >
         {showData === 0 ? (
-          <CafeInformation
-            selectedCafe={selectedCafe}
-            cafeData={cafeData}
-            setCafeUpdated={setCafeUpdated}
-          />
-        ) : showData === 1 ? (
-          <CafeComments selectedCafe={selectedCafe} />
-        ) : (
-          <ProtectedRoute>
-            <ReviewCafe
-              cafeID={selectedCafe.id}
-              setReviewAdded={setReviewAdded}
+          <div className="p-4 grow">
+            <CafeInformation
+              selectedCafe={selectedCafe}
+              cafeData={cafeData}
+              setCafeUpdated={setCafeUpdated}
             />
-          </ProtectedRoute>
+          </div>
+        ) : showData === 1 ? (
+          <div className="p-4 grow">
+            <CafeComments selectedCafe={selectedCafe} />
+          </div>
+        ) : (
+          <div className="p-4 grow">
+            <ProtectedRoute>
+              <ReviewCafe
+                cafeID={selectedCafe.id}
+                setReviewAdded={setReviewAdded}
+              />
+            </ProtectedRoute>
+          </div>
         )}
       </SidebarContainer>
     </div>
@@ -115,14 +121,16 @@ function SidebarContainer({
     <motion.nav
       className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1c1917] ${
         open ? "w-screen md:w-[400px]" : "w-fit"
-      }`}
+      } overflow-y-auto no-scrollbar relative flex flex-col`}
       layout
     >
       <Navbar isOpen={open} />
       {open && <Tabs showData={showData} setShowData={setShowData} />}
-      <div className="p-4">
+      <div className={`flex flex-col grow ${!open && "justify-end"}`}>
         {open && children}
-        <ToggleClose open={open} setOpen={setOpen} />
+        <div className="">
+          <ToggleClose open={open} setOpen={setOpen} />
+        </div>
       </div>
     </motion.nav>
   );
@@ -139,7 +147,7 @@ function CafeInformation({
 }) {
   return (
     <>
-      <section className="text-[#1a1a1a] bg-[#d02329] p-2 rounded-lg">
+      <section className="text-[#1a1a1a] bg-[#d02329] p-2 rounded-lg overflow-y-auto">
         <h1 className="text-3xl text-center font-extrabold">
           {selectedCafe.name}
         </h1>
@@ -169,7 +177,7 @@ function ToggleClose({
   return (
     <button
       onClick={() => setOpen((pv) => !pv)}
-      className="absolute bottom-0 left-0 right-0 border-t transition-colors hover:bg-[#b54329]"
+      className="sticky bottom-0 left-0 right-0 border-t transition-colors hover:bg-[#b54329] container bg-[#1c1917] shrink-0"
     >
       <div className="flex items-center justify-center p-2 cursor-pointer">
         <div className="grid size-10 place-content-center text-2xl text-[#fae3ad]">
