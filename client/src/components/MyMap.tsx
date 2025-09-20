@@ -18,6 +18,8 @@ type TCafe = {
 export default function MyMap() {
   const [cafes, setCafes] = useState([]);
   const [open, setOpen] = useState(false);
+  const [failedToGetCafes, setFailedToGetCafes] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [selectedCafe, setSelectedCafe] = useState<TCafe>({
     brand: null,
     id: 201,
@@ -34,22 +36,37 @@ export default function MyMap() {
     if (!cafeUpdated) return;
 
     (async () => {
-      if (import.meta.env.DEV) {
-        console.log("Fetching cafes...");
+      try {
+        setFailedToGetCafes(false);
+        setErrorMessage(null);
+
+        if (import.meta.env.DEV) {
+          console.log("Fetching cafes...");
+        }
+        const response = await fetch(`${BACKEND_URL}/cafe`);
+        if (import.meta.env.DEV) {
+          console.log("Cafe Response: ", response.status);
+        }
+        if (!response.ok) {
+          throw new Error(`Failed to get cafes. Status: ${response.status}`);
+        }
+
+        const cafes = await response.json();
+        setCafes(cafes);
+
+        const updated = cafes.find(
+          (cafe: TCafe) => cafe.id === selectedCafe.id
+        );
+        if (updated) setSelectedCafe(updated);
+
+        setCafeUpdated(false);
+      } catch (error) {
+        console.error("Error fetching cafes:", error);
+        setFailedToGetCafes(true);
+        setErrorMessage(
+          error instanceof Error ? error.message : "Unknown error occurred"
+        );
       }
-      const response = await fetch(`${BACKEND_URL}/cafe`);
-      if (import.meta.env.DEV) {
-        console.log("Cafe Response: ", response.status);
-      }
-      if (!response.ok) throw new Error("Failed to get all cafes.");
-
-      const cafes = await response.json();
-      setCafes(cafes);
-
-      const updated = cafes.find((cafe: TCafe) => cafe.id === selectedCafe.id);
-      if (updated) setSelectedCafe(updated);
-
-      setCafeUpdated(false);
     })();
   }, [cafeUpdated, selectedCafe.id]);
 
@@ -58,12 +75,32 @@ export default function MyMap() {
     [-114.907841, 36.411699],
   ];
 
-  if (cafes.length === 0) {
-    // TODO: Replace with proper loading spinner component
-    // TODO: Add error handling for failed API calls
-    return <h1 className="text-5xl text-black">Loading</h1>;
-  }
+  const handleRetry = () => {
+    setCafeUpdated(true);
+  };
 
+  if (failedToGetCafes) {
+    return (
+      <div className="flex items-center justify-center h-screen bg-gray-100">
+        <div className="text-center max-w-md mx-auto p-6">
+          <div className="text-6xl mb-4">☕❌</div>
+          <h1 className="text-2xl font-bold text-red-600 mb-2">
+            Failed to Load Cafes
+          </h1>
+          <p className="text-gray-600 mb-4">
+            {errorMessage ||
+              "Something went wrong while loading the cafe data."}
+          </p>
+          <button
+            onClick={handleRetry}
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="relative">
       <Map
