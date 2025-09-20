@@ -95,7 +95,7 @@ export default function ReviewCafe({
               Go Home
             </button>
             <button
-              className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-fit md:w-[35%] text-[#1a1a1a]"
+              className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-fit md:w-[35%] text-[#1a1a1a] px-3"
               type="submit"
               disabled={loading}
             >

@@ -128,9 +128,7 @@ function SidebarContainer({
       {open && <Tabs showData={showData} setShowData={setShowData} />}
       <div className={`flex flex-col grow ${!open && "justify-end"}`}>
         {open && children}
-        <div className="">
-          <ToggleClose open={open} setOpen={setOpen} />
-        </div>
+        <ToggleClose open={open} setOpen={setOpen} />
       </div>
     </motion.nav>
   );
