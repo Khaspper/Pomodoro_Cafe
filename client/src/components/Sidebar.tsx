@@ -28,33 +28,51 @@ export default function Sidebar({
   const [showData, setShowData] = useState(0);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     async function fetchData() {
-      if (import.meta.env.DEV) {
-        console.log(`Sidebar: Fetching Cafe(${selectedCafe.id}) inputs...`);
-      }
-      const response = await fetch(
-        `${BACKEND_URL}/cafe/${selectedCafe.id}/inputs`
-      );
-      if (import.meta.env.DEV) {
-        console.log(`Sidebar: response status: ${response.status}`);
-      }
-      if (response.status === 204) {
-        console.error("No reviews for this cafe!");
-        setCafeData({
-          cafeId: selectedCafe.id,
-          wifiCount: 3,
-          outletCount: 5,
-          seatingCount: 5,
-          freeWifi: true,
-        });
-      } else {
-        const data = await response.json();
-        const freeWifi = data.wifiFreeCount > 0 ? true : false;
-        setCafeData({ ...data, freeWifi });
+      try {
+        if (import.meta.env.DEV) {
+          console.log(`Sidebar: Fetching Cafe(${selectedCafe.id}) inputs...`);
+        }
+        const response = await fetch(
+          `${BACKEND_URL}/cafe/${selectedCafe.id}/inputs`,
+          { signal: abortController.signal }
+        );
+
+        if (import.meta.env.DEV) {
+          console.log(`Sidebar: response status: ${response.status}`);
+        }
+
+        if (response.status === 204) {
+          console.error("No reviews for this cafe!");
+          setCafeData({
+            cafeId: selectedCafe.id,
+            wifiCount: 3,
+            outletCount: 5,
+            seatingCount: 5,
+            freeWifi: true,
+          });
+        } else {
+          const data = await response.json();
+          const freeWifi = data.wifiFreeCount > 0 ? true : false;
+          setCafeData({ ...data, freeWifi });
+        }
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+          console.log("Sidebar: Fetch aborted");
+        } else {
+          console.error("Sidebar: Fetch error:", error);
+        }
       }
     }
+
     setReviewAdded(false);
     fetchData();
+
+    return () => {
+      abortController.abort();
+    };
   }, [selectedCafe, reviewAdded]);
 
   return (

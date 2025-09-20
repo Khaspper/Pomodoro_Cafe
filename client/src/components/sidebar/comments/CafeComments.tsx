@@ -14,23 +14,38 @@ export default function CafeComments({
   const [submit, setSubmit] = useState(false);
 
   useEffect(() => {
+    const abortController = new AbortController();
+
     async function getComments() {
-      if (import.meta.env.DEV) {
-        console.log(
-          `Cafe Comments: Fetching Cafe(${selectedCafe.id}) Comments...`
+      try {
+        if (import.meta.env.DEV) {
+          console.log(
+            `Cafe Comments: Fetching Cafe(${selectedCafe.id}) Comments...`
+          );
+        }
+        const response = await fetch(
+          `${BACKEND_URL}/cafe/${selectedCafe.id}/comments`,
+          { signal: abortController.signal }
         );
+        if (import.meta.env.DEV) {
+          console.log(`Cafe Comments: response status: ${response.status}`);
+        }
+        const newComments = (await response.json()).comments;
+        setComments(newComments);
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") {
+          console.log("Cafe Comments: Fetch aborted");
+        } else {
+          console.error("Cafe Comments: Fetch error:", error);
+        }
       }
-      const response = await fetch(
-        `${BACKEND_URL}/cafe/${selectedCafe.id}/comments`
-      );
-      if (import.meta.env.DEV) {
-        console.log(`Cafe Comments: response status: ${response.status}`);
-      }
-      const newComments = (await response.json()).comments;
-      setComments(newComments);
     }
     getComments();
     setSubmit(false);
+
+    return () => {
+      abortController.abort();
+    };
   }, [selectedCafe.id, submit]);
   return (
     // And delete the background
