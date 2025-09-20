@@ -40,7 +40,7 @@ export default function SignupForm() {
           newErrors[path] = msg;
         });
         setErrors(newErrors);
-        throw new Error(`Login failed`, errors);
+        throw new Error(`Sign up failed`, errors);
       }
       navigate("/login");
     } catch (error) {

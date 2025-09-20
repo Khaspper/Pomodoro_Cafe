@@ -41,3 +41,9 @@ right now!
 Fri Sept 19th 8:23 PM Just put dotenv client side... yeah yeah yeah i know i know
 
 Fri Sept 19th 10:34 PM Omg I have to add rate limiting
+
+Fri Sept 19th 11:51 PM Rate limiting... I hate you why is it so complicated
+I thought it was so easy UNTIL I SAW MY TERMINAL TALKING BOUT IPv6
+WHAT THE FREAK!!!! I'm on a time crunch so I will ignore this for now and will get back to this later...
+Rate limit: 1
+Markus: 0

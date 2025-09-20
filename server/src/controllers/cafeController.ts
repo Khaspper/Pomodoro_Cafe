@@ -109,8 +109,6 @@ export const postCafeReview = [
       const freeWifi = req.body.freeWifi;
       //?^^^^^^^^^^^^^^^ This is reviews and user and cafe id to tie the reviews to ^^^^^^^^^^^^^^^
 
-      // TODO: Add rate limiting to prevent spam reviews
-
       // Checks to see if the cafe even exists
       const exists = await getCafeById(cafeID);
       let message = "Received Review!";
@@ -142,8 +140,6 @@ export const postCafeReview = [
       }
     } catch (error) {
       console.error("Cafe doesn't exist", error);
-      // TODO: Add proper error handling and return appropriate error response
-      // TODO: Log errors to a proper logging service instead of console
     }
   },
 ];
