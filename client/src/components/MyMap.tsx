@@ -111,6 +111,7 @@ export default function MyMap() {
         }}
         style={{ width: "100vw", height: "100vh" }}
         mapStyle="https://tiles.openfreemap.org/styles/liberty"
+        // mapStyle="https://tiles.openfreemap.org/styles/dark"
         maxBounds={lasVegasBounds}
         attributionControl={false}
       >
