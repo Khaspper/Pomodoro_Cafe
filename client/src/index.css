@@ -7,3 +7,35 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.bg-light-background-color {
+  background-color: #f5f1e5;
+}
+
+.bg-light-primary-color {
+  background-color: #ccb68f;
+}
+
+.bg-light-secondary-color {
+  background-color: #aec69f;
+}
+
+.bg-light-accent-color {
+  background-color: #e74c1d;
+}
+
+.bg-light-text-color {
+  background-color: #1c1c1c;
+}
+
+.bg-dark-text-color {
+  background-color: #e7dfce;
+}
+
+.bg-dark-background-color {
+  background-color: #111111;
+}
+
+.bg-dark-primary-color {
+  background-color: #2f2a24;
+}
