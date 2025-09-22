@@ -8,6 +8,8 @@
   scrollbar-width: none; /* Firefox */
 }
 
+/* Light */
+
 .bg-light-background-color {
   background-color: #f5f1e5;
 }
@@ -16,21 +18,13 @@
   background-color: #ccb68f;
 }
 
-.bg-light-secondary-color {
-  background-color: #aec69f;
-}
-
-.bg-light-accent-color {
-  background-color: #e74c1d;
-}
-
 .bg-light-text-color {
   background-color: #1c1c1c;
 }
 
-.bg-dark-text-color {
-  background-color: #e7dfce;
-}
+/* Light */
+
+/* Dark */
 
 .bg-dark-background-color {
   background-color: #111111;
@@ -38,4 +32,22 @@
 
 .bg-dark-primary-color {
   background-color: #2f2a24;
+}
+
+.bg-dark-text-color {
+  background-color: #e7dfce;
+}
+
+.bg-dark-shadow-color {
+  background-color: #e7dfce;
+}
+
+/* Dark */
+
+.bg-secondary-color {
+  background-color: #aec69f;
+}
+
+.bg-accent-color {
+  background-color: #e74c1d;
 }
