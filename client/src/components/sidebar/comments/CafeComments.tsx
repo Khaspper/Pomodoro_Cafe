@@ -88,28 +88,27 @@ export default function CafeComments({
 
   return (
     // And delete the background
-    <>
-      <h1 className="text-center font-extrabold text-2xl bg-[#4c6850] p-2 mt-2 rounded-t-2xl">
-        Comments
-      </h1>
-      <div className="flex flex-col gap-4">
-        <CommentInput cafeID={selectedCafe.id} setSubmit={setSubmit} />
-        {/* Then we use the state variable to loop through
+    <div className="flex flex-col gap-4">
+      <CommentInput
+        lightMode={lightMode}
+        cafeID={selectedCafe.id}
+        setSubmit={setSubmit}
+      />
+      {/* Then we use the state variable to loop through
         them and load them and pass data to the Comment component */}
 
-        <div className="flex gap-2 flex-col p-2">
-          {comments.map((comment) => {
-            return (
-              <Comment
-                key={comment.id}
-                username={comment.username}
-                comment={comment.message}
-                createdAt={new Date(comment.createdAt)}
-              />
-            );
-          })}
-        </div>
+      <div className="flex gap-2 flex-col p-2">
+        {comments.map((comment) => {
+          return (
+            <Comment
+              key={comment.id}
+              username={comment.username}
+              comment={comment.message}
+              createdAt={new Date(comment.createdAt)}
+            />
+          );
+        })}
       </div>
-    </>
+    </div>
   );
 }

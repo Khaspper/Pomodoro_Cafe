@@ -2,11 +2,14 @@ import { useState } from "react";
 import { IoSend } from "react-icons/io5";
 import { sendComment } from "../../../services/Cafe";
 import type { TNewErrors } from "../../../types/types";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 export default function CommentInput({
   cafeID,
   setSubmit,
+  lightMode,
 }: {
+  lightMode: boolean;
   cafeID: number;
   setSubmit: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -47,7 +50,14 @@ export default function CommentInput({
       <form
         action="POST"
         onSubmit={handleSubmit}
-        className="text-white flex rounded-b-2xl border-b-2 border-l-2 border-r-2 border-[#4c6850]"
+        className={`flex ${
+          lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+        } py-1`}
+        style={{
+          boxShadow: `0px 3px 2px ${
+            lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+          }`,
+        }}
       >
         <input
           type="text"
@@ -61,9 +71,9 @@ export default function CommentInput({
         />
         <button type="submit">
           {loading ? (
-            "Posting"
+            <AiOutlineLoading3Quarters className="text-xl m-2 mr-3 light-text-color animate-spin" />
           ) : (
-            <IoSend className="rotate-270 text-xl m-2 mr-3 text-[#fae3ad]" />
+            <IoSend className="rotate-270 text-xl m-2 mr-3 light-text-color" />
           )}
         </button>
       </form>

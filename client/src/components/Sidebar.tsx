@@ -100,7 +100,7 @@ export default function Sidebar({
             />
           </div>
         ) : showData === 1 ? (
-          <div className="p-4 grow">
+          <div className="grow">
             <CafeComments lightMode={lightMode} selectedCafe={selectedCafe} />
           </div>
         ) : (
