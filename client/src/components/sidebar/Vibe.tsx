@@ -6,24 +6,23 @@ import type { TNewErrors } from "../../types/types";
 type TApiError = { path: keyof TNewErrors; msg: string };
 
 export default function Vibe({
+  lightMode,
   selectedCafe,
   setCafeUpdated,
 }: {
+  lightMode: boolean;
   selectedCafe: TCafe;
   setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const embedSrc = selectedCafe.spotifyLink
     ? toSpotifyEmbed(selectedCafe.spotifyLink)
     : null;
-
-  const [loading, setLoading] = useState(false);
   const [spotifyLink, setSpotifyLink] = useState("");
   const [errors, setErrors] = useState<TNewErrors>({});
   const [editMode, setEditMode] = useState(false);
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setLoading(true);
     try {
       const response = await addSong(spotifyLink.trim(), selectedCafe.id);
       if (!response.ok) {
@@ -44,14 +43,63 @@ export default function Vibe({
       }
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoading(false);
     }
   }
 
   return (
-    <section className="text-[#fbe3ad] bg-[#043253] p-4 rounded-lg mt-2 mb-2 grow">
-      <h1 className="text-center text-2xl mb-2 font-extrabold">Vibe</h1>
+    <section
+      className={`p-2 px-3 mt-6 mb-2 grow light-text-color ${
+        lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+      }`}
+      style={{
+        boxShadow: `3px 3px 2px ${
+          lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+        }`,
+      }}
+    >
+      <div className="container relative">
+        <h1 className="text-center text-2xl mb-3 font-extrabold">Vibe</h1>{" "}
+        {embedSrc && !editMode ? (
+          <button
+            type="button"
+            onClick={() => {
+              setSpotifyLink(selectedCafe.spotifyLink ?? "");
+              setEditMode(true);
+            }}
+            className={`text-[12px] w-[14px] h-[14px] font-extrabold rounded-full text-[#fae3ad] cursor-pointer hover:scale-105 transition-transform flex justify-center items-center ${
+              lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
+            } absolute top-0 right-0`}
+          >
+            +
+          </button>
+        ) : (
+          <div className="absolute top-0 right-0 flex gap-2">
+            <button
+              form="songForm"
+              type="submit"
+              className={`text-[12px] w-[14px] h-[14px] font-extrabold rounded-full text-[#fae3ad] cursor-pointer hover:scale-105 transition-transform flex justify-center items-center ${
+                lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
+              }`}
+            >
+              +
+            </button>
+            {embedSrc && (
+              <button
+                type="button"
+                onClick={() => {
+                  setErrors({});
+                  setEditMode(false);
+                }}
+                className={`text-[12px] w-[14px] h-[14px] font-extrabold rounded-full text-[#fae3ad] cursor-pointer hover:scale-105 transition-transform flex justify-center items-center ${
+                  lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
+                }`}
+              >
+                x
+              </button>
+            )}
+          </div>
+        )}
+      </div>
 
       {embedSrc && !editMode ? (
         <div className="text-center space-y-3">
@@ -64,58 +112,26 @@ export default function Vibe({
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"
           />
-          <button
-            type="button"
-            onClick={() => {
-              setSpotifyLink(selectedCafe.spotifyLink ?? "");
-              setEditMode(true);
-            }}
-            className="text-2xl border-2 px-4 py-2 rounded-2xl text-[#fae3ad] cursor-pointer hover:scale-105 transition-transform"
-          >
-            Change vibes
-          </button>
         </div>
       ) : (
         <form
+          id="songForm"
           method="POST"
           onSubmit={handleSubmit}
           className="text-lg flex flex-col gap-2"
         >
-          <p className="text-center">
-            {embedSrc ? "Update the song" : "No Song yet! Enter one here!"}
-          </p>
-
           <div className="flex gap-2 flex-col">
             <input
               type="url"
               inputMode="url"
               value={spotifyLink}
               onChange={(e) => setSpotifyLink(e.target.value)}
-              className="border-2 container rounded-lg py-1 px-2 outline-none"
+              className={`border-2 container rounded-lg py-1 px-2 outline-none ${
+                lightMode ? "border-[#93a66e]" : "border-[#e74c1d]"
+              }`}
               placeholder="https://open.spotify.com/track/..."
               required
             />
-            <div className="flex justify-around mt-2">
-              <button
-                type="submit"
-                disabled={loading}
-                className="border-2 py-2 px-3 rounded-4xl cursor-pointer hover:scale-105 transition-transform"
-              >
-                {loading ? "Sending…" : "Save"}
-              </button>
-              {embedSrc && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setErrors({});
-                    setEditMode(false);
-                  }}
-                  className="border-2 py-2 px-3 rounded-4xl cursor-pointer hover:scale-105 transition-transform"
-                >
-                  Cancel
-                </button>
-              )}
-            </div>
           </div>
 
           <p className="text-[#df9f3f]">{errors.spotifyLink ?? ""}</p>

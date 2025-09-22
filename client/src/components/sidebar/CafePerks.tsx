@@ -10,28 +10,74 @@ import { GrWifiLow, GrWifiMedium, GrWifi } from "react-icons/gr";
 import { MdAttachMoney, MdMoneyOffCsred } from "react-icons/md";
 
 export default function CafePerks({
+  lightMode,
   cafeData,
 }: {
+  lightMode: boolean;
   cafeData: TCafeData | null;
 }) {
   return (
-    <section className="text-[#fbe3ad] bg-[#043253] p-2 rounded-lg mt-4 grow flex justify-around">
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <p>Wifi</p>{" "}
-        <div className="flex gap-2">
-          {getWifiStrength(cafeData?.wifiCount)}{" "}
-          {cafeData?.freeWifi ? <MdMoneyOffCsred /> : <MdAttachMoney />}
+    <div className="flex text-[14px] mt-6 gap-4">
+      <section
+        className={`p-2 grow flex justify-around flex-col light-text-color ${
+          lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+        } grow`}
+        style={{
+          boxShadow: `3px 3px 2px ${
+            lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+          }`,
+        }}
+      >
+        <div className="flex items-center gap-2 font-bold p-1 justify-between">
+          <p>Wifi</p>{" "}
+          <div className="flex gap-2 text-[16px]">
+            {getWifiStrength(cafeData?.wifiCount)}{" "}
+            {cafeData?.freeWifi ? <MdMoneyOffCsred /> : <MdAttachMoney />}
+          </div>
         </div>
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <h1>Outlets</h1>
-        <div className="flex">{getAmountOfOutlets(cafeData?.outletCount)}</div>
-      </div>
-      <div className="flex items-center gap-2 text-lg font-bold p-1 flex-col">
-        <h1>Seating</h1>
-        <div className="flex">{getSeats(cafeData?.seatingCount)}</div>
-      </div>
-    </section>
+        <div className="flex items-center gap-2 font-bold p-1 justify-between">
+          <h1>Outlets</h1>
+          <div className="flex text-[16px]">
+            {getAmountOfOutlets(cafeData?.outletCount)}
+          </div>
+        </div>
+        <div className="flex items-center gap-2 font-bold p-1 justify-between">
+          <h1>Seating</h1>
+          <div className="flex text-[16px]">
+            {getSeats(cafeData?.seatingCount)}
+          </div>
+        </div>
+      </section>
+      {/* Legend */}
+      {/* Idk why I have to put grow-3 to make it even... I know it's cuz of the icons but idk how to fix this other than doing this */}
+      <section
+        className={`p-2 grow flex justify-around flex-col light-text-color ${
+          lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+        } grow-3`}
+        style={{
+          boxShadow: `3px 3px 2px ${
+            lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+          }`,
+        }}
+      >
+        <div className="flex items-center gap-2 font-bold p-1">
+          <GrWifi className="text-[16px]" />
+          <p> = Strong Wifi</p>
+        </div>
+        <div className="flex items-center gap-2 font-bold p-1">
+          <MdMoneyOffCsred className="text-[16px]" />
+          <p> = Free Wifi</p>
+        </div>
+        <div className="flex items-center gap-2 font-bold p-1">
+          <IoIosOutlet className="text-[16px]" />
+          <p> = 1~3 Outlets </p>
+        </div>
+        <div className="flex items-center gap-2 font-bold p-1">
+          <MdChair className="text-[16px]" />
+          <p> = 6~7 Chairs </p>
+        </div>
+      </section>
+    </div>
   );
 }
 

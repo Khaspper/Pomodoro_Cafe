@@ -15,7 +15,13 @@ type TCafe = {
   spotifyLink: string | null;
 };
 
-export default function MyMap() {
+export default function MyMap({
+  lightMode,
+  setLightMode,
+}: {
+  lightMode: boolean;
+  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
+}) {
   const [cafes, setCafes] = useState([]);
   const [open, setOpen] = useState(false);
   const [failedToGetCafes, setFailedToGetCafes] = useState(false);
@@ -110,12 +116,17 @@ export default function MyMap() {
           zoom: 5,
         }}
         style={{ width: "100vw", height: "100vh" }}
-        mapStyle="https://tiles.openfreemap.org/styles/liberty"
-        // mapStyle="https://tiles.openfreemap.org/styles/dark"
+        mapStyle={
+          lightMode
+            ? "https://tiles.openfreemap.org/styles/liberty"
+            : "https://tiles.openfreemap.org/styles/dark"
+        }
         maxBounds={lasVegasBounds}
         attributionControl={false}
       >
         <Sidebar
+          setLightMode={setLightMode}
+          lightMode={lightMode}
           selectedCafe={selectedCafe}
           setOpen={setOpen}
           open={open}

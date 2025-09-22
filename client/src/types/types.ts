@@ -9,6 +9,8 @@ export type TCafe = {
 };
 
 export type TSidebarContainer = {
+  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
+  lightMode: boolean;
   children: React.ReactNode;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;

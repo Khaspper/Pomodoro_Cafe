@@ -1,12 +1,18 @@
 export default function Tabs({
   showData,
   setShowData,
+  lightMode,
 }: {
+  lightMode: boolean;
   showData: number;
   setShowData: React.Dispatch<React.SetStateAction<number>>;
 }) {
   return (
-    <div className="text-[#1c1917] flex justify-around text-lg p-2 bg-[#4c6850] font-bold">
+    <div
+      className={`text-[#1c1917] flex justify-around text-lg p-2 font-bold ${
+        lightMode ? "bg-light-secondary-color" : "bg-dark-secondary-color"
+      } transition-colors`}
+    >
       <button
         type="button"
         className={`cursor-pointer ${showData === 0 && "text-[#fae3ad]"}`}

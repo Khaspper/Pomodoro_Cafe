@@ -13,11 +13,15 @@ import { FiChevronsRight } from "react-icons/fi";
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export default function Sidebar({
+  setLightMode,
+  lightMode,
   selectedCafe,
   setOpen,
   open,
   setCafeUpdated,
 }: {
+  setLightMode: React.Dispatch<React.SetStateAction<boolean>>;
+  lightMode: boolean;
   selectedCafe: TCafe;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
   open: boolean;
@@ -76,8 +80,11 @@ export default function Sidebar({
   }, [selectedCafe, reviewAdded]);
 
   return (
+    // Idek if I need this div any more
     <div className="flex bg-indigo-50 z-2">
       <SidebarContainer
+        setLightMode={setLightMode}
+        lightMode={lightMode}
         setOpen={setOpen}
         open={open}
         setShowData={setShowData}
@@ -86,6 +93,7 @@ export default function Sidebar({
         {showData === 0 ? (
           <div className="p-4 grow">
             <CafeInformation
+              lightMode={lightMode}
               selectedCafe={selectedCafe}
               cafeData={cafeData}
               setCafeUpdated={setCafeUpdated}
@@ -111,6 +119,8 @@ export default function Sidebar({
 }
 
 function SidebarContainer({
+  setLightMode,
+  lightMode,
   children,
   setOpen,
   open,
@@ -119,47 +129,68 @@ function SidebarContainer({
 }: TSidebarContainer) {
   return (
     <motion.nav
-      className={`sticky top-0 h-screen shrink-0 border-r border-slate-300 bg-[#1c1917] ${
+      className={`sticky top-0 h-screen shrink-0 transition-colors ${
+        lightMode ? "bg-light-background-color" : "bg-dark-background-color"
+      } ${
         open ? "w-screen md:w-[400px]" : "w-fit"
       } overflow-y-auto no-scrollbar relative flex flex-col`}
       layout
     >
-      <Navbar isOpen={open} />
-      {open && <Tabs showData={showData} setShowData={setShowData} />}
+      <Navbar isOpen={open} lightMode={lightMode} setLightMode={setLightMode} />
+      {open && (
+        <Tabs
+          showData={showData}
+          setShowData={setShowData}
+          lightMode={lightMode}
+        />
+      )}
       <div className={`flex flex-col grow ${!open && "justify-end"}`}>
         {open && children}
-        <ToggleClose open={open} setOpen={setOpen} />
+        <ToggleClose open={open} setOpen={setOpen} lightMode={lightMode} />
       </div>
     </motion.nav>
   );
 }
 
 function CafeInformation({
+  lightMode,
   selectedCafe,
   cafeData,
   setCafeUpdated,
 }: {
+  lightMode: boolean;
   selectedCafe: TCafe;
   cafeData: TCafeData | null;
   setCafeUpdated: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <>
-      <section className="text-[#1a1a1a] bg-[#d02329] p-2 rounded-lg overflow-y-auto">
-        <h1 className="text-3xl text-center font-extrabold">
-          {selectedCafe.name}
-        </h1>
-      </section>
+      <h1
+        className={`mt-6 text-5xl text-center font-extrabold dark-text-color py-3 ${
+          lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+        }`}
+        style={{
+          boxShadow: `3px 3px 2px ${
+            lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+          }`,
+        }}
+      >
+        {selectedCafe.name}
+      </h1>
       <div className="flex flex-col gap-2">
-        <CafePerks cafeData={cafeData} />
-        <Vibe selectedCafe={selectedCafe} setCafeUpdated={setCafeUpdated} />
-        <a
+        <CafePerks lightMode={lightMode} cafeData={cafeData} />
+        <Vibe
+          lightMode={lightMode}
+          selectedCafe={selectedCafe}
+          setCafeUpdated={setCafeUpdated}
+        />
+        {/* <a
           href="https://docs.google.com/forms/d/e/1FAIpQLSfzlGs7YKGTL3ioCKYLOsX9yDZu-diytfiTR2tJ0COnN3yHvA/viewform"
           target="blank"
           className="text-2xl font-extrabold bg-[#fae3ad] text-[#b64128] text-center inline p-4 rounded-2xl hover:scale-105 transform transition-transform duration-150"
         >
           Review the website here!
-        </a>
+        </a> */}
       </div>
     </>
   );
@@ -168,23 +199,37 @@ function CafeInformation({
 function ToggleClose({
   open,
   setOpen,
+  lightMode,
 }: {
+  lightMode: boolean;
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   return (
     <button
       onClick={() => setOpen((pv) => !pv)}
-      className="sticky bottom-0 left-0 right-0 border-t transition-colors hover:bg-[#b54329] container bg-[#1c1917] shrink-0"
+      className={`sticky bottom-0 left-0 right-0 border-t transition-colors container shrink-0 ${
+        lightMode ? "bg-light-background-color" : "bg-dark-background-color"
+      }`}
     >
       <div className="flex items-center justify-center p-2 cursor-pointer">
-        <div className="grid size-10 place-content-center text-2xl text-[#fae3ad]">
+        <div
+          className={`grid size-10 place-content-center text-2xl ${
+            lightMode ? "text-black" : "dark-text-color"
+          }`}
+        >
           <FiChevronsRight
             className={`transition-transform ${open && "rotate-180"}`}
           />
         </div>
         {open && (
-          <span className="text-xl font-medium text-[#fae3ad]">Hide</span>
+          <span
+            className={`text-xl font-medium ${
+              lightMode ? "text-black" : "dark-text-color"
+            }`}
+          >
+            Hide
+          </span>
         )}
       </div>
     </button>

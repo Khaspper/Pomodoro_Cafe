@@ -11,15 +11,23 @@
 /* Light */
 
 .bg-light-background-color {
-  background-color: #f5f1e5;
+  background-color: #f1daae;
 }
 
 .bg-light-primary-color {
-  background-color: #ccb68f;
+  background-color: #49301e;
 }
 
-.bg-light-text-color {
-  background-color: #1c1c1c;
+.light-text-color {
+  color: #e7dfce;
+}
+
+.bg-light-secondary-color {
+  background-color: #8b5e2e;
+}
+
+.bg-light-accent-color {
+  background-color: #93a66e;
 }
 
 /* Light */
@@ -34,20 +42,20 @@
   background-color: #2f2a24;
 }
 
-.bg-dark-text-color {
-  background-color: #e7dfce;
+.dark-text-color {
+  color: #e7dfce;
 }
 
 .bg-dark-shadow-color {
   background-color: #e7dfce;
 }
 
-/* Dark */
-
-.bg-secondary-color {
+.bg-dark-secondary-color {
   background-color: #aec69f;
 }
 
-.bg-accent-color {
+.bg-dark-accent-color {
   background-color: #e74c1d;
 }
+
+/* Dark */
