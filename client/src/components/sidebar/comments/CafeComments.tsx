@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import type { TCafe, TComment } from "../../../types/types";
 import { Comment } from "./Comment";
 import CommentInput from "./CommentInput";
+import pomodoroLogo from "../../../assets/pomodoro-cafe.png";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
 export default function CafeComments({
+  lightMode,
   selectedCafe,
 }: {
+  lightMode: boolean;
   selectedCafe: TCafe;
 }) {
   const [comments, setComments] = useState<TComment[]>([]);
@@ -57,20 +60,28 @@ export default function CafeComments({
 
   if (checking && showLoading) {
     return (
-      <div className="flex items-center justify-center h-full bg-[#1c1917] text-center">
-        <div className="">
-          <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#b6432a] border-t-transparent mx-auto mb-4 relative">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-2xl">🍅</span>
-            </div>
+      <div
+        className={`flex flex-col items-center justify-center h-full text-center ${
+          lightMode ? "bg-light-background-color" : "bg-dark-background-color"
+        } transition-colors`}
+      >
+        <div className="animate-spin rounded-full h-16 w-16 border-4 border-[#b6432a] border-t-transparent mx-auto mb-4 relative">
+          <div className="absolute inset-0 flex items-center justify-center">
+            <img src={pomodoroLogo} alt="Logo" width={40} />
           </div>
-          <h1 className="text-2xl text-[#fae3ad] font-semibold">
-            Grabbing the comments...
-          </h1>
-          <p className="text-[#fae3ad] mt-2">
-            Please wait while we grab the comments
-          </p>
         </div>
+        <h1
+          className={`text-2xl font-semibold ${
+            lightMode ? "text-[#49301e]" : "text-[#fae3ad]"
+          }`}
+        >
+          Grabbing the comments...
+        </h1>
+        <p
+          className={`mt-2 ${lightMode ? "text-[#49301e]" : "text-[#fae3ad]"}`}
+        >
+          Please wait while we grab the comments
+        </p>
       </div>
     );
   }
