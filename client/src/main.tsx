@@ -47,7 +47,7 @@ export function App() {
     {
       path: "/account",
       element: (
-        <ProtectedRoute>
+        <ProtectedRoute lightMode={lightMode}>
           <div className="flex flex-col h-screen">
             <Navbar
               isOpen={true}

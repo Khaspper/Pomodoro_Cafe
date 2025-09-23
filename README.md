@@ -1,9 +1,231 @@
-# Pomodoro_Cafe
+# Pomodoro Cafe
 
-A cafe review app
+An interactive cafe review web app that helps users find the perfect study spot in Las Vegas. I Built this with React, Node.js, and an interactive map powered by MapLibre!
+
+![Pomodoro Cafe Logo](./client/src/assets/pomodoro-cafe.png)
+
+## Features
+
+### Interactive Map
+
+- **MapLibre Integration**: An open source mapping solution (no Google Maps fees!)
+- **Real-time Cafe Discovery**: Browse cafes across Las Vegas (There are some cafes missing! I will add them if you want to tell me about them [here](https://docs.google.com/forms/d/1XGOo7LylmJiIRsTXhg2EgM-6pq-ff13tCEsRpsP7g60/viewform?edit_requested=true))
+- **Animations**: Framer Motion powered transitions
+- **Dark/Light Mode**: Toggle light and dark themes
+
+### Cafe Reviews & Ratings
+
+- **Rating System**: Rate cafes on multiple criteria:
+  - WiFi Strength
+  - Free WiFi availability
+  - Outlet availability (1-5 "stars")
+  - Seating comfort (1-5 "stars")
+- **Aggregated Statistics**: View community-driven cafe statistics
+- **Live Updates**: See ratings update instantly
+
+### Community Features
+
+- **Comment System**: Share experiences about cafes
+- **User Authentication**: Login/sign-up with session management
+- **Protected Routes**: Review and comment functionality
+
+### Modern UI/UX
+
+- **Responsive Design**: Works on desktop and mobile
+- **TailwindCSS Styling**: Modern interface
+- **Animations**: Framer Motion for some interactions
+
+## Tech Stack
+
+### Frontend
+
+- **React 19** with TypeScript
+- **Vite** for fast development and building
+- **TailwindCSS** for styling
+- **React Router DOM** for navigation
+- **MapLibre GL** for interactive maps
+- **Framer Motion** for animations
+- **React Icons** for iconography
+
+### Backend
+
+- **Node.js** with Express
+- **TypeScript** for type safety
+- **Prisma ORM** for database management
+- **PostgreSQL** as the primary database
+- **Passport.js** for authentication (sessions, not JWT!)
+- **Express Session** with PostgreSQL store
+- **Morgan** for request logging
+- **CORS** for cross-origin requests
+
+## 📦 Installation & Setup
+
+### Prerequisites
+
+- Node.js (v18 or higher)
+- PostgreSQL database
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone <https://github.com/Khaspper/Pomodoro_Cafe#>
+cd Pomodoro_Cafe
+```
+
+### 2. Backend Setup
+
+```bash
+cd server
+npm install
+
+# Edit .env with your database credentials
+
+# Set up the database
+npx prisma migrate dev --name init
+npx prisma generate
+npm run prisma:seed
+
+# Start the development server
+npm run dev
+```
+
+### 3. Frontend Setup
+
+```bash
+cd client
+npm install
+
+# Edit .env with your backend URL
+
+# Start the development server
+npm run dev
+```
+
+### 4. Environment Variables
+
+#### Backend (.env)
+
+```env
+DEV_DATABASE_URL="postgresql://username:password@localhost:5432/pomodoro_cafe"
+SECRET_KEY="your-secret-key-here"
+PORT=3000
+```
+
+#### Frontend (.env)
+
+```env
+VITE_BACKEND_URL="http://localhost:3000"
+```
+
+## Database Setup
+
+The application uses PostgreSQL with Prisma ORM. The database includes:
+
+- **Cafe data** seeded from OpenStreetMap via Overpass API
+- **User authentication** with bcrypt password hashing
+- **Session management** with PostgreSQL session store
+- **Review and comment** systems
+
+### Database Commands
+
+```bash
+# Reset and migrate database
+npx prisma migrate reset
+
+# Generate Prisma client
+npx prisma generate
+
+# Seed the database with cafe data
+npm run prisma:seed
+```
+
+## Usage
+
+### For Users
+
+1. **Browse Cafes**: Open the app to see an interactive map of Las Vegas cafes
+2. **Select a Cafe**: Click on any coffee emoji marker to view cafe details
+3. **View Information**: Check WiFi strength, outlet availability, and seating
+4. **Read Comments**: See what other users have to say
+5. **Leave Reviews**: Sign up to rate cafes and leave comments
+6. **Toggle Theme**: Switch between light and dark modes
+
+### For Developers
+
+1. **API Endpoints**: RESTful API with proper error handling
+2. **Authentication**: Session-based auth with protected routes
+3. **Real-time Updates**: State management for live data updates
+4. **Type Safety**: Full TypeScript implementation
+
+## Development
+
+### Available Scripts
+
+#### Backend
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run start        # Start production server
+npm test            # Run tests
+npm run migrate:dev  # Run database migrations
+```
+
+#### Frontend
+
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+```
+
+### Project Structure
+
+```
+Pomodoro_Cafe/
+├── client/                 # React frontend
+│   ├── src/
+│   │   ├── components/     # Reusable components
+│   │   ├── pages/         # Page components
+│   │   ├── services/      # API service functions
+│   │   └── types/         # TypeScript type definitions
+│   └── dist/              # Built frontend
+├── server/                # Node.js backend
+│   ├── src/
+│   │   ├── controllers/   # Route controllers
+│   │   ├── routes/        # API routes
+│   │   ├── db/           # Database queries
+│   │   └── config/       # Configuration files
+│   ├── prisma/           # Database schema and migrations
+│   └── tests/            # Test files
+└── README.md
+```
+
+## Testing
+
+The project includes backend testing using supertest:
+
+```bash
+# Run backend tests
+cd server
+npm test
+```
+
+## Acknowledgments
+
+- **MapLibre** for the open source mapping solution (shout out to Syntax and CJ!)
+- **OpenStreetMap** for the cafe data via Overpass API
+- **TailwindCSS** for the utility-first CSS framework
+- **Prisma** for the ORM experience
+
+---
+
+## My Development Journey
 
 What I learned so far:
-Sun Aug 24 11:58 PM --- I forgot about race conditions Bruh so now im implementing how to do race conditions...
+Sun Aug 24 11:58 PM --- I forgot about race conditions Bruh so now im implementing how to do stop race conditions...
 
 I also am learning how to fetch and post data in React with a server
 

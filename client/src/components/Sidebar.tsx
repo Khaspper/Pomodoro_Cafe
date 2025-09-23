@@ -105,7 +105,7 @@ export default function Sidebar({
           </div>
         ) : (
           <div className="p-4 grow">
-            <ProtectedRoute>
+            <ProtectedRoute lightMode={lightMode}>
               <ReviewCafe
                 cafeID={selectedCafe.id}
                 setReviewAdded={setReviewAdded}
