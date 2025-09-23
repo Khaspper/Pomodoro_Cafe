@@ -82,7 +82,7 @@ export default function MyMap({
   ];
 
   const handleRetry = () => {
-    setCafeUpdated(true);
+    window.location.reload();
   };
 
   if (failedToGetCafes) {

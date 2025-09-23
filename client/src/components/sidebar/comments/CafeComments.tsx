@@ -97,14 +97,14 @@ export default function CafeComments({
       {/* Then we use the state variable to loop through
         them and load them and pass data to the Comment component */}
 
-      <div className="flex gap-2 flex-col p-2">
+      <div className="flex gap-5 p-2 flex-wrap justify-center">
         {comments.map((comment) => {
           return (
             <Comment
+              lightMode={lightMode}
               key={comment.id}
               username={comment.username}
               comment={comment.message}
-              createdAt={new Date(comment.createdAt)}
             />
           );
         })}

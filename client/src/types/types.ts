@@ -50,7 +50,8 @@ export type TNewErrors = {
 export type TCommentProps = {
   username: string;
   comment: string;
-  createdAt: Date;
+  lightMode: boolean;
+  createdAt?: Date;
 };
 
 export type TComment = {

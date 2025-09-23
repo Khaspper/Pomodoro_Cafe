@@ -67,7 +67,7 @@ export default function CommentInput({
           onChange={(e) => {
             setComment(e.target.value);
           }}
-          className="grow outline-none px-4 text-[#fae3ad] text-lg"
+          className="grow outline-none px-4 text-[#fae3ad] text-lg font-bold"
         />
         <button type="submit">
           {loading ? (
@@ -77,7 +77,7 @@ export default function CommentInput({
           )}
         </button>
       </form>
-      <p className="text-xl text-[#b5442a] font-extrabold px-1">
+      <p className={`text-lg font-extrabold text-center text-[#e74c1d]`}>
         {errors ? errors.comment : ""}
       </p>
     </>
