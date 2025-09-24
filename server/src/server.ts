@@ -25,7 +25,12 @@ app.set("trust proxy", 1);
 
 // This is so we can send data to our front end
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:4173"],
+  origin: [
+    "https://pomodorocafes.com",
+    "https://www.pomodorocafe.com",
+    "http://localhost:5173",
+    "http://localhost:4173",
+  ],
   credentials: true,
 };
 // TODO: Replace hardcoded localhost URLs with environment variables
