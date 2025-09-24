@@ -25,7 +25,7 @@ export default function CommentInput({
       const response = await sendComment(comment, cafeID);
       if (!response.ok) {
         const newErrors: TNewErrors = {};
-        if (response.statusText === "Unauthorized") {
+        if (response.status === 401) {
           newErrors["comment"] = "You need to have an account to post.";
           setErrors(newErrors);
         } else {
