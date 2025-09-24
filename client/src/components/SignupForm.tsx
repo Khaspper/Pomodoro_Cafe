@@ -143,6 +143,7 @@ export default function SignupForm({ lightMode }: { lightMode: boolean }) {
         {/* Add if loading grey out the button */}
         <div className="flex justify-between">
           <button
+            type="button"
             className={`cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold py-2 md:text-xl w-[40%] md:w-[35%] ${
               lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
             }`}
