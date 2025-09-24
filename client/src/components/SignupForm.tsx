@@ -18,10 +18,6 @@ export default function SignupForm({ lightMode }: { lightMode: boolean }) {
 
   // Add a loading and error check and when user submits make button not clickable
 
-  function handleClick() {
-    navigate("/");
-  }
-
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
     event.preventDefault();
@@ -142,15 +138,6 @@ export default function SignupForm({ lightMode }: { lightMode: boolean }) {
         </div>
         {/* Add if loading grey out the button */}
         <div className="flex justify-between">
-          <button
-            type="button"
-            className={`cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold py-2 md:text-xl w-[40%] md:w-[35%] ${
-              lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
-            }`}
-            onClick={handleClick}
-          >
-            Go back
-          </button>
           <button
             className={`cursor-pointer font-bold py-2 md:text-xl w-[40%] md:w-[35%] active:translate-x-[3px] active:translate-y-[3px] ${
               lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
