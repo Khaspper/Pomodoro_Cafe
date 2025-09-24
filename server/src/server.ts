@@ -26,7 +26,8 @@ app.set("trust proxy", 1);
 // This is so we can send data to our front end
 const corsOptions = {
   origin: [
-    "https://cafe-n6dfdhc8c-marks-projects-3555b00d.vercel.app",
+    "https://pomodorocafes.com",
+    "https://www.pomodorocafe.com",
     "http://localhost:5173",
     "http://localhost:4173",
   ],
