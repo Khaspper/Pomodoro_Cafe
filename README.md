@@ -224,7 +224,8 @@ npm test
 
 ## My Development Journey
 
-What I learned so far:
+Dear Diary...
+
 Sun Aug 24 11:58 PM --- I forgot about race conditions Bruh so now im implementing how to do stop race conditions...
 
 I also am learning how to fetch and post data in React with a server
