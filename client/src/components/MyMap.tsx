@@ -115,7 +115,7 @@ export default function MyMap({
           latitude: 36.1699,
           zoom: 5,
         }}
-        style={{ width: "100vw", height: "100vh" }}
+        style={{ width: "100vw", height: "100dvh" }}
         mapStyle={
           lightMode
             ? "https://tiles.openfreemap.org/styles/liberty"
