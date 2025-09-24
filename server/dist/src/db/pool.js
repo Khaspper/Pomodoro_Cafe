@@ -7,7 +7,7 @@ const pg_1 = require("pg");
 const dotenv_1 = __importDefault(require("dotenv"));
 dotenv_1.default.config();
 const pool = new pg_1.Pool({
-    connectionString: process.env.DATABASE_URL || process.env.DEV_DATABASE_URL,
+    connectionString: process.env.DATABASE_URL,
 });
 exports.default = pool;
 //# sourceMappingURL=pool.js.map
