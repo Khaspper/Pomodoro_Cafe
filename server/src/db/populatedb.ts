@@ -4,7 +4,8 @@ dotenv.config();
 
 async function main() {
   console.log("Seeding...");
-  const connectionString = process.env.DEV_DATABASE_URL;
+  const connectionString =
+    process.env.DATABASE_URL || process.env.DEV_DATABASE_URL;
   const client = new Client({
     connectionString,
   });
