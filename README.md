@@ -272,3 +272,5 @@ Rate limit: 1
 Markus: 0
 
 Fri Sept 19th 12:45 PM I will add health check API idk I saw a youtube video talking about it so now I just wanna implement it
+
+Tue Sep 23rd 6:58 PM Finished the project... I hate front end I hate margins I hate figma I hate padding I hate color theory I hate it all but it has taught me a lot 10 / 10 would hate again I just have to deploy this website and then I am done frfr
