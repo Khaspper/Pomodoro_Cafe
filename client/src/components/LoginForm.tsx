@@ -3,7 +3,7 @@ import { loginUser } from "../services/Login";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
-export default function LoginForm() {
+export default function LoginForm({ lightMode }: { lightMode: boolean }) {
   // Inputs
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -43,67 +43,106 @@ export default function LoginForm() {
   }
 
   return (
-    <div className="bg-[#03304f] p-5 text-[#b1372c] rounded-2xl md:w-[400px] mt-[-100px]">
-      <form className="flex flex-col gap-2 md:gap-4" onSubmit={handleSubmit}>
-        <h1 className="text-4xl md:text-5xl text-center font-bold">Login</h1>
-        {errorMessage && (
-          <p className="text-red-500 text-center">
-            {errorMessage} It's super quick!!!!
-          </p>
-        )}
-        <div className="flex flex-col">
-          <label className="font-bold md:text-xl" htmlFor="email">
-            Email
-          </label>
-          <input
-            className="border-2 rounded-xl px-2 md:px-4 py-1 border-[#fbe3ad] font-bold md:text-xl outline-none"
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            name="email"
-            id="email"
-            required
-          />
-        </div>
-        <div className="flex flex-col">
-          <label className="font-bold md:text-xl" htmlFor="password">
-            Password
-          </label>
-          <input
-            className="border-2 rounded-xl px-2 md:px-4 py-1 border-[#fbe3ad] font-bold md:text-xl outline-none"
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            name="password"
-            id="password"
-            required
-          />
-        </div>
-        <p className="text-[#df9f3f]">{loginError}</p>
-        {/* Add if loading grey out the button */}
-        <div className="flex justify-between">
-          <button
-            className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-[40%] md:w-[35%] text-[#1a1a1a]"
-            type="submit"
-            onClick={handleClick}
-          >
-            Go back
-          </button>
-          <button
-            className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-[40%] md:w-[35%] text-[#1a1a1a]"
-            type="submit"
-            disabled={loading}
-          >
-            {loading ? "Submitting..." : "Login"}
-          </button>
-        </div>
-        <p className="text-md font-bold text-[#fbe3ad]">
-          Don't have an account?{" "}
-          <Link className="underline" to={"/signup"}>
-            Sign-up!
-          </Link>
+    <form
+      className={`flex flex-col gap-2 md:gap-4 p-5 light-text-color md:w-[400px] mt-[-100px] ${
+        lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+      } transition-colors`}
+      style={{
+        boxShadow: `3px 3px 2px ${
+          lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+        }`,
+      }}
+      onSubmit={handleSubmit}
+    >
+      <h1
+        className={`text-4xl md:text-5xl text-center font-bold ${
+          lightMode ? "text-[#93a66e]" : "text-[#e74c1d]"
+        }`}
+      >
+        Login
+      </h1>
+      {errorMessage && (
+        <p
+          className={`text-center ${
+            lightMode ? "text-[#e74c1d]" : "text-[#93a66e]"
+          }`}
+        >
+          {errorMessage} It's super quick!!!!
         </p>
-      </form>
-    </div>
+      )}
+      <div className="flex flex-col">
+        <label className="font-bold md:text-xl" htmlFor="email">
+          Email
+        </label>
+        <input
+          className="border-1 rounded-xl px-2 md:px-4 py-1 border-[#e7dfce] font-bold md:text-xl outline-none"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          name="email"
+          id="email"
+          required
+        />
+      </div>
+      <div className="flex flex-col">
+        <label className="font-bold md:text-xl" htmlFor="password">
+          Password
+        </label>
+        <input
+          className="border-1 rounded-xl px-2 md:px-4 py-1 border-[#e7dfce] font-bold md:text-xl outline-none"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          name="password"
+          id="password"
+          required
+        />
+      </div>
+      <p className="text-[#df9f3f]">{loginError}</p>
+      {/* Add if loading grey out the button */}
+      <div className="flex justify-between">
+        <button
+          className={`cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold py-2 md:text-xl w-[40%] md:w-[35%] ${
+            lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
+          }`}
+          onClick={handleClick}
+        >
+          Go back
+        </button>
+        <button
+          className={`cursor-pointer font-bold py-2 md:text-xl w-[40%] md:w-[35%] active:translate-x-[3px] active:translate-y-[3px] ${
+            lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
+          }`}
+          type="submit"
+          disabled={loading}
+          style={{
+            boxShadow: `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`,
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.boxShadow = "none";
+          }}
+          onMouseUp={(e) => {
+            e.currentTarget.style.boxShadow = `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`;
+          }}
+        >
+          {loading ? "Submitting" : "Login"}
+        </button>
+      </div>
+      <p className="text-md font-bold light-text-color">
+        Don't have an account?{" "}
+        <Link className="underline" to={"/signup"}>
+          Sign-up!
+        </Link>
+      </p>
+    </form>
   );
 }

@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { MdAccountCircle } from "react-icons/md";
 import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
+import { MdLightMode } from "react-icons/md";
+import { MdDarkMode } from "react-icons/md";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
@@ -74,13 +76,6 @@ export default function Navbar({
         <motion.img layout src={pomodoroLogo} alt="Logo" width={50} />
       </Link>
 
-      <button
-        onClick={() => setLightMode((p) => !p)}
-        className="cursor-pointer"
-      >
-        Switch to {lightMode ? "dark" : "light"} mode
-      </button>
-
       {!checking && (
         <div className="flex items-center gap-3">
           {isOpen && (
@@ -91,6 +86,17 @@ export default function Navbar({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
             >
+              {lightMode ? (
+                <MdDarkMode
+                  onClick={() => setLightMode((p) => !p)}
+                  className="cursor-pointer text-3xl"
+                />
+              ) : (
+                <MdLightMode
+                  onClick={() => setLightMode((p) => !p)}
+                  className="cursor-pointer text-3xl"
+                />
+              )}
               <Link
                 // className={`cursor-pointer hover:scale-105 transform transition-transform duration-150 ${
                 //   lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"

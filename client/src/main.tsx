@@ -27,7 +27,7 @@ export function App() {
             lightMode={lightMode}
             setLightMode={setLightMode}
           />
-          <Login />
+          <Login lightMode={lightMode} />
         </>
       ),
     },
@@ -40,7 +40,7 @@ export function App() {
             lightMode={lightMode}
             setLightMode={setLightMode}
           />
-          <Signup />
+          <Signup lightMode={lightMode} />
         </>
       ),
     },
@@ -54,7 +54,7 @@ export function App() {
               lightMode={lightMode}
               setLightMode={setLightMode}
             />
-            <Account />
+            <Account lightMode={lightMode} />
           </div>
         </ProtectedRoute>
       ),

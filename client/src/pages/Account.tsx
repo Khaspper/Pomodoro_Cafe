@@ -1,11 +1,10 @@
-import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { updateUser } from "../services/Account";
 import type { TNewErrors, TReceivedErrors } from "../types/types";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
-export default function Account() {
+export default function Account({ lightMode }: { lightMode: boolean }) {
   const [loading, setLoading] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [newEmail, setNewEmail] = useState("");
@@ -67,14 +66,6 @@ export default function Account() {
         }, 3000);
         setErrors({});
       }
-      // const errors = await loginUser(email, password);
-      // if (!errors.ok) {
-      //   setLoginError("Email or Password is incorrect.");
-      //   throw new Error(`Login failed`, errors);
-      // } else {
-      //   setLoginError("");
-      // }
-      // navigate("/");
     } catch (error) {
       console.error(error);
     } finally {
@@ -83,12 +74,27 @@ export default function Account() {
   }
 
   return (
-    <div className="bg-[#1a1a1a] h-full flex justify-center items-center">
+    <div
+      className={`h-full flex justify-center items-center ${
+        lightMode ? "bg-light-background-color" : "bg-dark-background-color"
+      } transition-colors`}
+    >
       <form
         onSubmit={handleSubmit}
-        className="bg-[#043253] text-[#fbe3ad] w-fit p-6 rounded-2xl"
+        className={`text-[#E7DFCE] text-xl font-bold w-fit p-6 ${
+          lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+        }`}
+        style={{
+          boxShadow: `3px 3px 2px ${
+            lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+          }`,
+        }}
       >
-        <h1 className="text-2xl text-[#d02329] font-bold">
+        <h1
+          className={`text-2xl font-bold ${
+            lightMode ? "text-[#93a66e]" : "text-[#e74c1d]"
+          }`}
+        >
           Change Personal Information
         </h1>
         <div className="flex flex-col mt-6 gap-2">
@@ -156,15 +162,16 @@ export default function Account() {
         <div className="flex flex-col">
           <button
             type="submit"
-            className="mt-6 p-3 bg-[#fbe3ad] text-[#1a1a1a] font-bold rounded-lg cursor-pointer hover:scale-105 transform transition-transform duration-150"
+            className={`mt-6 p-3 font-bold rounded-lg cursor-pointer hover:scale-105 transform transition-transform duration-150 ${
+              lightMode ? "bg-[#93a66e]" : "bg-[#e74c1d]"
+            }`}
           >
             {loading ? "Changing..." : "Change Information"}
           </button>
-          <button type="button" className="mt-6 text-[#d02329] font-bold">
-            <Link to={"/"}>Go Home</Link>
-          </button>
         </div>
-        <p className={`${success ? "block" : "hidden"}`}>Account updated!</p>
+        <p className={`${success ? "block" : "hidden"} mt-5 text-center`}>
+          Account updated!
+        </p>
       </form>
     </div>
   );

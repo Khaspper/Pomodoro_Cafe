@@ -69,7 +69,7 @@ export default function CommentInput({
           }}
           className="grow outline-none px-4 text-[#fae3ad] text-lg font-bold"
         />
-        <button type="submit">
+        <button type="submit" className="cursor-pointer">
           {loading ? (
             <AiOutlineLoading3Quarters className="text-xl m-2 mr-3 light-text-color animate-spin" />
           ) : (
