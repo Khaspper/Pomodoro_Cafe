@@ -87,7 +87,10 @@ export default function Navbar({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
             >
-              <a href="https://www.instagram.com/stuckonblessings/">
+              <a
+                href="https://www.instagram.com/stuckonblessings/"
+                target="blank"
+              >
                 <FaInstagram className="text-3xl cursor-pointer hover:scale-105 transform transition-transform duration-150" />
               </a>
               {lightMode ? (
