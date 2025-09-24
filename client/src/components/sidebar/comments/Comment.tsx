@@ -29,7 +29,8 @@ export function Comment({ lightMode, username, comment }: TCommentProps) {
 
   return (
     <div
-      className={`flex relative justify-center ${rotateClass} bg-[${colorClass}] isolate`}
+      className={`flex relative justify-center ${rotateClass} isolate`}
+      style={{ backgroundColor: colorClass }}
     >
       <section className="flex gap-3 text-black w-[170px] h-[170px] shrink-0 flex-col p-3 relative z-10">
         <p className="font-extrabold text-[13px]">

@@ -107,6 +107,7 @@ export default function Sidebar({
           <div className="p-4 grow">
             <ProtectedRoute lightMode={lightMode}>
               <ReviewCafe
+                lightMode={lightMode}
                 cafeID={selectedCafe.id}
                 setReviewAdded={setReviewAdded}
               />
@@ -132,7 +133,7 @@ function SidebarContainer({
       className={`sticky top-0 h-screen shrink-0 transition-colors ${
         lightMode ? "bg-light-background-color" : "bg-dark-background-color"
       } ${
-        open ? "w-screen md:w-[400px]" : "w-fit"
+        open ? "w-screen sm:w-[400px]" : "w-fit"
       } overflow-y-auto no-scrollbar relative flex flex-col`}
       layout
     >
@@ -184,13 +185,6 @@ function CafeInformation({
           selectedCafe={selectedCafe}
           setCafeUpdated={setCafeUpdated}
         />
-        {/* <a
-          href="https://docs.google.com/forms/d/e/1FAIpQLSfzlGs7YKGTL3ioCKYLOsX9yDZu-diytfiTR2tJ0COnN3yHvA/viewform"
-          target="blank"
-          className="text-2xl font-extrabold bg-[#fae3ad] text-[#b64128] text-center inline p-4 rounded-2xl hover:scale-105 transform transition-transform duration-150"
-        >
-          Review the website here!
-        </a> */}
       </div>
     </>
   );

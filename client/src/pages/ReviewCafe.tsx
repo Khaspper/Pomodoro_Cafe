@@ -1,6 +1,4 @@
 import { useState } from "react";
-// import { useNavigate, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
 import WifiStrength from "../components/reviewCafe/WifiStrength";
 import Outlets from "../components/reviewCafe/Outlets";
 import Seating from "../components/reviewCafe/Seating";
@@ -9,9 +7,11 @@ import { sendReview } from "../services/ReviewCafe";
 import type { TNewErrors, TReceivedErrors } from "../types/types";
 
 export default function ReviewCafe({
+  lightMode,
   cafeID,
   setReviewAdded,
 }: {
+  lightMode: boolean;
   cafeID: number;
   setReviewAdded: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
@@ -26,12 +26,6 @@ export default function ReviewCafe({
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  // const cafeID = useParams();
-  const navigate = useNavigate();
-
-  function handleClick() {
-    navigate(-1);
-  }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     setLoading(true);
@@ -71,64 +65,108 @@ export default function ReviewCafe({
   }
 
   return (
-    <div className="flex justify-center items-center mt-26">
-      <div className="bg-[#03304f] p-5 text-[#fae3ad] rounded-2xl w-[300px] md:w-[400px] mt-[-100px]">
-        <form className="flex flex-col gap-2 md:gap-4" onSubmit={handleSubmit}>
-          <h1 className="text-4xl md:text-5xl text-center font-bold text-[#b1372c]">
-            Review Cafe
-          </h1>
+    <form
+      className={`flex flex-col mt-5 gap-5 container transition-colors ${
+        lightMode ? "bg-light-background-color" : "bg-dark-background-color"
+      }`}
+      onSubmit={handleSubmit}
+    >
+      <h1
+        className={`text-4xl text-center font-bold light-text-color py-3 ${
+          lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+        }`}
+        style={{
+          boxShadow: `3px 3px 2px ${
+            lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+          }`,
+        }}
+      >
+        Review Cafe
+      </h1>
 
-          <WifiStrength setWifiStrength={setWifiStrength} />
-          <Outlets
-            setOutletAmounts={setOutletAmounts}
-            outletAmounts={outletAmounts}
-          />
-          <Seating setSeating={setSeating} seating={seating} />
-          <FreeWifi setFreeWifi={setFreeWifi} freeWifi={freeWifi} />
-
-          <div className="flex justify-between">
-            <button
-              className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-[40%] md:w-[35%] text-[#1a1a1a]"
-              type="submit"
-              onClick={handleClick}
-            >
-              Go Home
-            </button>
-            <button
-              className="cursor-pointer hover:scale-105 transform transition-transform duration-150 font-bold bg-[#b1372c] py-2 rounded-2xl md:text-xl w-fit md:w-[35%] text-[#1a1a1a] px-3"
-              type="submit"
-              disabled={loading}
-            >
-              {loading ? "Submitting..." : "Submit"}
-            </button>
-          </div>
-          <p className={`text-2xl text-center ${success ? "block" : "hidden"}`}>
-            Review posted
-          </p>
-          <p
-            className={`text-[#df9f3f] ${errors.freeWifi ? "block" : "hidden"}`}
-          >
-            {errors.freeWifi}
-          </p>
-          <p
-            className={`text-[#df9f3f] ${errors.seating ? "block" : "hidden"}`}
-          >
-            {errors.seating}
-          </p>
-          <p
-            className={`text-[#df9f3f] ${errors.outlets ? "block" : "hidden"}`}
-          >
-            {errors.outlets}
-          </p>
-          <p
-            className={`text-[#df9f3f] ${
-              errors.wifiStrength ? "block" : "hidden"
-            }`}
-          >
-            {errors.wifiStrength}
-          </p>
-        </form>
+      <div className="flex flex-col gap-5 mt-3">
+        <Outlets
+          lightMode={lightMode}
+          setOutletAmounts={setOutletAmounts}
+          outletAmounts={outletAmounts}
+        />
+        <Seating
+          lightMode={lightMode}
+          setSeating={setSeating}
+          seating={seating}
+        />
+        <WifiStrength lightMode={lightMode} setWifiStrength={setWifiStrength} />
+        <FreeWifi
+          lightMode={lightMode}
+          setFreeWifi={setFreeWifi}
+          freeWifi={freeWifi}
+        />
       </div>
-    </div>
+
+      <div className="flex justify-between">
+        <a
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfzlGs7YKGTL3ioCKYLOsX9yDZu-diytfiTR2tJ0COnN3yHvA/viewform"
+          target="blank"
+          className={`text-lg font-extrabold light-text-color p-4 hover:scale-105 transform transition-transform duration-150 ${
+            lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+          }`}
+          style={{
+            boxShadow: `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`,
+          }}
+        >
+          Review website!
+        </a>
+        <button
+          className={`cursor-pointer font-bold py-2 md:text-xl w-[40%] md:w-[35%] light-text-color transition-all duration-75 active:translate-x-[3px] active:translate-y-[3px] ${
+            lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+          }`}
+          style={{
+            boxShadow: `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`,
+          }}
+          onMouseDown={(e) => {
+            e.currentTarget.style.boxShadow = "none";
+          }}
+          onMouseUp={(e) => {
+            e.currentTarget.style.boxShadow = `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`;
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.boxShadow = `3px 3px 2px ${
+              lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+            }`;
+          }}
+          type="submit"
+          disabled={loading}
+        >
+          {loading ? "Submitting" : "Submit"}
+        </button>
+      </div>
+      <p
+        className={`text-2xl text-center ${
+          success ? "block" : "hidden"
+        } text-[#afc69f]`}
+      >
+        Review posted
+      </p>
+      <p className={`text-[#b6442a] ${errors.freeWifi ? "block" : "hidden"}`}>
+        {errors.freeWifi}
+      </p>
+      <p className={`text-[#b6442a] ${errors.seating ? "block" : "hidden"}`}>
+        {errors.seating}
+      </p>
+      <p className={`text-[#b6442a] ${errors.outlets ? "block" : "hidden"}`}>
+        {errors.outlets}
+      </p>
+      <p
+        className={`text-[#b6442a] ${errors.wifiStrength ? "block" : "hidden"}`}
+      >
+        {errors.wifiStrength}
+      </p>
+    </form>
   );
 }

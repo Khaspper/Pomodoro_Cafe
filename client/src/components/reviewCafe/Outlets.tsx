@@ -4,9 +4,11 @@ import { BsOutlet } from "react-icons/bs";
 export default function Outlets({
   setOutletAmounts,
   outletAmounts,
+  lightMode,
 }: {
   outletAmounts: number;
   setOutletAmounts: React.Dispatch<React.SetStateAction<number>>;
+  lightMode: boolean;
 }) {
   const max = 5;
   function handleClick(rating: number) {
@@ -14,19 +16,18 @@ export default function Outlets({
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      <div>
-        <h1 className="font-bold text-xl">How many outlets?</h1>
-        <div className="flex gap-2 items-center">
-          <h2 className="font-bold text-xs text-[#b1372c]">One Outlet is 2</h2>{" "}
-          <div className="text-xs border-1">
-            <IoIosOutlet />
-            <IoIosOutlet />
-          </div>
-          <h2 className="font-bold text-xs text-[#b1372c]"> pair</h2>
-        </div>
-      </div>
-      <div className="flex gap-2 cursor-pointer text-2xl">
+    <fieldset
+      className={`flex gap-2 items-center py-2 px-4 ${
+        lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+      }`}
+      style={{
+        boxShadow: `3px 3px 2px ${
+          lightMode ? "rgb(0 0 0 / 0.25)" : "rgb(255 255 255 / 0.25)"
+        }`,
+      }}
+    >
+      <h1 className="font-bold text-xl light-text-color">How many outlets?</h1>
+      <div className="flex gap-1 cursor-pointer text-xl light-text-color ml-auto">
         {Array.from({ length: max }, (_, i) => {
           const rating = i + 1;
           return (
@@ -36,6 +37,6 @@ export default function Outlets({
           );
         })}
       </div>
-    </div>
+    </fieldset>
   );
 }
