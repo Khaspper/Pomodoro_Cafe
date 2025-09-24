@@ -1,7 +1,6 @@
 import type { Request, Response, NextFunction } from "express";
-import { postNewUser } from "../db/queries.js";
 import { body, validationResult } from "express-validator";
-import { getUserByEmail, getUserByUsername } from "../db/queries.js";
+import { getUserByEmail, getUserByUsername, postNewUser } from "../db/queries";
 
 const emptyError = "cannot be empty.";
 const spaceError = "cannot contain spaces.";

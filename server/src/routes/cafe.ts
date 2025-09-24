@@ -5,9 +5,9 @@ import {
   postNewSong,
   addNewComment,
   getCommentsController,
-} from "../controllers/cafeController.js";
+} from "../controllers/cafeController";
 
-import { isAuthenticated } from "../controllers/accountController.js";
+import { isAuthenticated } from "../controllers/accountController";
 
 import { Router } from "express";
 

@@ -1,7 +1,7 @@
 import { Router } from "express";
-import "../config/passport.js";
+import "../config/passport";
 import passport from "passport";
-import { loginUser, sendLoginErrors } from "../controllers/loginController.js";
+import { loginUser, sendLoginErrors } from "../controllers/loginController";
 const loginRouter = Router();
 
 loginRouter.post(
