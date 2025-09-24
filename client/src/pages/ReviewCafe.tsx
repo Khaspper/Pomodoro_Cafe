@@ -119,7 +119,7 @@ export default function ReviewCafe({
           Review website!
         </a>
         <button
-          className={`cursor-pointer font-bold py-2 md:text-xl w-[40%] md:w-[35%] light-text-color transition-all duration-75 active:translate-x-[3px] active:translate-y-[3px] ${
+          className={`cursor-pointer font-bold py-2 text-xl w-[40%] md:w-[35%] light-text-color transition-all duration-75 active:translate-x-[3px] active:translate-y-[3px] ${
             lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
           }`}
           style={{
