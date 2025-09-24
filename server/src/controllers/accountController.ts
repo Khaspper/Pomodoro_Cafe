@@ -6,7 +6,7 @@ import {
   updateEmail,
   updatePassword,
   updateUsername,
-} from "../db/queries";
+} from "../db/queries.js";
 
 const spaceError = "cannot contain spaces.";
 

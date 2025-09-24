@@ -1,6 +1,6 @@
 import { Router } from "express";
 import type { Request, Response } from "express";
-import { isAuthenticated } from "../controllers/accountController";
+import { isAuthenticated } from "../controllers/accountController.js";
 
 const indexRouter = Router();
 

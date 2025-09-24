@@ -11,7 +11,7 @@ import {
   addSong,
   postNewComment,
   getComments,
-} from "../db/queries";
+} from "../db/queries.js";
 import { body, param, validationResult } from "express-validator";
 import { RequestHandler } from "express";
 

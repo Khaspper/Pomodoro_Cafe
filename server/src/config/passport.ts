@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy } from "passport-local";
-import { getUserByEmail, getUserById } from "../db/queries";
+import { getUserByEmail, getUserById } from "../db/queries.js";
 import bcrypt from "bcrypt";
 
 passport.serializeUser((user, done) => {
