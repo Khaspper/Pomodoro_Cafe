@@ -137,6 +137,7 @@ export default function MyMap({
             key={cafe.id}
             cafe={cafe}
             setSelectedCafe={setSelectedCafe}
+            setOpen={setOpen}
           />
         ))}
       </Map>
@@ -147,9 +148,11 @@ export default function MyMap({
 function CafeMarker({
   cafe,
   setSelectedCafe,
+  setOpen,
 }: {
   cafe: TCafe;
   setSelectedCafe: React.Dispatch<React.SetStateAction<TCafe>>;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) {
   const { current: map } = useMap();
 
@@ -171,6 +174,7 @@ function CafeMarker({
       onClick={() => {
         handleClick();
         setSelectedCafe(cafe);
+        setOpen(true);
       }}
       className="cursor-pointer"
     >
