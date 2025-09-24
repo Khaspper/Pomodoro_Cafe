@@ -130,7 +130,7 @@ function SidebarContainer({
 }: TSidebarContainer) {
   return (
     <motion.nav
-      className={`sticky top-0 h-screen shrink-0 transition-colors ${
+      className={`sticky top-0 h-dvh shrink-0 transition-colors ${
         lightMode ? "bg-light-background-color" : "bg-dark-background-color"
       } ${
         open ? "w-screen sm:w-[400px]" : "w-fit"
