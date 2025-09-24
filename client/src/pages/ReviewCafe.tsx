@@ -108,7 +108,7 @@ export default function ReviewCafe({
           href="https://docs.google.com/forms/d/e/1FAIpQLSfzlGs7YKGTL3ioCKYLOsX9yDZu-diytfiTR2tJ0COnN3yHvA/viewform"
           target="blank"
           className={`text-lg font-extrabold light-text-color p-4 hover:scale-105 transform transition-transform duration-150 ${
-            lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+            lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
           }`}
           style={{
             boxShadow: `3px 3px 2px ${
@@ -120,7 +120,7 @@ export default function ReviewCafe({
         </a>
         <button
           className={`cursor-pointer font-bold py-2 md:text-xl w-[40%] md:w-[35%] light-text-color transition-all duration-75 active:translate-x-[3px] active:translate-y-[3px] ${
-            lightMode ? "bg-light-primary-color" : "bg-dark-primary-color"
+            lightMode ? "bg-light-accent-color" : "bg-dark-accent-color"
           }`}
           style={{
             boxShadow: `3px 3px 2px ${

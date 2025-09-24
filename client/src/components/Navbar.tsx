@@ -8,6 +8,7 @@ import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
+import { FaInstagram } from "react-icons/fa";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
@@ -86,6 +87,9 @@ export default function Navbar({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.15 }}
             >
+              <a href="https://www.instagram.com/stuckonblessings/">
+                <FaInstagram className="text-3xl cursor-pointer hover:scale-105 transform transition-transform duration-150" />
+              </a>
               {lightMode ? (
                 <MdDarkMode
                   onClick={() => setLightMode((p) => !p)}
@@ -109,7 +113,6 @@ export default function Navbar({
                   <BiLogIn className="text-3xl cursor-pointer hover:scale-105 transform transition-transform duration-150" />
                 )}
               </Link>
-
               {allowed && (
                 <BiLogOut
                   className="text-3xl cursor-pointer hover:scale-105 transform transition-transform duration-150"
