@@ -24,6 +24,7 @@ const PORT = process.env.PORT || 3000;
 app.set("trust proxy", 1);
 
 // This is so we can send data to our front end
+<<<<<<< HEAD
 const ALLOWED_ORIGINS = [
   "https://pomodorocafes.com",
   "https://www.pomodorocafes.com",
@@ -36,6 +37,14 @@ const corsCheck = cors({
     if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
     cb(new Error(`CORS: ${origin} not allowed`));
   },
+=======
+const corsOptions = {
+  origin: [
+    "www.pomodorocafes.com",
+    "http://localhost:5173",
+    "http://localhost:4173",
+  ],
+>>>>>>> parent of 00cd1fb (last one?)
   credentials: true,
 });
 
@@ -59,15 +68,13 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      secure: true,
-      sameSite: "lax",
-      domain: ".pomodorocafes.com",
+      secure: true, // required over HTTPS
+      sameSite: "none", // required for cross-site cookies
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   })
 );
 
-app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
