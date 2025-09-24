@@ -24,19 +24,33 @@ const PORT = process.env.PORT || 3000;
 app.set("trust proxy", 1);
 
 // This is so we can send data to our front end
-const corsOptions = {
-  origin: [
-    "https://pomodorocafes.com",
-    "https://www.pomodorocafes.com",
-    "www.pomodorocafes.com",
-    "http://localhost:5173",
-    "http://localhost:4173",
-  ],
-  credentials: true,
-};
+const ALLOWED_ORIGINS = [
+  "https://pomodorocafes.com",
+  "https://www.pomodorocafes.com",
+  "http://localhost:5173",
+  "http://localhost:4173",
+];
 // TODO: Replace hardcoded localhost URLs with environment variables
 // TODO: Add production URLs to CORS origins
-app.use(cors(corsOptions));
+app.use(
+  cors({
+    origin: (origin, cb) => {
+      // allow same-origin (no Origin header) and exact allow-list matches
+      if (!origin || ALLOWED_ORIGINS.includes(origin)) return cb(null, true);
+      return cb(new Error(`CORS: ${origin} not allowed`));
+    },
+    credentials: true, // required because you use cookies
+  })
+);
+
+// handle preflight
+app.options(
+  "*",
+  cors({
+    origin: ALLOWED_ORIGINS,
+    credentials: true,
+  })
+);
 // This is so we can send data to our front end
 
 app.use(morgan("dev"));
