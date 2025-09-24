@@ -8,9 +8,9 @@ const prisma = new PrismaClient();
 async function seed() {
   const data = await getCafesFromOverPass();
 
-  if (data && data.elements) {
+  if (data && data.elements && Array.isArray(data.elements)) {
     const cafes = data.elements;
-    cafes.forEach(async (c) => {
+    cafes.forEach(async (c: any) => {
       if ("name" in c.tags && c.tags.takeaway !== "only") {
         if (c.type === "way") {
           await prisma.cafe.create({
