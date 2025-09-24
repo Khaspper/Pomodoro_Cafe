@@ -25,7 +25,11 @@ app.set("trust proxy", 1);
 
 // This is so we can send data to our front end
 const corsOptions = {
-  origin: ["http://localhost:5173", "http://localhost:4173"],
+  origin: [
+    "https://cafe-rose-eta.vercel.app/",
+    "http://localhost:5173",
+    "http://localhost:4173",
+  ],
   credentials: true,
 };
 // TODO: Replace hardcoded localhost URLs with environment variables
