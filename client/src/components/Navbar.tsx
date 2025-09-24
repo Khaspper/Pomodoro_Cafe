@@ -8,6 +8,7 @@ import { BiLogIn } from "react-icons/bi";
 import { BiLogOut } from "react-icons/bi";
 import { MdLightMode } from "react-icons/md";
 import { MdDarkMode } from "react-icons/md";
+import { FaInstagram } from "react-icons/fa";
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
 
@@ -78,6 +79,9 @@ export default function Navbar({
 
       {!checking && (
         <div className="flex items-center gap-3">
+          <a href="https://www.instagram.com/stuckonblessings/" target="blank">
+            <FaInstagram className="text-3xl cursor-pointer hover:scale-105 transform transition-transform duration-150" />
+          </a>
           {isOpen && (
             <motion.div
               className="flex gap-4 items-center"
@@ -89,12 +93,12 @@ export default function Navbar({
               {lightMode ? (
                 <MdDarkMode
                   onClick={() => setLightMode((p) => !p)}
-                  className="cursor-pointer text-3xl"
+                  className="cursor-pointer text-3xl hover:scale-105 transform transition-transform duration-150"
                 />
               ) : (
                 <MdLightMode
                   onClick={() => setLightMode((p) => !p)}
-                  className="cursor-pointer text-3xl"
+                  className="cursor-pointer text-3xl hover:scale-105 transform transition-transform duration-150"
                 />
               )}
               <Link
