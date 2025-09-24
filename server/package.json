@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "jest --watch",
-    "build": "tsc --build",
+    "build": "tsc",
     "start": "node ./dist/server.js",
     "dev": "nodemon ./src/server.ts",
     "migrate:dev": "prisma migrate dev --name init"
